@@ -1,2 +1,3 @@
-# quickflux
-Implement Flux Application Architecture in QML Application
+# Writing QML application a Flux way
+
+Under Development
