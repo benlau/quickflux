@@ -3,20 +3,20 @@
 #include <QVariant>
 #include <QJSValue>
 #include <QPointer>
-#include "qfactiondispatcher.h"
+#include "qfappdispatcher.h"
 
-QFActionDispatcher::QFActionDispatcher(QObject *parent) : QObject(parent)
+QFAppDispatcher::QFAppDispatcher(QObject *parent) : QObject(parent)
 {
     m_dispatching = false;
 
 }
 
-QFActionDispatcher::~QFActionDispatcher()
+QFAppDispatcher::~QFAppDispatcher()
 {
 
 }
 
-void QFActionDispatcher::dispatch(QString name, QJSValue message)
+void QFAppDispatcher::dispatch(QString name, QJSValue message)
 {
     if (m_dispatching) {
         m_queue.enqueue(QPair<QString,QJSValue> (name,message) );
@@ -37,7 +37,7 @@ static QObject *provider(QQmlEngine *engine, QJSEngine *scriptEngine) {
     Q_UNUSED(engine);
     Q_UNUSED(scriptEngine);
 
-    QFActionDispatcher* object = new QFActionDispatcher();
+    QFAppDispatcher* object = new QFAppDispatcher();
 
     return object;
 }
@@ -46,7 +46,7 @@ class QFActionDispatcherRegisterHelper {
 
 public:
     QFActionDispatcherRegisterHelper() {
-        qmlRegisterSingletonType<QFActionDispatcher>("QuickFlux", 1, 0, "ActionDispatcher", provider);
+        qmlRegisterSingletonType<QFAppDispatcher>("QuickFlux", 1, 0, "AppDispatcher", provider);
     }
 };
 

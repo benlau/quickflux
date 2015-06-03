@@ -3,35 +3,35 @@ import QtTest 1.0
 import QuickFlux 1.0
 
 TestCase {
-    name : "Dispatcher_dispatch_sequence"
+    name : "Dispatcher_dispatch_reentrant"
 
     property var messages : new Array
 
     Connections {
-        target : ActionDispatcher
+        target : AppDispatcher
         onReceived: {
             messages.push([name,message]);
             if (name === "ping") {
-                ActionDispatcher.dispatch("pong",{})
+                AppDispatcher.dispatch("pong",{})
             }
         }
     }
 
     Connections {
-        target : ActionDispatcher
+        target : AppDispatcher
         onReceived: {
             messages.push([name,message]);
             if (name === "ping") {
-                ActionDispatcher.dispatch("pong",{})
+                AppDispatcher.dispatch("pong",{})
             }
         }
     }
 
-    function test_dispatch_sequence() {
+    function test_dispatch_reentrant() {
         var i;
         compare(messages.length,0);
 
-        ActionDispatcher.dispatch("ping",{});
+        AppDispatcher.dispatch("ping",{});
 
 //        for (i = 0 ; i < messages.length ; i++) {
 //            console.log(messages[i][0]);

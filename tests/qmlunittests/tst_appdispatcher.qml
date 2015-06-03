@@ -3,12 +3,12 @@ import QtTest 1.0
 import QuickFlux 1.0
 
 TestCase {
-    name : "ActionDispatcher"
+    name : "AppDispatcher"
 
     property var messages : new Array
 
     Connections {
-        target : ActionDispatcher
+        target : AppDispatcher
         onReceived: {
             messages.push([name,message]);
         }
@@ -17,12 +17,12 @@ TestCase {
     function test_actionDispatcher() {
         compare(messages.length,0);
 
-        ActionDispatcher.dispatch("test1",{});
+        AppDispatcher.dispatch("test1",{});
         compare(messages.length,1);
 
         // Verify can it pass function over the message.
 
-        ActionDispatcher.dispatch("test2",{
+        AppDispatcher.dispatch("test2",{
                                       func : function(i) {
                                           return i+i;
                                       }

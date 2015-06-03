@@ -2,7 +2,7 @@ DISTFILES += \
     $$PWD/README.md
 
 HEADERS += \
-    $$PWD/qfactiondispatcher.h
+    $$PWD/qfappdispatcher.h
 
 SOURCES += \
-    $$PWD/qfactiondispatcher.cpp
+    $$PWD/qfappispatcher.cpp
