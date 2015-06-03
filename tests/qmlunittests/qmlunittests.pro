@@ -14,5 +14,6 @@ include(../../quickflux.pri)
 DEFINES += SRCDIR=\\\"$$PWD/\\\" BASEDIR=\\\"$$PWD/..\\\"
 
 DISTFILES += \
-    tst_actiondispatcher.qml
+    tst_actiondispatcher.qml \
+    tst_appdispatcher_dispatch_sequence.qml
 
