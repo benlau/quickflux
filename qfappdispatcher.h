@@ -26,10 +26,11 @@ public slots:
       @param message The message content
       @reentrant
 
-      This function dispatch message via the "received" signal.
-      Direct connected slot functions will be invoked by first come first
-      served basis. It is safe to call dispatch() within slot function,
-      the order will be preserved.
+      This function dispatch message by emitting the "received" signal.
+      Usually, direct connected slot function should be invoked immediately.
+      But recursive call from slot functions will be processed differently.
+      It will defer the signal emittion until the slot function is finished
+      and go back to the top most dispatch() function in call tree.
      */
     Q_INVOKABLE void dispatch(QString name,QJSValue message);
 

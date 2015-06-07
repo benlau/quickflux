@@ -15,5 +15,6 @@ DEFINES += SRCDIR=\\\"$$PWD/\\\" BASEDIR=\\\"$$PWD/..\\\"
 
 DISTFILES += \
     tst_appdispatcher_dispatch_reentrant.qml \
-    tst_appdispatcher.qml
+    tst_appdispatcher.qml \
+    tst_qfapplistener.qml
 

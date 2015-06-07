@@ -8,7 +8,6 @@
 QFAppDispatcher::QFAppDispatcher(QObject *parent) : QObject(parent)
 {
     m_dispatching = false;
-
 }
 
 QFAppDispatcher::~QFAppDispatcher()
@@ -42,12 +41,12 @@ static QObject *provider(QQmlEngine *engine, QJSEngine *scriptEngine) {
     return object;
 }
 
-class QFActionDispatcherRegisterHelper {
+class QFAppDispatcherRegisterHelper {
 
 public:
-    QFActionDispatcherRegisterHelper() {
+    QFAppDispatcherRegisterHelper() {
         qmlRegisterSingletonType<QFAppDispatcher>("QuickFlux", 1, 0, "AppDispatcher", provider);
     }
 };
 
-static QFActionDispatcherRegisterHelper registerHelper;
+static QFAppDispatcherRegisterHelper registerHelper;
