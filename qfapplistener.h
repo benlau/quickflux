@@ -19,8 +19,11 @@ public:
     QObject *target() const;
     void setTarget(QObject *target);
 
-    /// Resgister a callback for a message.
+    /// Add a listener to the end of the listeners array for the specified message.  Multiple calls passing the same combination of event and listener will result in the listener being added multiple times.
     Q_INVOKABLE QFAppListener* on(QString name,QJSValue callback);
+
+    /// Remove a listener from the listener array for the specified message.
+    Q_INVOKABLE void removeListener(QString name,QJSValue callback);
 
 signals:
     /// It is emitted whatever it has received a dispatched message from AppDispatcher.

@@ -50,6 +50,30 @@ QFAppListener *QFAppListener::on(QString name, QJSValue callback)
     return this;
 }
 
+void QFAppListener::removeListener(QString name, QJSValue callback)
+{
+    if (!mapping.contains(name)) {
+        return;
+    };
+
+    QList<QJSValue> list;
+    list = mapping[name];
+
+    int index = -1;
+    for (int i = 0 ; i < list.size() ;i++) {
+        if (list.at(i).equals(callback)) {
+            index = i;
+            break;
+        }
+    }
+
+    if (index >=0 ) {
+        list.removeAt(index);
+        mapping[name] = list;
+    }
+    return;
+}
+
 void QFAppListener::onDispatcherReceived(QString name, QJSValue message)
 {
     if (!isEnabled())
