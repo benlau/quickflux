@@ -77,5 +77,30 @@ TestCase {
 
     }
 
+    function test_removeAllListener() {
+        var count1 = 0,count2=0;
+
+        var func1 = function() {
+            count1++;
+        }
+
+        var func2 = function() {
+            count2++;
+        }
+
+        listener.on("test_removeAllListener",func1).on("test_removeAllListener",func2);
+
+        AppDispatcher.dispatch("test_removeAllListener");
+        AppDispatcher.dispatch("test_removeAllListener");
+        compare(count1,2);
+        compare(count2,2);
+
+        listener.removeAllListener("test_removeAllListener");
+        AppDispatcher.dispatch("test_removeAllListener",null);
+
+        compare(count1,2);
+        compare(count2,2);
+    }
+
 }
 

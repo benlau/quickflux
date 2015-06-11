@@ -74,6 +74,15 @@ void QFAppListener::removeListener(QString name, QJSValue callback)
     return;
 }
 
+void QFAppListener::removeAllListener(QString name)
+{
+    if (name.isEmpty()) {
+        mapping.clear();
+    } else {
+        mapping.remove(name);
+    }
+}
+
 void QFAppListener::onDispatcherReceived(QString name, QJSValue message)
 {
     if (!isEnabled())

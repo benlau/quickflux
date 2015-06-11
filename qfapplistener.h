@@ -25,6 +25,8 @@ public:
     /// Remove a listener from the listener array for the specified message.
     Q_INVOKABLE void removeListener(QString name,QJSValue callback);
 
+    Q_INVOKABLE void removeAllListener(QString name = QString());
+
 signals:
     /// It is emitted whatever it has received a dispatched message from AppDispatcher.
     void received(QString name,QJSValue message);

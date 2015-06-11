@@ -32,7 +32,7 @@ public slots:
       It will defer the signal emittion until the slot function is finished
       and go back to the top most dispatch() function in call tree.
      */
-    Q_INVOKABLE void dispatch(QString name,QJSValue message);
+    Q_INVOKABLE void dispatch(QString name,QJSValue message = QJSValue());
 
 private:
     bool m_dispatching;
