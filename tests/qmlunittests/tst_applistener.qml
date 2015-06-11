@@ -3,13 +3,14 @@ import QtTest 1.0
 import QuickFlux 1.0
 
 TestCase {
-    name : "QFAppListenerBase"
+
+    name : "AppListener"
+
     Item {
         id: container
 
-        QFAppListenerBase {
+        AppListener {
             id: listener
-            target: AppDispatcher
         }
     }
 

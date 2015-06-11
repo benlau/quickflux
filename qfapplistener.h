@@ -5,6 +5,7 @@
 #include <QJSValue>
 #include <QPointer>
 #include <QQuickItem>
+#include <QQmlParserStatus>
 #include <QMap>
 
 class QFAppListener : public QQuickItem
@@ -36,7 +37,7 @@ signals:
 public slots:
 
 private:
-
+    virtual void componentComplete();
     Q_INVOKABLE void onDispatcherReceived(QString name,QJSValue message);
 
     QPointer<QObject> m_target;
