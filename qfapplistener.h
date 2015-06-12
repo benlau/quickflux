@@ -11,13 +11,15 @@
 class QFAppListener : public QQuickItem
 {
     Q_OBJECT
-    Q_PROPERTY(QObject* target READ target WRITE setTarget NOTIFY targetChanged)
 
 public:
     explicit QFAppListener(QQuickItem *parent = 0);
     ~QFAppListener();
 
+    /// Get the listening target.
     QObject *target() const;
+
+    /// Set the listening target. If the class is constructed by QQmlComponent. It will be set automatically.
     void setTarget(QObject *target);
 
     /// Add a listener to the end of the listeners array for the specified message.  Multiple calls passing the same combination of event and listener will result in the listener being added multiple times.
@@ -26,13 +28,12 @@ public:
     /// Remove a listener from the listener array for the specified message.
     Q_INVOKABLE void removeListener(QString name,QJSValue callback);
 
+    /// Remove all the listeners for a message with name. If name is empty, it will remove all the listeners.
     Q_INVOKABLE void removeAllListener(QString name = QString());
 
 signals:
     /// It is emitted whatever it has received a dispatched message from AppDispatcher.
     void received(QString name,QJSValue message);
-
-    void targetChanged();
 
 public slots:
 

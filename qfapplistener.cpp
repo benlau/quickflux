@@ -29,9 +29,6 @@ void QFAppListener::setTarget(QObject *target)
                 this,SLOT(onDispatcherReceived(QString,QJSValue)));
 
     }
-
-
-    emit targetChanged();
 }
 
 QFAppListener *QFAppListener::on(QString name, QJSValue callback)
@@ -70,7 +67,6 @@ void QFAppListener::removeListener(QString name, QJSValue callback)
         list.removeAt(index);
         mapping[name] = list;
     }
-    return;
 }
 
 void QFAppListener::removeAllListener(QString name)
@@ -93,7 +89,7 @@ void QFAppListener::componentComplete()
 
     QObject* holder = comp.create();
     if (!holder) {
-        qWarning() << "Unknown error: Unable to access AppDispatcher" << comp.errorString();
+        qWarning() << "Unknown error: Unable to access AppDispatcher: " << comp.errorString();
         return;
     }
 
@@ -105,7 +101,6 @@ void QFAppListener::componentComplete()
     }
 
     holder->deleteLater();
-    Q_ASSERT(holder);
 }
 
 void QFAppListener::onDispatcherReceived(QString name, QJSValue message)
