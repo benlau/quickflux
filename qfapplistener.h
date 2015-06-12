@@ -33,13 +33,13 @@ public:
 
 signals:
     /// It is emitted whatever it has received a dispatched message from AppDispatcher.
-    void received(QString name,QJSValue message);
+    void dispatched(QString name,QJSValue message);
 
 public slots:
 
 private:
     virtual void componentComplete();
-    Q_INVOKABLE void onDispatcherReceived(QString name,QJSValue message);
+    Q_INVOKABLE void onMessageReceived(QString name,QJSValue message);
 
     QPointer<QObject> m_target;
 

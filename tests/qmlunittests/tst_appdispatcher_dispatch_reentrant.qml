@@ -9,7 +9,7 @@ TestCase {
 
     Connections {
         target : AppDispatcher
-        onReceived: {
+        onDispatched: {
             messages.push([name,message]);
             if (name === "ping") {
                 AppDispatcher.dispatch("pong",{})
@@ -19,7 +19,7 @@ TestCase {
 
     Connections {
         target : AppDispatcher
-        onReceived: {
+        onDispatched: {
             messages.push([name,message]);
             if (name === "ping") {
                 AppDispatcher.dispatch("pong",{})
@@ -32,10 +32,6 @@ TestCase {
         compare(messages.length,0);
 
         AppDispatcher.dispatch("ping",{});
-
-//        for (i = 0 ; i < messages.length ; i++) {
-//            console.log(messages[i][0]);
-//        }
 
         compare(messages.length,6); // ping x 2 , pong x 4
 

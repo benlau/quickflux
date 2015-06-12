@@ -23,11 +23,11 @@ void QFAppDispatcher::dispatch(QString name, QJSValue message)
     }
 
     m_dispatching = true;
-    emit received(name,message);
+    emit dispatched(name,message);
 
     while (m_queue.size() > 0) {
         QPair<QString,QJSValue> pair = m_queue.dequeue();
-        emit received(pair.first,pair.second);
+        emit dispatched(pair.first,pair.second);
     }
     m_dispatching = false;
 }

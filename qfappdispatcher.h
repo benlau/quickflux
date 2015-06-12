@@ -17,7 +17,8 @@ public:
     ~QFAppDispatcher();
 
 signals:
-    void received(QString name,QJSValue message);
+    /// Listeners should listen on this signal to get the latest dispatched message from AppDispatcher
+    void dispatched(QString name,QJSValue message);
 
 public slots:
     /// Dispatch a message via Dispatcher
@@ -26,11 +27,13 @@ public slots:
       @param message The message content
       @reentrant
 
-      This function dispatch message by emitting the "received" signal.
+      This function dispatch message by emitting the "dispatched" signal.
       Usually, direct connected slot function should be invoked immediately.
       But recursive call from slot functions will be processed differently.
       It will defer the signal emittion until the slot function is finished
-      and go back to the top most dispatch() function in call tree.
+      and go back to the top most dispatch() function in call tree. Such
+      that the order of "dispatched" signal emission is in fast come, fast
+      serve basis.
      */
     Q_INVOKABLE void dispatch(QString name,QJSValue message = QJSValue());
 

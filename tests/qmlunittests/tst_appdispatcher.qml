@@ -9,7 +9,7 @@ TestCase {
 
     Connections {
         target : AppDispatcher
-        onReceived: {
+        onDispatched: {
             messages.push([name,message]);
         }
     }

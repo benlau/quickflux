@@ -25,8 +25,8 @@ void QFAppListener::setTarget(QObject *target)
 
     if (!m_target.isNull()) {
 
-        connect(m_target.data(),SIGNAL(received(QString,QJSValue)),
-                this,SLOT(onDispatcherReceived(QString,QJSValue)));
+        connect(m_target.data(),SIGNAL(dispatched(QString,QJSValue)),
+                this,SLOT(onMessageReceived(QString,QJSValue)));
 
     }
 }
@@ -103,12 +103,12 @@ void QFAppListener::componentComplete()
     holder->deleteLater();
 }
 
-void QFAppListener::onDispatcherReceived(QString name, QJSValue message)
+void QFAppListener::onMessageReceived(QString name, QJSValue message)
 {
     if (!isEnabled())
         return;
 
-    emit received(name,message);
+    emit dispatched(name,message);
 
     if (!mapping.contains(name))
         return;
