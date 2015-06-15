@@ -4,7 +4,7 @@
 What is Flux and How to use in QML Application? 
 ===============================================
 
-Please refer to his article for detail : 
+Please refer to this article for detail : 
 [Writing QML Application in a Flux way | Qt Forum](http://forum.qt.io/topic/55213/writing-qml-application-in-a-flux-way)
 
 Installation Instruction
