@@ -32,6 +32,29 @@ void QFAppDispatcher::dispatch(QString name, QJSValue message)
     m_dispatching = false;
 }
 
+QFAppDispatcher *QFAppDispatcher::instance(QQmlEngine *engine)
+{
+    QFAppDispatcher *dispatcher = 0;
+
+    QQmlComponent comp (engine);
+    comp.setData("import QtQuick 2.0\nimport QuickFlux 1.0;QtObject { property var dispatcher : AppDispatcher }" ,QUrl());
+
+    QObject* holder = comp.create();
+    if (!holder) {
+        qWarning() << "Unknown error: Unable to access AppDispatcher: " << comp.errorString();
+        return dispatcher;
+    }
+
+    dispatcher = holder->property("dispatcher").value<QFAppDispatcher*>();
+    holder->deleteLater();
+
+    if (!dispatcher) {
+        qWarning() << "#QuickFlux: Unknown error: Unable to access AppDispatcher";
+    }
+
+    return dispatcher;
+}
+
 static QObject *provider(QQmlEngine *engine, QJSEngine *scriptEngine) {
     Q_UNUSED(engine);
     Q_UNUSED(scriptEngine);

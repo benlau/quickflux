@@ -6,6 +6,7 @@
 #include <QJSValue>
 #include <QQueue>
 #include <QPair>
+#include <QQmlEngine>
 
 /// Message Dispatcher
 
@@ -36,6 +37,9 @@ public slots:
       serve basis.
      */
     Q_INVOKABLE void dispatch(QString name,QJSValue message = QJSValue());
+
+    /// Obtain the singleton instance of AppDispatcher for specific QQmlEngine
+    static QFAppDispatcher* instance(QQmlEngine* engine);
 
 private:
     bool m_dispatching;

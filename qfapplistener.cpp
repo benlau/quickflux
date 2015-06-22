@@ -1,5 +1,6 @@
 #include <QtQml>
 #include <QtCore>
+#include "qfappdispatcher.h"
 #include "qfapplistener.h"
 
 QFAppListener::QFAppListener(QQuickItem *parent) : QQuickItem(parent)
@@ -84,23 +85,13 @@ void QFAppListener::componentComplete()
 
     QQmlEngine *engine = qmlEngine(this);
     Q_ASSERT(engine);    
-    QQmlComponent comp (qmlEngine(this));
-    comp.setData("import QtQuick 2.0\nimport QuickFlux 1.0;QtObject { property var dispatcher : AppDispatcher }" ,QUrl());
 
-    QObject* holder = comp.create();
-    if (!holder) {
-        qWarning() << "Unknown error: Unable to access AppDispatcher: " << comp.errorString();
-        return;
-    }
-
-    QObject* dispatcher = holder->property("dispatcher").value<QObject*>();
+    QObject* dispatcher = qobject_cast<QObject*>(QFAppDispatcher::instance(engine));
     if (!dispatcher) {
         qWarning() << "Unknown error: Unable to access AppDispatcher";
     } else {
         setTarget(dispatcher);
     }
-
-    holder->deleteLater();
 }
 
 void QFAppListener::onMessageReceived(QString name, QJSValue message)
