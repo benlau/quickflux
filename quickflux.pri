@@ -1,3 +1,5 @@
+INCLUDEPATH += $$PWD
+
 DISTFILES += \
     $$PWD/README.md
 
