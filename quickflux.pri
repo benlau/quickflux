@@ -8,5 +8,5 @@ HEADERS += \
     $$PWD/qfapplistener.h
 
 SOURCES += \
-    $$PWD/qfappispatcher.cpp \
-    $$PWD/qfapplistener.cpp
+    $$PWD/qfapplistener.cpp \
+    $$PWD/qfappdispatcher.cpp
