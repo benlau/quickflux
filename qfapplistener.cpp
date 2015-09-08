@@ -99,7 +99,29 @@ void QFAppListener::onMessageReceived(QString name, QJSValue message)
     if (!isEnabled())
         return;
 
-    emit dispatched(name,message);
+    bool dispatch = true;
+
+    QStringList rules = m_filters;
+    if (!m_filter.isEmpty()) {
+        rules.append(m_filter);
+    }
+
+    if (rules.size() > 0) {
+        dispatch = false;
+
+        for (int i = 0 ; i < rules.size() ; i++) {
+            if (name == rules.at(i)) {
+                dispatch = true;
+                break;
+            }
+        }
+    }
+
+    if (dispatch) {
+        emit dispatched(name,message);
+    }
+
+    // Listener registered with on() should not be affected by filter.
 
     if (!mapping.contains(name))
         return;
@@ -116,9 +138,31 @@ void QFAppListener::onMessageReceived(QString name, QJSValue message)
     }
 
 }
+QStringList QFAppListener::filters() const
+{
+    return m_filters;
+}
+
+void QFAppListener::setFilters(const QStringList &filters)
+{
+    m_filters = filters;
+    emit filtersChanged();
+}
+
+QString QFAppListener::filter() const
+{
+    return m_filter;
+}
+
+void QFAppListener::setFilter(const QString &filter)
+{
+    m_filter = filter;
+    emit filterChanged();
+}
+
 
 class QFAppListenerRegisterHelper {
-
+    
 public:
     QFAppListenerRegisterHelper() {
         qmlRegisterType<QFAppListener>("QuickFlux", 1, 0, "AppListener");

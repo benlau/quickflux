@@ -11,6 +11,8 @@
 class QFAppListener : public QQuickItem
 {
     Q_OBJECT
+    Q_PROPERTY(QString filter READ filter WRITE setFilter NOTIFY filterChanged)
+    Q_PROPERTY(QStringList filters READ filters WRITE setFilters NOTIFY filtersChanged)
 
 public:
     explicit QFAppListener(QQuickItem *parent = 0);
@@ -31,9 +33,25 @@ public:
     /// Remove all the listeners for a message with name. If name is empty, it will remove all the listeners.
     Q_INVOKABLE void removeAllListener(QString name = QString());
 
+    /// Get the filter for incoming message
+    QString filter() const;
+
+    /// Set a filter to incoming message. Only message with name matched with the filter will emit "dispatched" signal.
+    void setFilter(const QString &filter);
+
+    /// Get a list of filter for incoming message
+    QStringList filters() const;
+
+    /// Set a list of filter to incoming message. Only message with name matched with the filters will emit "dispatched" signal.
+    void setFilters(const QStringList &filters);
+
 signals:
     /// It is emitted whatever it has received a dispatched message from AppDispatcher.
     void dispatched(QString name,QJSValue message);
+
+    void filterChanged();
+
+    void filtersChanged();
 
 public slots:
 
@@ -44,6 +62,9 @@ private:
     QPointer<QObject> m_target;
 
     QMap<QString,QList<QJSValue> >  mapping;
+
+    QString m_filter;
+    QStringList m_filters;
 };
 
 #endif // QFAPPLISTENER_H

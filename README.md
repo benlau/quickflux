@@ -34,11 +34,14 @@ AppDispatcher is a singleton object in QML scope for delivering message.
 
 **AppDispatcher.dispatch(string name,object message)**
 
-Dispatch a message with name via the AppDispatcher. A "dispatched" signal will be emitted.
-Usually, direct connected slot function should be invoked immediately.
-But recursive call from slot functions will be processed differently.
-It will defer the signal emittion until the slot function is finished and go back to the top most dispatch() function in call tree.
-Such that the order of "dispatched" signal emission is in fast come, fast serve basis.
+Dispatch a message with name via the AppDispatcher.
+Listener should listen on the "dispatched" signal to be notified.
+
+Usually, it will emit "dispatched" signal immediately after calling dispatch().
+However, the rule don't apply on recursive call from slot functions.
+Instead, the new message will be placed on a queue,
+and wait until the slot function finished.
+Such the the order of "dispatched" is guaranteed in fast come, fast serve basis.
 
 **AppDispatcher.dispatched(string name,object message)[Signal]**
 
@@ -69,6 +72,30 @@ It is a helper class to listen dispatched messages from AppDispatcher. It provid
 Example
 
 ```
+
+// Only listen for specific message
+AppListener {
+    filter: "messageType1"; // filter property will be added in v1.0.1
+    onDispatched: {
+      // Your code here
+    }
+}
+
+// Listen for multiple messages.
+AppListener {
+    onDispatched: {
+        switch (name) {
+            case "messageType1":
+                // ...
+                break;
+            case "messageType2":
+                // ...
+                break;
+        }
+    }
+}
+
+// Alternative method to listen for multiple messages
 
 AppListener {
 
@@ -106,4 +133,13 @@ If the enabled property is set to false, this signal will not be emitted.
 
 If this property is set to false, all the signal and callback will not be invokved.
 This include the "dispatched" signal and callback registered via the "on()" function.
+
+**filter[Property]**
+
+Set a filter to incoming message. Only message with name matched with the filter will emit "dispatched" signal.
+If it is not set, it will dispatch every message.
+
+**filters[Property]**
+Set a list of filter to incoming message. Only message with name matched with the filters will emit "dispatched" signal.
+If it is not set, it will dispatch every message.
 
