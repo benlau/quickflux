@@ -1,6 +1,15 @@
 # Writing QML application in a Flux way
 [![Build Status](https://travis-ci.org/benlau/quickflux.svg?branch=master)](https://travis-ci.org/benlau/quickflux)
 
+Generally speaking, you should avoid writing a big QML file. 
+Break down into smaller piece of files is more readable and reusable. 
+But sometimes it is not true due to event/signal propagation. 
+Managing code dependence is very troublesome.
+
+Writing QML in a Flux way is a solution for this problem. 
+It breaks the dependence and simplify your code by taking out event/signal propagation. 
+This project provides an implementation of Flux application architecture in QML for user to get started easily.
+
 What is Flux and How to use in QML Application? 
 ===============================================
 
@@ -11,8 +20,6 @@ Installation Instruction
 ========================
 
  1) Clone this repository or download release to a folder within your source tree.
-
-(You may use `git submodule` to embed this repository)
 
  2) Add this line to your profile file(.pro):
 
