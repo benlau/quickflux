@@ -21,7 +21,7 @@ But sometimes it is not true due to event/signal propagation.
 Managing code dependence is very troublesome.
 
 Writing QML in a Flux way is a solution for this problem. 
-It breaks the dependence and simplify your code by taking out event/signal propagation. 
+It breaks the dependence and simplify your code by taking out unnecessary signal binding. 
 This project provides an implementation of Flux application architecture in QML for user to get started easily.
 
 What is Flux and How to use in QML Application? 
