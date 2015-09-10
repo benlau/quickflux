@@ -1,5 +1,19 @@
-# Writing QML application in a Flux way
+# QuickFlux - Inter-Process Communication / Message Queue for Qt/QML
+
 [![Build Status](https://travis-ci.org/benlau/quickflux.svg?branch=master)](https://travis-ci.org/benlau/quickflux)
+
+QuickFlux is an Inter-Process Communication / Message Queue solution for Qt/QML.
+It is also an implementation of Flux Application Architecture which is invented by Facebook.
+By using this library, users may write their QML application in a Flux way.
+
+Features
+
+ 1. Singleton Message Queue per QML Engine.
+ 2. Write QML application in a Flux way.
+ 3. Utility function for C++ code to listen on QML event.
+
+Concept and Motivation
+======================
 
 Generally speaking, you should avoid writing a big QML file. 
 Break down into smaller piece of files is more readable and reusable. 
@@ -42,13 +56,13 @@ AppDispatcher is a singleton object in QML scope for delivering message.
 **AppDispatcher.dispatch(string name,object message)**
 
 Dispatch a message with name via the AppDispatcher.
-Listener should listen on the "dispatched" signal to be notified.
+Listeners should listen on the "dispatched" signal to be notified.
 
 Usually, it will emit "dispatched" signal immediately after calling dispatch().
-However, the rule don't apply on recursive call from slot functions.
-Instead, the new message will be placed on a queue,
-and wait until the slot function finished.
-Such the the order of "dispatched" is guaranteed in fast come, fast serve basis.
+However, if AppDispatcher is still dispatching messages,
+the new messages will be placed on a queue,
+and wait until the it is finished.
+It guarantees the order of messages are arrived in sequence to listeners
 
 **AppDispatcher.dispatched(string name,object message)[Signal]**
 
