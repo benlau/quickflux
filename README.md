@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/benlau/quickflux.svg?branch=master)](https://travis-ci.org/benlau/quickflux)
 
 QuickFlux is an Inter-Process Communication / Message Queue solution for Qt/QML.
-It is also an implementation of Flux Application Architecture which is invented by Facebook.
+It is also an implementation of Flux Application Architecture (from Facebook).
 By using this library, users may write their QML application in a Flux way.
 
 Features
@@ -22,6 +22,7 @@ Managing code dependence is very troublesome.
 
 Writing QML in a Flux way is a solution for this problem. 
 It breaks the dependence and simplify your code by taking out unnecessary signal binding. 
+
 This project provides an implementation of Flux application architecture in QML for user to get started easily.
 
 What is Flux and How to use in QML Application? 
@@ -51,7 +52,7 @@ Class Reference
 AppDispatcher
 -------------
 
-AppDispatcher is a singleton object in QML scope for delivering message.
+AppDispatcher is a singleton object in QML scope for message delivery.
 
 **AppDispatcher.dispatch(string name,object message)**
 
@@ -73,17 +74,31 @@ Example code:
 ```
 import QuickFlux 1.0
 
+// Method 1 - Using Connections component
 Connections {
     target: AppDispatcher
     onDispatched: {
-        if (name === "ItemOpen") {
-            ...
-        } else if (name ==="ItemDelete") {
-            ...
+        switch (name) {
+            case "OpenItem";
+                // ...
+                break;
+            case "DeleteItem";
+                // ...
+                break;
         }
     }
 }
+
+// Method 2 - Using helper component, AppListener
+AppListener {
+    filter: "ItemOpen";
+    onDispatched: {
+      /// ...
+    }
+}
+
 ```
+
 
 AppListener
 -----------
