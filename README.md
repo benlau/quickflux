@@ -1,14 +1,14 @@
-# QuickFlux - Inter-Process Communication / Message Queue for Qt/QML
+# QuickFlux - Message Queue for Qt/QML
 
 [![Build Status](https://travis-ci.org/benlau/quickflux.svg?branch=master)](https://travis-ci.org/benlau/quickflux)
 
-QuickFlux is an Inter-Process Communication / Message Queue solution for Qt/QML.
+QuickFlux is a Message Queue solution for Qt/QML.
 It is also an implementation of Flux Application Architecture (from Facebook).
 By using this library, users may write their QML application in a Flux way.
 
 Features
 
- 1. Singleton Message Queue per QML Engine.
+ 1. Singleton Message Dispatcher/Queue per QML Engine.
  2. Write QML application in a Flux way.
  3. Utility function for C++ code to listen on QML event.
 
@@ -21,6 +21,7 @@ But sometimes it is not true due to event/signal propagation.
 Managing code dependence is very troublesome.
 
 Writing QML in a Flux way is a solution for this problem. 
+Using a global AppDispatcher for communication between components. 
 It breaks the dependence and simplify your code by taking out unnecessary signal binding. 
 
 This project provides an implementation of Flux application architecture in QML for user to get started easily.
@@ -62,7 +63,7 @@ Listeners should listen on the "dispatched" signal to be notified.
 Usually, it will emit "dispatched" signal immediately after calling dispatch().
 However, if AppDispatcher is still dispatching messages,
 the new messages will be placed on a queue,
-and wait until the it is finished.
+and wait until it is finished.
 It guarantees the order of messages are arrived in sequence to listeners
 
 **AppDispatcher.dispatched(string name,object message)[Signal]**
@@ -167,7 +168,7 @@ If the enabled property is set to false, this signal will not be emitted.
 
 **enabled[Property]**
 
-If this property is set to false, all the signal and callback will not be invokved.
+If this property is set to false, all the signal and callback will not be invoked.
 This include the "dispatched" signal and callback registered via the "on()" function.
 
 **filter[Property]**
@@ -178,4 +179,7 @@ If it is not set, it will dispatch every message.
 **filters[Property]**
 Set a list of filter to incoming message. Only message with name matched with the filters will emit "dispatched" signal.
 If it is not set, it will dispatch every message.
+
+Related Projects
+ 1. [benlau/quickpromise](https://github.com/benlau/quickpromise) - Promise library for QML
 
