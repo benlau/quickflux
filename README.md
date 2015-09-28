@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/benlau/quickflux.svg?branch=master)](https://travis-ci.org/benlau/quickflux)
 
-QuickFlux is a Message Queue solution for Qt/QML.
+QuickFlux is a Message Dispatcher / Message Queue solution for Qt/QML.
 It is also an implementation of Flux Application Architecture (from Facebook).
 By using this library, users may write their QML application in a Flux way.
 
@@ -181,5 +181,6 @@ Set a list of filter to incoming message. Only message with name matched with th
 If it is not set, it will dispatch every message.
 
 Related Projects
+----------------
  1. [benlau/quickpromise](https://github.com/benlau/quickpromise) - Promise library for QML
 

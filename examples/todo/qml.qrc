@@ -10,5 +10,6 @@
         <file>stores/qmldir</file>
         <file>views/TodoVisualModel.qml</file>
         <file>views/Header.qml</file>
+        <file>actions/ActionTypes.qml</file>
     </qresource>
 </RCC>

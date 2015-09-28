@@ -35,7 +35,7 @@ VisualDataModel {
 
         // In production environment, you should disconnect the signal during destruction.
         AppDispatcher.onDispatched.connect(function(name,message) {
-            if (name !== TodoActions.onShowCompleted) {
+            if (name !== ActionTypes.todo_showCompleted) {
                 return;
             }
             filterOnGroup = message.value ? "" : "nonCompleted"

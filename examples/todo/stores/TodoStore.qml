@@ -42,7 +42,7 @@ Item {
     }
 
     AppListener {
-        filter: TodoActions.onAdd
+        filter: ActionTypes.todo_add
         onDispatched: {
             var item = {
                 uid: nextUid++,
@@ -54,7 +54,7 @@ Item {
     }
 
     AppListener {
-        filter: TodoActions.onSetDone
+        filter: ActionTypes.todo_setDone
         onDispatched: {
             for (var i = 0 ; i < model.count ; i++) {
                 var item  = model.get(i);
