@@ -19,5 +19,11 @@ QtObject {
         AppDispatcher.dispatch(onSetDone,{uid: uid,done: done })
     }
 
+    property string onShowCompleted: prefix + "showCompleted";
+
+    function showCompleted(value) {
+        AppDispatcher.dispatch(onShowCompleted,{value: value })
+    }
+
 }
 

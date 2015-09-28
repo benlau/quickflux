@@ -13,6 +13,11 @@ Window {
         anchors.leftMargin: 16
         anchors.rightMargin: 16
 
+        Header {
+            Layout.fillWidth: true
+            Layout.fillHeight: false
+        }
+
         TodoList {
             Layout.fillWidth: true
             Layout.fillHeight: true

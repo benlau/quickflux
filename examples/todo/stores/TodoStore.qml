@@ -13,7 +13,14 @@ Item {
     property int nextUid: 4;
 
     ListModel {
+        // Initial data
         id: model
+
+        ListElement {
+            uid: 0
+            title: "Task Zero"
+            done: true
+        }
 
         ListElement {
             uid: 1

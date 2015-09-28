@@ -9,5 +9,6 @@
         <file>stores/TodoStore.qml</file>
         <file>stores/qmldir</file>
         <file>views/TodoVisualModel.qml</file>
+        <file>views/Header.qml</file>
     </qresource>
 </RCC>
