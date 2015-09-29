@@ -70,7 +70,7 @@ It guarantees the order of messages are arrived in sequence to listeners
 
 **AppDispatcher.dispatched(string type,object message)[Signal]**
 
-Listeners should listen on this signal to get the latest dispatched message from AppDispatcher.
+Listeners may listen on this signal to get the latest dispatched message from AppDispatcher.
 
 Example code:
 
@@ -102,6 +102,28 @@ AppListener {
 
 ```
 
+QFAppDispatcher
+---------------
+
+QFAppDispatcher is the C++ implementation of AppDispatcher in QML scope. 
+You may need this class to setup communication between C++ and QML.
+
+```
+#include "qfappdispatcher.h"
+```
+
+**static QFAppDispatcher* QFAppDispatcher.instance(QQmlEngine* engine)**
+
+Obtain the singleton instance of AppDispatcher for specific QQmlEngine
+
+**static QObject* singletonObject(QQmlEngine* engine,QString package,
+                                    int versionMajor,
+                                    int versionMinor,
+                                    QString typeName)**
+
+
+Obtain a singleton object from package for specific QQmlEngine. 
+It is useful when you need to get singleton Actions component.
 
 AppListener
 -----------
