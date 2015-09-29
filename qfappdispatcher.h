@@ -28,18 +28,24 @@ public slots:
       @param message The message content
       @reentrant
 
-      This function dispatch message by emitting the "dispatched" signal.
-      Usually, direct connected slot function should be invoked immediately.
-      But recursive call from slot functions will be processed differently.
-      It will defer the signal emittion until the slot function is finished
-      and go back to the top most dispatch() function in call tree. Such
-      that the order of "dispatched" signal emission is in fast come, fast
-      serve basis.
+      Dispatch a message with name via the AppDispatcher. Listeners should listen on the "dispatched"
+      signal to be notified.
+
+      Usually, it will emit "dispatched" signal immediately after calling dispatch(). However, if
+      AppDispatcher is still dispatching messages, the new messages will be placed on a queue, and
+      wait until it is finished. It guarantees the order of messages are arrived in sequence to
+      listeners
      */
     Q_INVOKABLE void dispatch(QString name,QJSValue message = QJSValue());
 
     /// Obtain the singleton instance of AppDispatcher for specific QQmlEngine
     static QFAppDispatcher* instance(QQmlEngine* engine);
+
+    /// Obtain a singleton object from package for specific QQmlEngine
+    static QObject* singletonObject(QQmlEngine* engine,QString package,
+                                    int versionMajor,
+                                    int versionMinor,
+                                    QString typeName);
 
 private:
     bool m_dispatching;

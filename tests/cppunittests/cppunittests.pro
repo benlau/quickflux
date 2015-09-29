@@ -21,3 +21,4 @@ include(../../quickflux.pri)
 
 RESOURCES += \
     qml.qrc
+

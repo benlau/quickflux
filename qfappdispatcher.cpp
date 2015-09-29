@@ -34,25 +34,38 @@ void QFAppDispatcher::dispatch(QString name, QJSValue message)
 
 QFAppDispatcher *QFAppDispatcher::instance(QQmlEngine *engine)
 {
-    QFAppDispatcher *dispatcher = 0;
-
-    QQmlComponent comp (engine);
-    comp.setData("import QtQuick 2.0\nimport QuickFlux 1.0;QtObject { property var dispatcher : AppDispatcher }" ,QUrl());
-
-    QObject* holder = comp.create();
-    if (!holder) {
-        qWarning() << "Unknown error: Unable to access AppDispatcher: " << comp.errorString();
-        return dispatcher;
-    }
-
-    dispatcher = holder->property("dispatcher").value<QFAppDispatcher*>();
-    holder->deleteLater();
-
-    if (!dispatcher) {
-        qWarning() << "#QuickFlux: Unknown error: Unable to access AppDispatcher";
-    }
+    QFAppDispatcher *dispatcher = qobject_cast<QFAppDispatcher*>(singletonObject(engine,"QuickFlux",1,0,"AppDispatcher"));
 
     return dispatcher;
+}
+
+QObject *QFAppDispatcher::singletonObject(QQmlEngine *engine, QString package, int versionMajor, int versionMinor, QString typeName)
+{
+    QString pattern  = "import QtQuick 2.0\nimport %1 %2.%3;QtObject { property var object : %4 }";
+
+    QString qml = pattern.arg(package).arg(versionMajor).arg(versionMinor).arg(typeName);
+
+    QObject* holder = 0;
+
+    QQmlComponent comp (engine);
+    comp.setData(qml.toUtf8(),QUrl());
+    holder = comp.create();
+
+    if (!holder) {
+        qWarning() << QString("QuickFlux: Failed to gain singleton object: %1").arg(typeName);
+        qWarning() << QString("Error: ") << comp.errorString();
+        return 0;
+    }
+
+    QObject*object = holder->property("object").value<QObject*>();
+    holder->deleteLater();
+
+    if (!object) {
+        qWarning() << QString("QuickFlux: Failed to gain singleton object: %1").arg(typeName);
+        qWarning() << QString("Error: Unknown");
+    }
+
+    return object;
 }
 
 static QObject *provider(QQmlEngine *engine, QJSEngine *scriptEngine) {

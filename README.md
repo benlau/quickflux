@@ -10,7 +10,7 @@ Features
 
  1. Singleton Message Dispatcher/Queue per QML Engine.
  2. Write QML application in a Flux way.
- 3. Utility function for C++ code to listen on QML event.
+ 3. Helper function for C++ code to listen on QML event / obtain QML singleton instance
 
 Concept and Motivation
 ======================

@@ -20,6 +20,7 @@ private Q_SLOTS:
     void initTestCase();
     void cleanupTestCase();
     void instance();
+    void singletonObject();
 };
 
 AppDispatcherTests::AppDispatcherTests()
@@ -52,6 +53,25 @@ void AppDispatcherTests::instance()
 
     dispatcher->dispatch("TestMessage");
 
+}
+
+void AppDispatcherTests::singletonObject()
+{
+    QQmlApplicationEngine engine;
+
+    engine.addImportPath("qrc:/");
+
+    QUrl url("qrc:///dummy.qml");
+    engine.load(url);
+
+    QObject *rootItem = engine.rootObjects().first();
+
+    QVERIFY(rootItem);
+
+    QObject* dummyAction = QFAppDispatcher::singletonObject(&engine,"QuickFluxTests",3,2,"DummyAction");
+
+    QVERIFY(dummyAction);
+    QVERIFY(dummyAction->property("value").toInt() == 13);
 }
 
 int main(int argc, char *argv[])
