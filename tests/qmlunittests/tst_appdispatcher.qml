@@ -10,7 +10,7 @@ TestCase {
     Connections {
         target : AppDispatcher
         onDispatched: {
-            messages.push([name,message]);
+            messages.push([type,message]);
         }
     }
 

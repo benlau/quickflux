@@ -25,29 +25,29 @@ public:
     void setTarget(QObject *target);
 
     /// Add a listener to the end of the listeners array for the specified message.  Multiple calls passing the same combination of event and listener will result in the listener being added multiple times.
-    Q_INVOKABLE QFAppListener* on(QString name,QJSValue callback);
+    Q_INVOKABLE QFAppListener* on(QString type,QJSValue callback);
 
     /// Remove a listener from the listener array for the specified message.
-    Q_INVOKABLE void removeListener(QString name,QJSValue callback);
+    Q_INVOKABLE void removeListener(QString type,QJSValue callback);
 
-    /// Remove all the listeners for a message with name. If name is empty, it will remove all the listeners.
-    Q_INVOKABLE void removeAllListener(QString name = QString());
+    /// Remove all the listeners for a message with type. If type is empty, it will remove all the listeners.
+    Q_INVOKABLE void removeAllListener(QString type = QString());
 
     /// Get the filter for incoming message
     QString filter() const;
 
-    /// Set a filter to incoming message. Only message with name matched with the filter will emit "dispatched" signal.
+    /// Set a filter to incoming message. Only message with type matched with the filter will emit "dispatched" signal.
     void setFilter(const QString &filter);
 
     /// Get a list of filter for incoming message
     QStringList filters() const;
 
-    /// Set a list of filter to incoming message. Only message with name matched with the filters will emit "dispatched" signal.
+    /// Set a list of filter to incoming message. Only message with type matched with the filters will emit "dispatched" signal.
     void setFilters(const QStringList &filters);
 
 signals:
     /// It is emitted whatever it has received a dispatched message from AppDispatcher.
-    void dispatched(QString name,QJSValue message);
+    void dispatched(QString type,QJSValue message);
 
     void filterChanged();
 

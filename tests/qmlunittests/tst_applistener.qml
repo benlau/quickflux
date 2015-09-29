@@ -11,6 +11,8 @@ TestCase {
 
         AppListener {
             id: listener
+            onDispatched: {
+            }
         }
     }
 

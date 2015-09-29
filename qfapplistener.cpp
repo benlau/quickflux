@@ -32,29 +32,29 @@ void QFAppListener::setTarget(QObject *target)
     }
 }
 
-QFAppListener *QFAppListener::on(QString name, QJSValue callback)
+QFAppListener *QFAppListener::on(QString type, QJSValue callback)
 {
     QList<QJSValue> list;
 
-    if (mapping.contains(name)) {
-        list = mapping[name];
+    if (mapping.contains(type)) {
+        list = mapping[type];
     }
 
     list.append(callback);
 
-    mapping[name] = list;
+    mapping[type] = list;
 
     return this;
 }
 
-void QFAppListener::removeListener(QString name, QJSValue callback)
+void QFAppListener::removeListener(QString type, QJSValue callback)
 {
-    if (!mapping.contains(name)) {
+    if (!mapping.contains(type)) {
         return;
     };
 
     QList<QJSValue> list;
-    list = mapping[name];
+    list = mapping[type];
 
     int index = -1;
     for (int i = 0 ; i < list.size() ;i++) {
@@ -66,16 +66,16 @@ void QFAppListener::removeListener(QString name, QJSValue callback)
 
     if (index >=0 ) {
         list.removeAt(index);
-        mapping[name] = list;
+        mapping[type] = list;
     }
 }
 
-void QFAppListener::removeAllListener(QString name)
+void QFAppListener::removeAllListener(QString type)
 {
-    if (name.isEmpty()) {
+    if (type.isEmpty()) {
         mapping.clear();
     } else {
-        mapping.remove(name);
+        mapping.remove(type);
     }
 }
 
@@ -94,7 +94,7 @@ void QFAppListener::componentComplete()
     }
 }
 
-void QFAppListener::onMessageReceived(QString name, QJSValue message)
+void QFAppListener::onMessageReceived(QString type, QJSValue message)
 {
     if (!isEnabled())
         return;
@@ -110,7 +110,7 @@ void QFAppListener::onMessageReceived(QString name, QJSValue message)
         dispatch = false;
 
         for (int i = 0 ; i < rules.size() ; i++) {
-            if (name == rules.at(i)) {
+            if (type == rules.at(i)) {
                 dispatch = true;
                 break;
             }
@@ -118,15 +118,15 @@ void QFAppListener::onMessageReceived(QString name, QJSValue message)
     }
 
     if (dispatch) {
-        emit dispatched(name,message);
+        emit dispatched(type,message);
     }
 
     // Listener registered with on() should not be affected by filter.
 
-    if (!mapping.contains(name))
+    if (!mapping.contains(type))
         return;
 
-    QList<QJSValue> list = mapping[name];
+    QList<QJSValue> list = mapping[type];
 
     QList<QJSValue> arguments;
     arguments << message;

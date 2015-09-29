@@ -28,7 +28,7 @@ public slots:
       @param message The message content
       @reentrant
 
-      Dispatch a message with name via the AppDispatcher. Listeners should listen on the "dispatched"
+      Dispatch a message with type via the AppDispatcher. Listeners should listen on the "dispatched"
       signal to be notified.
 
       Usually, it will emit "dispatched" signal immediately after calling dispatch(). However, if

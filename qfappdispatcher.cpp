@@ -15,15 +15,15 @@ QFAppDispatcher::~QFAppDispatcher()
 
 }
 
-void QFAppDispatcher::dispatch(QString name, QJSValue message)
+void QFAppDispatcher::dispatch(QString type, QJSValue message)
 {
     if (m_dispatching) {
-        m_queue.enqueue(QPair<QString,QJSValue> (name,message) );
+        m_queue.enqueue(QPair<QString,QJSValue> (type,message) );
         return;
     }
 
     m_dispatching = true;
-    emit dispatched(name,message);
+    emit dispatched(type,message);
 
     while (m_queue.size() > 0) {
         QPair<QString,QJSValue> pair = m_queue.dequeue();
