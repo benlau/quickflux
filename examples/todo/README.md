@@ -7,4 +7,4 @@ Design Principles
 
 1. Avoid writing a big QML file. Break down into smaller pieces
 
-2. Avoid signal propagation between components.
+2. Avoid signal propagation between custom components.

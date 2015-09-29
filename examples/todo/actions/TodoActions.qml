@@ -10,10 +10,14 @@ QtObject {
         AppDispatcher.dispatch(ActionTypes.todo_add,{title: title });
     }
 
+    // Set/unset done on a task
     function setDone(uid,done) {
         AppDispatcher.dispatch(ActionTypes.todo_setDone,{uid: uid,done: done })
     }
 
+    // Show/hide completed task
+    // @Remarks: Unlike other actions, TodoStore do not listen on this
+    // message.
     function showCompleted(value) {
         AppDispatcher.dispatch(ActionTypes.todo_showCompleted,{value: value })
     }

@@ -17,4 +17,9 @@ script:
     - make
     - ls
     - ./qmlunittests
+    - cd ../cppunittests
+    - qmake
+    - make
+    - ls
+    - ./cppunittests
 
