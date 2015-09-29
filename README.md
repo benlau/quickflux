@@ -57,9 +57,9 @@ AppDispatcher
 
 AppDispatcher is a singleton object in QML scope for message delivery.
 
-**AppDispatcher.dispatch(string name,object message)**
+**AppDispatcher.dispatch(string type,object message)**
 
-Dispatch a message with name via the AppDispatcher.
+Dispatch a message with type via the AppDispatcher.
 Listeners should listen on the "dispatched" signal to be notified.
 
 Usually, it will emit "dispatched" signal immediately after calling dispatch().
@@ -68,7 +68,7 @@ the new messages will be placed on a queue,
 and wait until it is finished.
 It guarantees the order of messages are arrived in sequence to listeners
 
-**AppDispatcher.dispatched(string name,object message)[Signal]**
+**AppDispatcher.dispatched(string type,object message)[Signal]**
 
 Listeners should listen on this signal to get the latest dispatched message from AppDispatcher.
 
@@ -81,7 +81,7 @@ import QuickFlux 1.0
 Connections {
     target: AppDispatcher
     onDispatched: {
-        switch (name) {
+        switch (type) {
             case "OpenItem";
                 // ...
                 break;
@@ -123,7 +123,7 @@ AppListener {
 // Listen for multiple messages.
 AppListener {
     onDispatched: {
-        switch (name) {
+        switch (type) {
             case "messageType1":
                 // ...
                 break;
@@ -151,19 +151,19 @@ AppListener {
 
 ```
 
-**AppListener.on(string name,function callback)**
+**AppListener.on(string type,function callback)**
 
 Add a listener to the end of the listeners array for the specified message.  Multiple calls passing the same combination of event and listener will result in the listener being added multiple times.
 
-**AppListener.removeListener(string name,function callback)**
+**AppListener.removeListener(string type,function callback)**
 
 Remove a listener from the listener array for the specified message.
 
-**AppListener.removeAllListener(string name)**
+**AppListener.removeAllListener(string type)**
 
-Remove all the listeners for a message with name. If name is empty, it will remove all the listeners.
+Remove all the listeners for a message with type. If type is empty, it will remove all the listeners.
 
-**AppListener.dispatched(string name,object message)[Signal]**
+**AppListener.dispatched(string type,object message)[Signal]**
 
 It is a proxy of AppDispatcher.dispatched signal.
 If the enabled property is set to false, this signal will not be emitted.
@@ -175,11 +175,11 @@ This include the "dispatched" signal and callback registered via the "on()" func
 
 **filter[Property]**
 
-Set a filter to incoming message. Only message with name matched with the filter will emit "dispatched" signal.
+Set a filter to incoming message. Only message with type matched with the filter will emit "dispatched" signal.
 If it is not set, it will dispatch every message.
 
 **filters[Property]**
-Set a list of filter to incoming message. Only message with name matched with the filters will emit "dispatched" signal.
+Set a list of filter to incoming message. Only message with type matched with the filters will emit "dispatched" signal.
 If it is not set, it will dispatch every message.
 
 Related Projects

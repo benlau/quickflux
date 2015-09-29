@@ -19,12 +19,12 @@ public:
 
 signals:
     /// Listeners should listen on this signal to get the latest dispatched message from AppDispatcher
-    void dispatched(QString name,QJSValue message);
+    void dispatched(QString type,QJSValue message);
 
 public slots:
     /// Dispatch a message via Dispatcher
     /**
-      @param name The name of the message
+      @param type The type of the message
       @param message The message content
       @reentrant
 
@@ -36,7 +36,7 @@ public slots:
       wait until it is finished. It guarantees the order of messages are arrived in sequence to
       listeners
      */
-    Q_INVOKABLE void dispatch(QString name,QJSValue message = QJSValue());
+    Q_INVOKABLE void dispatch(QString type,QJSValue message = QJSValue());
 
     /// Obtain the singleton instance of AppDispatcher for specific QQmlEngine
     static QFAppDispatcher* instance(QQmlEngine* engine);

@@ -10,8 +10,8 @@ TestCase {
     Connections {
         target : AppDispatcher
         onDispatched: {
-            messages.push([name,message]);
-            if (name === "ping") {
+            messages.push([type,message]);
+            if (type === "ping") {
                 AppDispatcher.dispatch("pong",{})
             }
         }
@@ -20,8 +20,8 @@ TestCase {
     Connections {
         target : AppDispatcher
         onDispatched: {
-            messages.push([name,message]);
-            if (name === "ping") {
+            messages.push([type,message]);
+            if (type === "ping") {
                 AppDispatcher.dispatch("pong",{})
             }
         }
