@@ -32,6 +32,10 @@ What is Flux and How to use in QML Application?
 Please refer to this article for detail : 
 [Writing QML Application in a Flux way | Qt Forum](http://forum.qt.io/topic/55213/writing-qml-application-in-a-flux-way)
 
+or
+
+[A cartoon guide to Flux — Code Cartoons — Medium](https://medium.com/code-cartoons/a-cartoon-guide-to-flux-6157355ab207)
+
 An example program is available at examples/todo folder.
 
 Installation Instruction
@@ -102,28 +106,6 @@ AppListener {
 
 ```
 
-QFAppDispatcher
----------------
-
-QFAppDispatcher is the C++ implementation of AppDispatcher in QML scope. 
-You may need this class to setup communication between C++ and QML.
-
-```
-#include "qfappdispatcher.h"
-```
-
-**static QFAppDispatcher* QFAppDispatcher.instance(QQmlEngine* engine)**
-
-Obtain the singleton instance of AppDispatcher for specific QQmlEngine
-
-**static QObject* singletonObject(QQmlEngine* engine,QString package,
-                                    int versionMajor,
-                                    int versionMinor,
-                                    QString typeName)**
-
-
-Obtain a singleton object from package for specific QQmlEngine. 
-It is useful when you need to get singleton Actions component.
 
 AppListener
 -----------
@@ -203,6 +185,30 @@ If it is not set, it will dispatch every message.
 **filters[Property]**
 Set a list of filter to incoming message. Only message with type matched with the filters will emit "dispatched" signal.
 If it is not set, it will dispatch every message.
+
+QFAppDispatcher
+---------------
+
+QFAppDispatcher is the C++ implementation of AppDispatcher in QML scope. 
+You may need this class to setup communication between C++ and QML.
+
+```
+#include "qfappdispatcher.h"
+```
+
+**static QFAppDispatcher* QFAppDispatcher.instance(QQmlEngine* engine)**
+
+Obtain the singleton instance of AppDispatcher for specific QQmlEngine
+
+**static QObject* singletonObject(QQmlEngine* engine,QString package,
+                                    int versionMajor,
+                                    int versionMinor,
+                                    QString typeName)**
+
+
+Obtain a singleton object from package for specific QQmlEngine. 
+It is useful when you need to get singleton Actions component.
+
 
 Related Projects
 ----------------
