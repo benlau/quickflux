@@ -1,4 +1,4 @@
-# QuickFlux - Message Queue for Qt/QML
+# Message Dispatcher/Queue for Qt/QML
 
 [![Build Status](https://travis-ci.org/benlau/quickflux.svg?branch=master)](https://travis-ci.org/benlau/quickflux)
 
@@ -36,7 +36,8 @@ or
 
 [A cartoon guide to Flux — Code Cartoons — Medium](https://medium.com/code-cartoons/a-cartoon-guide-to-flux-6157355ab207)
 
-An example program is available at examples/todo folder.
+An example program is available for demonstrate how to write QML application in a Flux way
+[quickflux/examples/todo](https://github.com/benlau/quickflux/tree/master/examples/todo)
 
 Installation Instruction
 ========================
