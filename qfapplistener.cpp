@@ -5,12 +5,14 @@
 
 QFAppListener::QFAppListener(QQuickItem *parent) : QQuickItem(parent)
 {
+    m_alwaysOn = false;
 }
 
 QFAppListener::~QFAppListener()
 {
 
 }
+
 QObject *QFAppListener::target() const
 {
     return m_target;
@@ -96,7 +98,7 @@ void QFAppListener::componentComplete()
 
 void QFAppListener::onMessageReceived(QString type, QJSValue message)
 {
-    if (!isEnabled())
+    if (!isEnabled() && !m_alwaysOn)
         return;
 
     bool dispatch = true;
@@ -138,6 +140,18 @@ void QFAppListener::onMessageReceived(QString type, QJSValue message)
     }
 
 }
+
+bool QFAppListener::alwaysOn() const
+{
+    return m_alwaysOn;
+}
+
+void QFAppListener::setAlwaysOn(bool alwaysOn)
+{
+    m_alwaysOn = alwaysOn;
+    emit alwaysOnChanged();
+}
+
 QStringList QFAppListener::filters() const
 {
     return m_filters;

@@ -5,6 +5,7 @@
 QuickFlux is a Message Dispatcher / Message Queue solution for Qt/QML.
 It is also an implementation of Flux Application Architecture (from Facebook).
 By using this library, users may write their QML application in a Flux way.
+Their code could be more readable and reusable.
 
 Features
 
@@ -175,8 +176,16 @@ If the enabled property is set to false, this signal will not be emitted.
 
 **enabled[Property]**
 
-If this property is set to false, all the signal and callback will not be invoked.
-This include the "dispatched" signal and callback registered via the "on()" function.
+This property holds whether the listener receives message.
+If it is false, it won't emit "dispatched" signal and trigger callback registered via "on" function.
+By default this is true.
+
+The value can be controlled by parent component.
+Setting this property directly affects the enabled value of child items.
+When set to false, the enabled values of all child items also become false.
+When set to true,
+the enabled values of child items are returned to true,
+unless they have explicitly been set to false.
 
 **filter[Property]**
 
@@ -186,6 +195,10 @@ If it is not set, it will dispatch every message.
 **filters[Property]**
 Set a list of filter to incoming message. Only message with type matched with the filters will emit "dispatched" signal.
 If it is not set, it will dispatch every message.
+
+**alwaysOn[Property]**
+
+This property holds a value to indicate if the listener should remain listening message when it is not enabled.
 
 QFAppDispatcher
 ---------------

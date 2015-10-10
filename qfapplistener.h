@@ -13,6 +13,7 @@ class QFAppListener : public QQuickItem
     Q_OBJECT
     Q_PROPERTY(QString filter READ filter WRITE setFilter NOTIFY filterChanged)
     Q_PROPERTY(QStringList filters READ filters WRITE setFilters NOTIFY filtersChanged)
+    Q_PROPERTY(bool alwaysOn READ alwaysOn WRITE setAlwaysOn NOTIFY alwaysOnChanged)
 
 public:
     explicit QFAppListener(QQuickItem *parent = 0);
@@ -45,6 +46,9 @@ public:
     /// Set a list of filter to incoming message. Only message with type matched with the filters will emit "dispatched" signal.
     void setFilters(const QStringList &filters);
 
+    bool alwaysOn() const;
+    void setAlwaysOn(bool alwaysOn);
+
 signals:
     /// It is emitted whatever it has received a dispatched message from AppDispatcher.
     void dispatched(QString type,QJSValue message);
@@ -52,6 +56,8 @@ signals:
     void filterChanged();
 
     void filtersChanged();
+
+    void alwaysOnChanged();
 
 public slots:
 
@@ -65,6 +71,7 @@ private:
 
     QString m_filter;
     QStringList m_filters;
+    bool m_alwaysOn;
 };
 
 #endif // QFAPPLISTENER_H
