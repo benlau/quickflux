@@ -125,5 +125,24 @@ TestCase {
         compare(script3.startedCount,1);
         compare(script3.finishedCount,1);
     }
+
+    AppScript {
+        id: script4
+
+        property int finishedCount: 0;
+        property int startedCount: 0;
+
+        script: {
+        }
+
+        onStarted: startedCount++;
+        onFinished: finishedCount++;
+    }
+
+    function test_auto_exit() {
+        script4.run();
+        compare(script4.startedCount,1);
+        compare(script4.finishedCount,1);
+    }
 }
 

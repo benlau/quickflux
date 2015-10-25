@@ -47,6 +47,10 @@ void QFAppScript::run()
         qWarning() << expr.error();
     }
 
+    if (m_runnables.size() == 0) {
+        exit(0);
+    }
+
     m_processing = false;
 }
 
