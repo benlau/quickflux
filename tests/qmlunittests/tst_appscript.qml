@@ -10,14 +10,16 @@ TestCase {
         id: script1
         property bool started: false
         property int step1 : 0;
+        property var step1Message;
         property int step2 : 0;
         property int step3 : 0;
 
         script: {
             started = true;
 
-            wait("step1",function() {
+            wait("step1",function(message) {
                 step1++;
+                step1Message = message;
             });
 
             wait("step2",function() {
@@ -35,8 +37,9 @@ TestCase {
         script1.run();
         compare(script1.started,true);
 
-        AppDispatcher.dispatch("step1");
+        AppDispatcher.dispatch("step1",13);
         compare(script1.step1,1);
+        compare(script1.step1Message,13);
         AppDispatcher.dispatch("step1");
         compare(script1.step1,1);
 
@@ -120,8 +123,11 @@ TestCase {
 
     function test_nested_run() {
         script3.run();
+        compare(script3.running,true);
         AppDispatcher.dispatch("step1");
+        compare(script3.running,true);
         AppDispatcher.dispatch("step2");
+        compare(script3.running,false);
         compare(script3.startedCount,1);
         compare(script3.finishedCount,1);
     }
@@ -143,6 +149,21 @@ TestCase {
         script4.run();
         compare(script4.startedCount,1);
         compare(script4.finishedCount,1);
+    }
+
+    AppScript {
+        id: script5
+        runWhen: "start";
+        script: {
+            wait("step1",function() {
+            });
+        }
+    }
+
+    function test_runWhen() {
+        AppDispatcher.dispatch("start");
+        compare(script5.running,true);
+        script5.exit();
     }
 }
 

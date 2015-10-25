@@ -13,8 +13,8 @@ QFAppScript::QFAppScript(QQuickItem *parent) : QQuickItem(parent)
 
 void QFAppScript::exit(int returnCode)
 {
-    m_running = false;
     clear();
+    setRunning(false);
     emit finished(returnCode);
 }
 
@@ -34,15 +34,13 @@ void QFAppScript::run()
         return;
     }
 
-    connect(m_dispatcher.data(),SIGNAL(dispatched(QString,QJSValue)),
-            this,SLOT(onDispatched(QString,QJSValue)));
-
-    m_running = true;
+    setRunning(true);
 
     emit started();
 
     QQmlExpression expr(m_script);
-    expr.evaluate();
+    if (!m_script.isEmpty())
+        expr.evaluate();
     if (expr.hasError()) {
         qWarning() << expr.error();
     }
@@ -65,6 +63,18 @@ QFAppScriptRunnable *QFAppScript::wait(QString type, QJSValue script)
 
 void QFAppScript::onDispatched(QString type, QJSValue message)
 {
+    if (!m_runWhen.isNull() &&
+        type == m_runWhen &&
+        !m_running &&
+        !m_processing) {
+        run();
+        return;
+    }
+
+    if (!m_running) {
+        return;
+    }
+
     m_processing = true;
     QList<int> marked;
     for (int i = 0 ; i < m_runnables.size() ; i++) {
@@ -108,22 +118,47 @@ void QFAppScript::componentComplete()
     Q_ASSERT(engine);
 
     m_dispatcher = qobject_cast<QFAppDispatcher*>(QFAppDispatcher::instance(engine));
+
+    connect(m_dispatcher.data(),SIGNAL(dispatched(QString,QJSValue)),
+            this,SLOT(onDispatched(QString,QJSValue)));
 }
 
-void QFAppScript::cancel()
+void QFAppScript::abort()
 {
     exit(-1);
 }
 
 void QFAppScript::clear()
 {
-    if (!m_dispatcher.isNull())
-        m_dispatcher->disconnect(this);
-
     for (int i = 0 ; i < m_runnables.size(); i++) {
         m_runnables[i]->deleteLater();
     }
     m_runnables.clear();
+}
+
+bool QFAppScript::running() const
+{
+    return m_running;
+}
+
+void QFAppScript::setRunning(bool running)
+{
+    if (m_running == running) {
+        return;
+    }
+    m_running = running;
+    emit runningChanged();
+}
+
+QString QFAppScript::runWhen() const
+{
+    return m_runWhen;
+}
+
+void QFAppScript::setRunWhen(const QString &runWhen)
+{
+    m_runWhen = runWhen;
+    emit runWhenChanged();
 }
 
 QQmlScriptString QFAppScript::script() const
@@ -134,6 +169,7 @@ QQmlScriptString QFAppScript::script() const
 void QFAppScript::setScript(const QQmlScriptString &script)
 {
     m_script = script;
+    emit scriptChanged();
 }
 
 class QFAppScriptRegisterHelper {
