@@ -8,6 +8,7 @@ TestCase {
 
     AppScript {
         id: script1
+        property var runMessage;
         property bool started: false
         property int step1 : 0;
         property var step1Message;
@@ -16,6 +17,7 @@ TestCase {
 
         script: {
             started = true;
+            runMessage = message;
 
             wait("step1",function(message) {
                 step1++;
@@ -34,8 +36,9 @@ TestCase {
     }
 
     function test_parallel() {
-        script1.run();
+        script1.run(["a","b","c"]);
         compare(script1.started,true);
+        compare(script1.runMessage,["a","b","c"]);
 
         AppDispatcher.dispatch("step1",13);
         compare(script1.step1,1);

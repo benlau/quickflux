@@ -15,8 +15,8 @@ class QFAppScript : public QQuickItem
     Q_OBJECT
     Q_PROPERTY(QQmlScriptString script READ script WRITE setScript NOTIFY scriptChanged)
     Q_PROPERTY(bool running READ running WRITE setRunning NOTIFY runningChanged)
-
     Q_PROPERTY(QString runWhen READ runWhen WRITE setRunWhen NOTIFY runWhenChanged)
+    Q_PROPERTY(QJSValue message READ message NOTIFY messageChanged)
 
 public:
     explicit QFAppScript(QQuickItem *parent = 0);
@@ -29,6 +29,9 @@ public:
     QString runWhen() const;
     void setRunWhen(const QString &runWhen);
 
+    QJSValue message() const;
+    void setMessage(const QJSValue &message);
+
 signals:
     void started();
     void finished(int returnCode);
@@ -36,10 +39,11 @@ signals:
     void scriptChanged();
     void runningChanged();
     void runWhenChanged();
+    void messageChanged();
 
 public slots:
     void exit(int returnCode = 0);
-    void run();
+    void run(QJSValue message = QJSValue());
 
     QFAppScriptRunnable* wait(QString type,QJSValue script);
 
@@ -59,6 +63,9 @@ private:
 
     bool m_running;
     bool m_processing;
+
+    // The message object passed to run()
+    QJSValue m_message;
 };
 
 #endif // QFAPPSCRIPT_H

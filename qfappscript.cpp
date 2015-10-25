@@ -18,7 +18,7 @@ void QFAppScript::exit(int returnCode)
     emit finished(returnCode);
 }
 
-void QFAppScript::run()
+void QFAppScript::run(QJSValue message)
 {
     if (m_processing) {
         qWarning() << "AppScript::run(): Don't call run() within script / wait callback";
@@ -27,6 +27,7 @@ void QFAppScript::run()
 
     m_processing = true;
     clear();
+    setMessage(message);
 
     if (m_dispatcher.isNull()) {
         qWarning() << "AppScript::run() - Missing AppDispatcher. Aborted.";
@@ -39,8 +40,11 @@ void QFAppScript::run()
     emit started();
 
     QQmlExpression expr(m_script);
-    if (!m_script.isEmpty())
+
+    if (!m_script.isEmpty()) {
         expr.evaluate();
+    }
+
     if (expr.hasError()) {
         qWarning() << expr.error();
     }
@@ -67,7 +71,7 @@ void QFAppScript::onDispatched(QString type, QJSValue message)
         type == m_runWhen &&
         !m_running &&
         !m_processing) {
-        run();
+        run(message);
         return;
     }
 
@@ -148,6 +152,17 @@ void QFAppScript::setRunning(bool running)
     }
     m_running = running;
     emit runningChanged();
+}
+
+QJSValue QFAppScript::message() const
+{
+    return m_message;
+}
+
+void QFAppScript::setMessage(const QJSValue &message)
+{
+    m_message = message;
+    emit messageChanged();
 }
 
 QString QFAppScript::runWhen() const
