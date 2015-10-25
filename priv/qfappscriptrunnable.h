@@ -19,13 +19,18 @@ public:
 
     void run(QJSValue message);
 
+    QFAppScriptRunnable *next() const;
+    void setNext(QFAppScriptRunnable *next);
+
 signals:
 
 public slots:
+    QFAppScriptRunnable* wait(QString type,QJSValue value);
 
 private:
     QJSValue m_script;
     QString m_type;
+    QFAppScriptRunnable* m_next;
 
 };
 

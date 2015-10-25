@@ -21,6 +21,7 @@ public:
     void setScript(const QQmlScriptString &script);
 
 signals:
+    void started();
     void finished(int returnCode);
     void scriptChanged();
 
@@ -42,6 +43,7 @@ private:
     QList<QFAppScriptRunnable*> m_runnables;
     QPointer<QFAppDispatcher> m_dispatcher;
     bool m_running;
+    bool m_processing;
 
 };
 

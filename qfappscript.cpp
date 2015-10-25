@@ -8,6 +8,7 @@
 QFAppScript::QFAppScript(QQuickItem *parent) : QQuickItem(parent)
 {
     m_running = false;
+    m_processing = false;
 }
 
 void QFAppScript::exit(int returnCode)
@@ -19,10 +20,17 @@ void QFAppScript::exit(int returnCode)
 
 void QFAppScript::run()
 {
+    if (m_processing) {
+        qWarning() << "AppScript::run(): Don't call run() within script / wait callback";
+        return;
+    }
+
+    m_processing = true;
     clear();
 
     if (m_dispatcher.isNull()) {
         qWarning() << "AppScript::run() - Missing AppDispatcher. Aborted.";
+        m_processing = false;
         return;
     }
 
@@ -31,11 +39,15 @@ void QFAppScript::run()
 
     m_running = true;
 
+    emit started();
+
     QQmlExpression expr(m_script);
     expr.evaluate();
     if (expr.hasError()) {
         qWarning() << expr.error();
     }
+
+    m_processing = false;
 }
 
 QFAppScriptRunnable *QFAppScript::wait(QString type, QJSValue script)
@@ -49,6 +61,7 @@ QFAppScriptRunnable *QFAppScript::wait(QString type, QJSValue script)
 
 void QFAppScript::onDispatched(QString type, QJSValue message)
 {
+    m_processing = true;
     QList<int> marked;
     for (int i = 0 ; i < m_runnables.size() ; i++) {
         if (m_runnables[i]->type() == type) {
@@ -59,13 +72,27 @@ void QFAppScript::onDispatched(QString type, QJSValue message)
 
     if (!m_running) {
         // Terminate if exit() is called in runnable
+        m_processing = false;
         return;
     }
 
     for (int i = marked.size() - 1 ; i >= 0 ; i--) {
         int idx = marked[i];
         QFAppScriptRunnable* runnable = m_runnables.takeAt(idx);
+
+        QFAppScriptRunnable* next = runnable->next();
+        if (next) {
+            next->setParent(this);
+            m_runnables.append(next);
+        }
         runnable->deleteLater();
+    }
+
+    m_processing = false;
+
+    // All the tasks are finished
+    if (m_runnables.size() == 0) {
+        exit(0);
     }
 }
 
