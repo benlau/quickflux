@@ -1,10 +1,16 @@
-#include <QQmlExpression>
+#include <QtCore>
+#include <QUuid>
+#include "qfappdispatcher.h"
 #include "priv/qfappscriptrunnable.h"
+#include "priv/qfappscriptdispatcherwrapper.h"
 
 QFAppScriptRunnable::QFAppScriptRunnable(QObject *parent) : QObject(parent)
 {
+    m_engine = 0;
     m_next = 0;
+    m_isSignalCondition = false;
 }
+
 
 QJSValue QFAppScriptRunnable::script() const
 {
@@ -26,17 +32,48 @@ void QFAppScriptRunnable::setType(const QString &type)
     m_type = type;
 }
 
+void QFAppScriptRunnable::setEngine(QQmlEngine* engine)
+{
+    m_engine = engine;
+}
+
+void QFAppScriptRunnable::release()
+{
+    if (!m_condition.isNull() &&
+        m_condition.isObject() &&
+        m_condition.hasProperty("disconnect")) {
+
+        QJSValue disconnect = m_condition.property("disconnect");
+        QJSValueList args;
+        args << m_callback;
+
+        disconnect.callWithInstance(m_condition,args);
+    }
+
+    m_condition = QJSValue();
+    m_callback = QJSValue();
+}
+
 void QFAppScriptRunnable::run(QJSValue message)
 {
     QJSValueList args;
-    args << message;
+    if (m_isSignalCondition &&
+        message.hasProperty("length")) {
+        int count = message.property("length").toInt();
+        for (int i = 0 ; i < count;i++) {
+            args << message.property(i);
+        }
+    } else {
+        args << message;
+    }
     m_script.call(args);
 }
 
-QFAppScriptRunnable *QFAppScriptRunnable::wait(QString type,QJSValue script)
+QFAppScriptRunnable *QFAppScriptRunnable::wait(QJSValue condition,QJSValue script)
 {
     QFAppScriptRunnable* runnable = new QFAppScriptRunnable(this);
-    runnable->setType(type);
+    runnable->setEngine(m_engine.data());
+    runnable->setCondition(condition);
     runnable->setScript(script);
     setNext(runnable);
     return runnable;
@@ -50,5 +87,43 @@ QFAppScriptRunnable *QFAppScriptRunnable::next() const
 void QFAppScriptRunnable::setNext(QFAppScriptRunnable *next)
 {
     m_next = next;
+}
+
+void QFAppScriptRunnable::setCondition(QJSValue condition)
+{
+    m_condition = condition;
+
+    if (condition.isString()) {
+        setType(condition.toString());
+        m_isSignalCondition = false;
+    } else if (condition.isObject() && condition.hasProperty("connect")) {
+        Q_ASSERT(!m_engine.isNull());
+
+        QString type = QString("QuickFlux.AppScript.%1").arg(QUuid::createUuid().toString());
+        setType(type);
+
+        QString generator = "function(dispatcher) { return function() {dispatcher.dispatch(arguments)}}";
+        QFAppDispatcher* dispatcher = QFAppDispatcher::instance(m_engine);
+        QFAppScriptDispatcherWrapper * wrapper = new QFAppScriptDispatcherWrapper();
+        wrapper->setType(type);
+        wrapper->setDispatcher(dispatcher);
+
+        QJSValue generatorFunc = m_engine->evaluate(generator);
+
+        QJSValueList args;
+        args << m_engine->newQObject(wrapper);
+        QJSValue callback = generatorFunc.call(args);
+
+        args.clear();
+        args << callback;
+
+        QJSValue connect = condition.property("connect");
+        connect.callWithInstance(condition,args);
+
+        m_callback = callback;
+        m_isSignalCondition = true;
+    } else {
+        qWarning() << "AppScript: Invalid condition type";
+    }
 }
 

@@ -168,5 +168,85 @@ TestCase {
         compare(script5.running,true);
         script5.exit();
     }
+
+    Timer {
+        id: timer6
+        interval: 200
+        repeat: true
+        property int count : 0;
+        onTriggered: {
+            count++;
+        }
+    }
+
+    AppScript {
+        id: script6
+        property int timerTriggered: 0;
+        script: {
+            timer6.start();
+
+            wait(timer6.onTriggered,function() {
+                timerTriggered++;
+            });
+        }
+    }
+
+    function test_wait_for_signal() {
+        var tmpType;
+        var dispatchedCount = 0;
+        function listener(type, message) {
+            dispatchedCount++;
+            tmpType = type;
+        }
+
+        AppDispatcher.onDispatched.connect(listener);
+        script6.run();
+
+        compare(script6.timerTriggered,0);
+        compare(timer6.count,0);
+        compare(dispatchedCount,0);
+        wait(50);
+        compare(script6.timerTriggered,0);
+        compare(timer6.count,0);
+        compare(dispatchedCount,0);
+
+        wait(200);
+        compare(script6.timerTriggered,1);
+        compare(timer6.count,1);
+        compare(dispatchedCount,1);
+        gc();
+        wait(200);
+        compare(timer6.count,2);
+        compare(script6.timerTriggered,1);
+        compare(dispatchedCount,1);
+
+        AppDispatcher.dispatch(tmpType);
+    }
+
+    AppScript {
+        id: script7
+
+        signal trigger(int value1, string value2);
+        property int value1 : 0;
+        property string value2: "";
+
+        script: {
+            wait(onTrigger,function(a,b) {
+                value1 = a;
+                value2 = b;
+            });
+        }
+
+    }
+
+    function test_wait_for_signal_with_arguments() {
+        script7.run();
+        compare(script7.running,true);
+        script7.trigger(13,"value");
+        compare(script7.running,false);
+        compare(script7.value1,13);
+        compare(script7.value2,"value");
+    }
+
 }
 

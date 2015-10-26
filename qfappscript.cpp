@@ -56,10 +56,11 @@ void QFAppScript::run(QJSValue message)
     m_processing = false;
 }
 
-QFAppScriptRunnable *QFAppScript::wait(QString type, QJSValue script)
+QFAppScriptRunnable *QFAppScript::wait(QJSValue condition, QJSValue script)
 {
     QFAppScriptRunnable* runnable = new QFAppScriptRunnable(this);
-    runnable->setType(type);
+    runnable->setEngine(qmlEngine(this));
+    runnable->setCondition(condition);
     runnable->setScript(script);
     m_runnables.append(runnable);
     return runnable;
@@ -67,7 +68,7 @@ QFAppScriptRunnable *QFAppScript::wait(QString type, QJSValue script)
 
 void QFAppScript::onDispatched(QString type, QJSValue message)
 {
-    if (!m_runWhen.isNull() &&
+    if (!m_runWhen.isEmpty() &&
         type == m_runWhen &&
         !m_running &&
         !m_processing) {
@@ -103,6 +104,7 @@ void QFAppScript::onDispatched(QString type, QJSValue message)
             next->setParent(this);
             m_runnables.append(next);
         }
+        runnable->release();
         runnable->deleteLater();
     }
 

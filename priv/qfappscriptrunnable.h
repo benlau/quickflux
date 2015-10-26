@@ -2,8 +2,9 @@
 #define QFAPPSCRIPTRUNNABLE_H
 
 #include <QObject>
-#include <QQmlScriptString>
 #include <QJSValue>
+#include <QQmlEngine>
+#include <QPointer>
 
 class QFAppScriptRunnable : public QObject
 {
@@ -15,22 +16,34 @@ public:
     void setScript(const QJSValue &script);
 
     QString type() const;
-    void setType(const QString &type);
 
     void run(QJSValue message);
 
     QFAppScriptRunnable *next() const;
     void setNext(QFAppScriptRunnable *next);
 
+    void setCondition(QJSValue condition);
+
+    void setEngine(QQmlEngine* engine);
+
+    void release();
+
 signals:
 
 public slots:
-    QFAppScriptRunnable* wait(QString type,QJSValue value);
+    QFAppScriptRunnable* wait(QJSValue condition,QJSValue value);
 
 private:
+    void setType(const QString &type);
+
     QJSValue m_script;
     QString m_type;
     QFAppScriptRunnable* m_next;
+    QPointer<QQmlEngine> m_engine;
+
+    QJSValue m_condition;
+    QJSValue m_callback;
+    bool m_isSignalCondition;
 
 };
 
