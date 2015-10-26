@@ -66,7 +66,12 @@ void QFAppScriptRunnable::run(QJSValue message)
     } else {
         args << message;
     }
-    m_script.call(args);
+    QJSValue ret = m_script.call(args);
+
+    if (ret.isError()) {
+        qWarning() << "AppScript::wait()" << ret.toString();
+    }
+
 }
 
 QFAppScriptRunnable *QFAppScriptRunnable::wait(QJSValue condition,QJSValue script)

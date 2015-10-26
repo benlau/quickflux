@@ -248,5 +248,22 @@ TestCase {
         compare(script7.value2,"value");
     }
 
+    AppScript {
+        id: script8
+
+        script: {
+            wait("step",function() {
+               var c = undefinedVariable;
+            });
+
+            var t = undefinedVariable;
+        }
+    }
+
+    function test_error_handling() {
+        script8.run();
+        AppDispatcher.dispatch("step");
+    }
+
 }
 
