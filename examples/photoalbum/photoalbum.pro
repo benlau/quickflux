@@ -12,6 +12,7 @@ QML_IMPORT_PATH =
 
 DISTFILES += \
     actions/qmldir \
-    stores/qmldir
+    stores/qmldir \
+    README.md
 
 include("../../quickflux.pri")

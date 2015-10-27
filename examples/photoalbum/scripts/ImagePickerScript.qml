@@ -56,9 +56,9 @@ Item {
             }); // You may chain then() function again
 
             // Force to terminate if dialog is rejected / or navigateBack is dispatched
-            once(dialog.onRejected,exit.bind(0));
+            once(dialog.onRejected,exit.bind(this,0));
 
-            once(ActionTypes.navigateBack,exit.bind(0));
+            once(ActionTypes.navigateBack,exit.bind(this,0));
         }
     }
 
