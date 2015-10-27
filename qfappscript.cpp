@@ -56,7 +56,7 @@ void QFAppScript::run(QJSValue message)
     m_processing = false;
 }
 
-QFAppScriptRunnable *QFAppScript::wait(QJSValue condition, QJSValue script)
+QFAppScriptRunnable *QFAppScript::once(QJSValue condition, QJSValue script)
 {
     QFAppScriptRunnable* runnable = new QFAppScriptRunnable(this);
     runnable->setEngine(qmlEngine(this));

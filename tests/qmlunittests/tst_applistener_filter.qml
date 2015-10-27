@@ -34,6 +34,8 @@ TestCase {
         AppDispatcher.dispatch(name);
         compare(count1,1);
         compare(count2,2);
+
+        compare(listener1.filters.length,0);
     }
 
     function test_filters() {
@@ -57,6 +59,9 @@ TestCase {
         AppDispatcher.dispatch(name2);
         compare(count1,2);
         compare(count2,3);
+
+        compare(listener1.filters.length,2);
+
     }
 
 }

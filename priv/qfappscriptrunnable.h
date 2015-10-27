@@ -31,7 +31,7 @@ public:
 signals:
 
 public slots:
-    QFAppScriptRunnable* wait(QJSValue condition,QJSValue value);
+    QFAppScriptRunnable* then(QJSValue condition,QJSValue value);
 
 private:
     void setType(const QString &type);

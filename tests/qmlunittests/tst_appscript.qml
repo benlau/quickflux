@@ -19,17 +19,17 @@ TestCase {
             started = true;
             runMessage = message;
 
-            wait("step1",function(message) {
+            once("step1",function(message) {
                 step1++;
                 step1Message = message;
             });
 
-            wait("step2",function() {
+            once("step2",function() {
                 step2++;
                 exit();
             });
 
-            wait("step3",function() {
+            once("step3",function() {
                 step3++;
             });
         }
@@ -69,13 +69,13 @@ TestCase {
         property int returnCode: -100;
 
         script: {
-            wait("step1",function() {
+            once("step1",function() {
                 step1++;
-            }).wait("step2",function() {
+            }).then("step2",function() {
                 step2++;
             });
 
-            wait("step3",function() {
+            once("step3",function() {
                 step3++;
             });
         }
@@ -112,10 +112,10 @@ TestCase {
         script: {
             run();
 
-            wait("step1",function() {
+            once("step1",function() {
             });
 
-            wait("step2",function() {
+            once("step2",function() {
                run();
             });
         }
@@ -158,7 +158,7 @@ TestCase {
         id: script5
         runWhen: "start";
         script: {
-            wait("step1",function() {
+            once("step1",function() {
             });
         }
     }
@@ -185,7 +185,7 @@ TestCase {
         script: {
             timer6.start();
 
-            wait(timer6.onTriggered,function() {
+            once(timer6.onTriggered,function() {
                 timerTriggered++;
             });
         }
@@ -231,7 +231,7 @@ TestCase {
         property string value2: "";
 
         script: {
-            wait(onTrigger,function(a,b) {
+            once(onTrigger,function(a,b) {
                 value1 = a;
                 value2 = b;
             });
@@ -252,7 +252,7 @@ TestCase {
         id: script8
 
         script: {
-            wait("step",function() {
+            once("step",function() {
                var c = undefinedVariable;
             });
 
@@ -274,7 +274,7 @@ TestCase {
 
         script: {
             startedCount++;
-            wait("message-never-dispatch",function() {});
+            once("message-never-dispatch",function() {});
         }
 
         onFinished: finishedCount++

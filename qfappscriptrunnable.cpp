@@ -74,7 +74,7 @@ void QFAppScriptRunnable::run(QJSValue message)
 
 }
 
-QFAppScriptRunnable *QFAppScriptRunnable::wait(QJSValue condition,QJSValue script)
+QFAppScriptRunnable *QFAppScriptRunnable::then(QJSValue condition,QJSValue script)
 {
     QFAppScriptRunnable* runnable = new QFAppScriptRunnable(this);
     runnable->setEngine(m_engine.data());
