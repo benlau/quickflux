@@ -70,8 +70,11 @@ void QFAppScript::onDispatched(QString type, QJSValue message)
 {
     if (!m_runWhen.isEmpty() &&
         type == m_runWhen &&
-        !m_running &&
         !m_processing) {
+
+        if (m_running) {
+            abort();
+        }
         run(message);
         return;
     }

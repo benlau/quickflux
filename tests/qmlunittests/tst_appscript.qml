@@ -265,5 +265,32 @@ TestCase {
         AppDispatcher.dispatch("step");
     }
 
+    AppScript {
+        id: script9
+        runWhen: "run"
+
+        property int startedCount: 0
+        property int finishedCount: 0
+
+        script: {
+            startedCount++;
+            wait("message-never-dispatch",function() {});
+        }
+
+        onFinished: finishedCount++
+    }
+
+    function test_rerun() {
+        AppDispatcher.dispatch("run");
+        compare(script9.running,true);
+        compare(script9.startedCount,1);
+        compare(script9.finishedCount,0);
+
+        AppDispatcher.dispatch("run");
+        compare(script9.running,true);
+        compare(script9.startedCount,2);
+        compare(script9.finishedCount,1);
+    }
+
 }
 
