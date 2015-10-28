@@ -9,8 +9,8 @@ QFAppScriptRunnable::QFAppScriptRunnable(QObject *parent) : QObject(parent)
     m_engine = 0;
     m_next = 0;
     m_isSignalCondition = false;
+    m_isOnceOnly = true;
 }
-
 
 QJSValue QFAppScriptRunnable::script() const
 {
@@ -32,6 +32,16 @@ void QFAppScriptRunnable::setType(const QString &type)
     m_type = type;
 }
 
+bool QFAppScriptRunnable::isOnceOnly() const
+{
+    return m_isOnceOnly;
+}
+
+void QFAppScriptRunnable::setIsOnceOnly(bool isOnceOnly)
+{
+    m_isOnceOnly = isOnceOnly;
+}
+
 void QFAppScriptRunnable::setEngine(QQmlEngine* engine)
 {
     m_engine = engine;
@@ -40,7 +50,7 @@ void QFAppScriptRunnable::setEngine(QQmlEngine* engine)
 void QFAppScriptRunnable::release()
 {
     if (!m_condition.isNull() &&
-        m_condition.isObject() &&
+            m_condition.isObject() &&
         m_condition.hasProperty("disconnect")) {
 
         QJSValue disconnect = m_condition.property("disconnect");

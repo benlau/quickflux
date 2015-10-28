@@ -28,6 +28,9 @@ public:
 
     void release();
 
+    bool isOnceOnly() const;
+    void setIsOnceOnly(bool isOnceOnly);
+
 signals:
 
 public slots:
@@ -44,7 +47,7 @@ private:
     QJSValue m_condition;
     QJSValue m_callback;
     bool m_isSignalCondition;
-
+    bool m_isOnceOnly;
 };
 
 #endif // QFAPPSCRIPTRUNNABLE_H

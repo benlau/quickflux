@@ -66,6 +66,12 @@ QFAppScriptRunnable *QFAppScript::once(QJSValue condition, QJSValue script)
     return runnable;
 }
 
+void QFAppScript::on(QJSValue condition, QJSValue script)
+{
+    QFAppScriptRunnable* runnable = once(condition,script);
+    runnable->setIsOnceOnly(false);
+}
+
 void QFAppScript::onDispatched(QString type, QJSValue message)
 {
     if (!m_runWhen.isEmpty() &&
@@ -84,11 +90,22 @@ void QFAppScript::onDispatched(QString type, QJSValue message)
     }
 
     m_processing = true;
+
+    // Mark for removeal
     QList<int> marked;
+
     for (int i = 0 ; i < m_runnables.size() ; i++) {
         if (m_runnables[i]->type() == type) {
             m_runnables[i]->run(message);
-            marked << i;
+
+            if (!m_running) {
+                // If exit() is called in runnable. It shoud not process any more.
+                break;
+            }
+
+            if (m_runnables[i]->isOnceOnly()) {
+                marked << i;
+            }
         }
     }
 

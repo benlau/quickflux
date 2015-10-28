@@ -22,17 +22,19 @@ Item {
     }
 
     // Use AppScript to pick image from local file system, preview, and ask for confirmation.
-    // (asynchronous sequence task)
+    // It is a component designed for handling asynchronous sequence task.
 
     // Benefit of using AppScript
     // 1. Centralize your workflow code in one place
     // 2. Highly integrated with AppDispatcher. The order of callback execution is guaranteed in sequence order.
     // 3. Only one script can be executed at a time. Registered callbacks by previous script will be removed before started.
-    // 4. exit() will remove all the registered callbacks.
+    // 4. exit() will remove all the registered callbacks. No callback leave after termination.
 
     // Why not just use Promise?
     // 1. You need another library. (e.g QuickPromise)
-    // 2. AppScript.exit() will remove all the registered callback completely. You can write less code.
+    // 2. AppScript.run() / exit() clear all the registered callback completely. You can write less code.
+    //    Reason: Coding in a promise way requires you to handle every reject condition correctly. Otherwise,
+    //    they will leave in memory and their behaviour will be unexpected.
 
     AppScript {
         // Run this script if "Pick Image" is clicked.

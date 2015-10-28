@@ -292,5 +292,45 @@ TestCase {
         compare(script9.finishedCount,1);
     }
 
+    AppScript {
+        id: script10
+        property int step1 : 0;
+        property int step2 : 0;
+        property int step3 : 0;
+
+        script: {
+            once("step1",function() {
+                step1++;
+            });
+
+            on("step2",function() {
+                step2++;
+            });
+
+        }
+    }
+
+    function test_on() {
+        script10.run();
+        compare(script10.step1,0);
+        compare(script10.step2,0);
+
+        AppDispatcher.dispatch("step2");
+        compare(script10.step1,0);
+        compare(script10.step2,1);
+
+        AppDispatcher.dispatch("step2");
+        compare(script10.step1,0);
+        compare(script10.step2,2);
+
+        AppDispatcher.dispatch("step1");
+        compare(script10.step1,1);
+        compare(script10.step2,2);
+
+        AppDispatcher.dispatch("step1");
+        compare(script10.step1,1);
+        compare(script10.step2,2);
+    }
+
 }
 

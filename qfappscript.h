@@ -46,6 +46,7 @@ public slots:
     void run(QJSValue message = QJSValue());
 
     QFAppScriptRunnable* once(QJSValue condition, QJSValue script);
+    void on(QJSValue condition, QJSValue script);
 
 private slots:
     void onDispatched(QString type,QJSValue message);
