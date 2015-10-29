@@ -32,12 +32,13 @@ Item {
 
     // Why not just use Promise?
     // 1. You need another library. (e.g QuickPromise)
-    // 2. AppScript.run() / exit() clear all the registered callback completely. You can write less code.
-    //    Reason: Coding in a promise way requires you to handle every reject condition correctly. Otherwise,
-    //    they will leave in memory and their behaviour will be unexpected.
+    // 2. You need to set reject condtion per callback/promise
+    //    Explanation: Coding in a promise way requires you to handle every reject condition correctly. Otherwise,
+    //    promise will leave in memory and their behaviour will be unexpected.
+    //    AppScript.run() / exit() clear all the registered callback completely. You can write less code.
 
     AppScript {
-        // Run this script if "Pick Image" is clicked.
+        // Run this script if "Pick Image" button is clicked.
         runWhen: ActionTypes.askToPickPhoto
 
         script: {
@@ -56,7 +57,7 @@ Item {
                 // The function of then() is same as once() but it won't
                 // trigger the callback until once() is triggered.
 
-                // Step 3. Add picked image to store and go back to preview page.
+                // Step 3. Add picked image to store and go back to previous page.
 
                 PhotoStore.add(String(message.url));
 

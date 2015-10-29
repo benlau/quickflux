@@ -12,6 +12,11 @@ QFAppScriptRunnable::QFAppScriptRunnable(QObject *parent) : QObject(parent)
     m_isOnceOnly = true;
 }
 
+QFAppScriptRunnable::~QFAppScriptRunnable()
+{
+    release();
+}
+
 QJSValue QFAppScriptRunnable::script() const
 {
     return m_script;
@@ -79,7 +84,11 @@ void QFAppScriptRunnable::run(QJSValue message)
     QJSValue ret = m_script.call(args);
 
     if (ret.isError()) {
-        qWarning() << "AppScript::wait()" << ret.toString();
+        if (m_isSignalCondition) {
+            qWarning() << "AppScript:" << ret.toString();
+        } else {
+            qWarning() << QString("AppScript(%1): %2").arg(m_type).arg(ret.toString());
+        }
     }
 
 }

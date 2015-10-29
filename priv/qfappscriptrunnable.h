@@ -6,11 +6,14 @@
 #include <QQmlEngine>
 #include <QPointer>
 
+/// QFAppScriptRunnable handles registered callback in QFAppScript (Private class)
+
 class QFAppScriptRunnable : public QObject
 {
     Q_OBJECT
 public:
     explicit QFAppScriptRunnable(QObject *parent = 0);
+    ~QFAppScriptRunnable();
 
     QJSValue script() const;
     void setScript(const QJSValue &script);
