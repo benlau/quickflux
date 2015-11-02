@@ -89,7 +89,7 @@ void QFAppScriptRunnable::run(QJSValue message)
                           .arg(ret.property("lineNumber").toString())
                           .arg(ret.property("name").toString())
                           .arg(ret.property("message").toString());
-        qWarning().noquote() << message;
+        qWarning() << message;
     }
 
 }
