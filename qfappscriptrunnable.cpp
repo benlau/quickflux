@@ -84,11 +84,12 @@ void QFAppScriptRunnable::run(QJSValue message)
     QJSValue ret = m_script.call(args);
 
     if (ret.isError()) {
-        if (m_isSignalCondition) {
-            qWarning() << "AppScript:" << ret.toString();
-        } else {
-            qWarning() << QString("AppScript(%1): %2").arg(m_type).arg(ret.toString());
-        }
+        QString message = QString("%1:%2: %3: %4")
+                          .arg(ret.property("fileName").toString())
+                          .arg(ret.property("lineNumber").toString())
+                          .arg(ret.property("name").toString())
+                          .arg(ret.property("message").toString());
+        qWarning().noquote() << message;
     }
 
 }
