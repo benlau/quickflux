@@ -68,11 +68,36 @@ AppDispatcher is a singleton object in QML scope for message delivery.
 Dispatch a message with type via the AppDispatcher.
 Listeners should listen on the "dispatched" signal to be notified.
 
+```
+MouseArea {
+    anchors.fill: parent
+    onClicked: {
+        AppDispatcher.dispatch(ActionTypes.askToRemoveItem, { uid: uid });
+    }
+}
+```
+
 Usually, it will emit "dispatched" signal immediately after calling dispatch().
 However, if AppDispatcher is still dispatching messages,
 the new messages will be placed on a queue,
 and wait until it is finished.
 It guarantees the order of messages are arrived in sequence to listeners
+
+``` 
+
+AppListener {
+    filter: ActionTypes.askToRemoveItem
+    onDispatched: {
+        if (options.skipRemoveConfirmation) {
+            AppDispatcher.dispatch(ActionTypes.removeItem,message);
+            // Because AppDispatcher is still dispatching ActionTypes.askToRemoveItem,
+            // ActionTypes.removeItem will be placed in a queue and will dispatch when
+            // all the listeners received current message.
+        }
+    }
+}
+
+```
 
 **AppDispatcher.dispatched(string type,object message)[Signal]**
 
