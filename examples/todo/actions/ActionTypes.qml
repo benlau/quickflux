@@ -9,10 +9,8 @@ QtObject {
 
     Component.onCompleted:  {
         for (var prop in this) {
-            if (prop.match(/Changed$/) || prop === "objectName") {
-                continue
-            }
-            if (typeof prop === "string") {
+            if (typeof this[prop] === "string" &&
+                prop !== "objectName") {
                 this[prop] = prop;
             }
         }
