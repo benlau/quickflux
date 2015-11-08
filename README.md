@@ -249,6 +249,115 @@ Obtain a singleton object from package for specific QQmlEngine.
 It is useful when you need to get singleton Actions component.
 
 
+AppScript
+---------
+(Will avaiable at 1.0.3)
+
+AppScript is a helper component to handle asynchronous sequential workflow.
+The immediate benefit of using AppScript  is the centralisation of code in a place.
+Instead of placing them within onXXXX code block in several components in several places.
+
+AppScript also manage the life cycle of registered callbacks. You could remove them by a single function. Nothing will leave in memory.
+
+Example Code:
+[quickflux/ImagePickerScript.qml at master · benlau/quickflux](https://github.com/benlau/quickflux/blob/master/examples/photoalbum/scripts/ImagePickerScript.qml)
+
+```
+
+    AppScript {
+        // Run this script if "Pick Image" button is clicked.
+        runWhen: ActionTypes.askToPickPhoto
+
+        script: {
+            // Step 1. Open file dialog
+            dialog.open();
+
+            // Register a set of callbacks as workflow
+            // Registered callbacks will be executed once only per script execution
+            once(dialog.onAccepted, function() {
+
+                // Step 2. Once user picked an image, launch preview window and ask for confirmation.
+                AppActions.navigateTo(imagePreview,
+                                      {source: dialog.fileUrl});
+
+            }).then(ActionTypes.pickPhoto, function(message) {
+                // The function of then() is same as once() but it won't
+                // trigger the callback until once() is triggered.
+
+                // Step 3. Add picked image to store and go back to previous page.
+
+                PhotoStore.add(String(message.url));
+
+                AppActions.navigateBack();
+
+            }); // <-- You may chain then() function again.
+
+            // Condition to terminate the workflow:
+            // Force to terminate if dialog is rejected / or navigateBack is dispatched
+            // That will remove all the registered callbacks
+
+            once(dialog.onRejected,exit.bind(this,0));
+
+            once(ActionTypes.navigateBack,exit.bind(this,0));
+        }
+    }
+
+
+```
+
+**Benefit of using AppScript**
+
+1. Centralize your workflow code in one place
+2. Highly integrated with AppDispatcher. The order of callback execution is guaranteed in sequence order.
+3. Only one script can be executed at a time. Registered callbacks by previous script will be removed before starting.
+4. exit() will remove all the registered callbacks. No callback leave after termination.
+
+**Why not just use Promise?**
+
+1. You need another library. (e.g QuickPromise)
+2. You need to set reject condition per callback/promise
+
+Explanation: Coding in a promise way requires you to handle every reject condition correctly. Otherwise,
+promise will leave in memory and their behaviour will be unexpected.
+AppScript.run() / exit() clear all the registered callback completely. You can write less code.
+
+*AppScript.script[Property]*
+The code to be executed at run()
+
+**AppScript.run()**
+Execute the code within the script property.
+If the previous script is still running.
+AppScript will terminate it by removing all the registered callback.
+
+*AppScript.runWhen[Property]*
+Whatever a message with type same as runWhen will trigger run() immediately. 
+
+**AppScript.once(type,callback)**
+
+Register a callback to be triggered when the required message type is dispatched.
+It will be triggered once only. 
+Users should call this function within the script code block.
+
+**AppScript.once().then(type,callback)**
+
+Similar to once() function, it will register a callback to be executed once only.
+But its registration is deferred until the previous callback triggered.
+then() is a chain able function, users may place as many as possible as they like.
+
+**AppScript.on(type,callback)**
+
+Register a callback to be triggered whatever the required message type is dispatched.
+Users should call this function within the script code block.
+
+**AppScript.exit()**
+Terming current executing script by removing all the registered callbacks.
+
+**AppScript.running[Property]**
+
+It is true when the script is running or there still has registered callback leave.
+
+
+
 Related Projects
 ----------------
  1. [benlau/quickpromise](https://github.com/benlau/quickpromise) - Promise library for QML
