@@ -11,7 +11,8 @@ QtObject {
         for (var prop in this) {
             if (typeof this[prop] === "string" &&
                 prop !== "objectName") {
-                this[prop] = prop;
+                // It is suggested to give a prefix to your ActionTypes
+                this[prop] = "AppActions." + prop;
             }
         }
     }
