@@ -8,6 +8,7 @@
 QFAppDispatcher::QFAppDispatcher(QObject *parent) : QObject(parent)
 {
     m_dispatching = false;
+    nextListenerId = 1;
 }
 
 QFAppDispatcher::~QFAppDispatcher()
@@ -23,13 +24,57 @@ void QFAppDispatcher::dispatch(QString type, QJSValue message)
     }
 
     m_dispatching = true;
-    emit dispatched(type,message);
+    emitDispatched(type,message);
 
     while (m_queue.size() > 0) {
         QPair<QString,QJSValue> pair = m_queue.dequeue();
-        emit dispatched(pair.first,pair.second);
+        emitDispatched(pair.first,pair.second);
     }
     m_dispatching = false;
+}
+
+void QFAppDispatcher::waitFor(QList<int> ids)
+{
+    if (!m_dispatching)
+        return;
+
+    bool shouldWait = false;
+
+    for (int i = 0 ; i < ids.size() ; i++) {
+        int id = ids[i];
+        if (pendingListeners.contains(id)) {
+            shouldWait = true;
+            break;
+        }
+    }
+
+    if (!shouldWait) {
+        return;
+    }
+
+    waitingListeners.append(dispatchingListenerId);
+    invokeListeners();
+    waitingListeners.removeLast();
+
+    for (int i = 0 ; i < ids.size() ; i++) {
+        int id = ids[i];
+        if (waitingListeners.indexOf(id) >= 0) {
+            qWarning() << "AppDispatcher: Cyclic dependency detected";
+            break;
+        }
+    }
+}
+
+int QFAppDispatcher::addListener(QJSValue callback)
+{
+    m_listeners[nextListenerId] = callback;
+    return nextListenerId++;
+}
+
+void QFAppDispatcher::removeListener(int id)
+{
+    if (m_listeners.contains(id))
+        m_listeners.remove(id);
 }
 
 QFAppDispatcher *QFAppDispatcher::instance(QQmlEngine *engine)
@@ -66,6 +111,51 @@ QObject *QFAppDispatcher::singletonObject(QQmlEngine *engine, QString package, i
     }
 
     return object;
+}
+
+void QFAppDispatcher::emitDispatched(QString type, QJSValue message)
+{
+    dispatchingMessage = message;
+    dispatchingMessageType = type;
+    pendingListeners.clear();
+    waitingListeners.clear();
+
+    QMapIterator<int, QJSValue> iter(m_listeners);
+    while (iter.hasNext()) {
+        iter.next();
+        pendingListeners[iter.key()] = true;
+    }
+
+    invokeListeners();
+
+    emit dispatched(type,message);
+}
+
+void QFAppDispatcher::invokeListeners()
+{
+    QJSValueList args;
+    args << dispatchingMessageType;
+    args << dispatchingMessage;
+
+    while (!pendingListeners.empty()) {
+        int next = pendingListeners.firstKey();
+        pendingListeners.remove(next);
+        dispatchingListenerId = next;
+
+        QJSValue callback = m_listeners[next];
+
+        QJSValue ret = callback.call(args);
+
+        if (ret.isError()) {
+            QString message = QString("%1:%2: %3: %4")
+                              .arg(ret.property("fileName").toString())
+                              .arg(ret.property("lineNumber").toString())
+                              .arg(ret.property("name").toString())
+                              .arg(ret.property("message").toString());
+            qWarning() << message;
+        }
+
+    }
 }
 
 static QObject *provider(QQmlEngine *engine, QJSEngine *scriptEngine) {

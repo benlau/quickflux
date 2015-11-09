@@ -19,5 +19,6 @@ DISTFILES += \
     tst_applistener.qml \
     tst_applistener_filter.qml \
     tst_applistener_alwayson.qml \
-    tst_appscript.qml
+    tst_appscript.qml \
+    tst_appdispatcher_waitfor.qml
 

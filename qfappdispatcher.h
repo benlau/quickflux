@@ -38,6 +38,14 @@ public slots:
      */
     Q_INVOKABLE void dispatch(QString type,QJSValue message = QJSValue());
 
+    Q_INVOKABLE void waitFor(QList<int> ids);
+
+    Q_INVOKABLE int addListener(QJSValue callback);
+
+    Q_INVOKABLE void removeListener(int id);
+
+public:
+
     /// Obtain the singleton instance of AppDispatcher for specific QQmlEngine
     static QFAppDispatcher* instance(QQmlEngine* engine);
 
@@ -48,9 +56,36 @@ public slots:
                                     QString typeName);
 
 private:
+
+    void emitDispatched(QString type,QJSValue message);
+
+    void invokeListeners();
+
     bool m_dispatching;
+
+    // Queue for dispatching messages
     QQueue<QPair<QString,QJSValue > > m_queue;
 
+    // Next id for listener.
+    int nextListenerId;
+
+    // Registered listener
+    QMap<int, QJSValue> m_listeners;
+
+    // Current dispatching listener id
+    int dispatchingListenerId;
+
+    // Current dispatching message
+    QJSValue dispatchingMessage;
+
+    // Current dispatching message type
+    QString dispatchingMessageType;
+
+    // List of listeners pending to be invoked.
+    QMap<int,bool> pendingListeners;
+
+    // List of listeners blocked in waitFor()
+    QList<int> waitingListeners;
 };
 
 #endif // APPDISPATCHER_H
