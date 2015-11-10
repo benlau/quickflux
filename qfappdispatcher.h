@@ -7,6 +7,7 @@
 #include <QQueue>
 #include <QPair>
 #include <QQmlEngine>
+#include "priv/qflistener.h"
 
 /// Message Dispatcher
 
@@ -70,7 +71,7 @@ private:
     int nextListenerId;
 
     // Registered listener
-    QMap<int, QJSValue> m_listeners;
+    QMap<int, QPointer<QFListener> > m_listeners;
 
     // Current dispatching listener id
     int dispatchingListenerId;

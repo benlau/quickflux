@@ -61,13 +61,20 @@ void QFAppDispatcher::waitFor(QList<int> ids)
 
 int QFAppDispatcher::addListener(QJSValue callback)
 {
-    m_listeners[nextListenerId] = callback;
+    QFListener* listener = new QFListener(this);
+    listener->setCallback(callback);
+
+    m_listeners[nextListenerId] = listener;
     return nextListenerId++;
 }
 
 void QFAppDispatcher::removeListener(int id)
 {
     if (m_listeners.contains(id)) {
+        QFListener* listener = m_listeners[id].data();
+        if (listener->parent() == this) {
+            listener->deleteLater();
+        }
         m_listeners.remove(id);
     }
 }
@@ -115,7 +122,7 @@ void QFAppDispatcher::emitDispatched(QString type, QJSValue message)
     pendingListeners.clear();
     waitingListeners.clear();
 
-    QMapIterator<int, QJSValue> iter(m_listeners);
+    QMapIterator<int, QPointer<QFListener> > iter(m_listeners);
     while (iter.hasNext()) {
         iter.next();
         pendingListeners[iter.key()] = true;
@@ -128,28 +135,16 @@ void QFAppDispatcher::emitDispatched(QString type, QJSValue message)
 
 void QFAppDispatcher::invokeListeners()
 {
-    QJSValueList args;
-    args << dispatchingMessageType;
-    args << dispatchingMessage;
-
     while (!pendingListeners.empty()) {
         int next = pendingListeners.firstKey();
         pendingListeners.remove(next);
         dispatchingListenerId = next;
 
-        QJSValue callback = m_listeners[next];
+        QFListener* listener = m_listeners[next].data();
 
-        QJSValue ret = callback.call(args);
-
-        if (ret.isError()) {
-            QString message = QString("%1:%2: %3: %4")
-                              .arg(ret.property("fileName").toString())
-                              .arg(ret.property("lineNumber").toString())
-                              .arg(ret.property("name").toString())
-                              .arg(ret.property("message").toString());
-            qWarning() << message;
+        if (listener) {
+            listener->dispatch(dispatchingMessageType,dispatchingMessage);
         }
-
     }
 }
 
