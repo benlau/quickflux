@@ -38,13 +38,15 @@ void QFAppDispatcher::waitFor(QList<int> ids)
     if (!m_dispatching)
         return;
 
+    int id = dispatchingListenerId;
     bool shouldWait = false;
 
     for (int i = 0 ; i < ids.size() ; i++) {
         int id = ids[i];
         if (pendingListeners.contains(id)) {
             shouldWait = true;
-            break;
+        } else if (waitingListeners.contains(id)) {
+            qWarning() << "AppDispatcher: Cyclic dependency detected";
         }
     }
 
@@ -52,17 +54,9 @@ void QFAppDispatcher::waitFor(QList<int> ids)
         return;
     }
 
-    waitingListeners.append(dispatchingListenerId);
+    waitingListeners[id] = true;
     invokeListeners();
-    waitingListeners.removeLast();
-
-    for (int i = 0 ; i < ids.size() ; i++) {
-        int id = ids[i];
-        if (waitingListeners.indexOf(id) >= 0) {
-            qWarning() << "AppDispatcher: Cyclic dependency detected";
-            break;
-        }
-    }
+    waitingListeners.remove(id);
 }
 
 int QFAppDispatcher::addListener(QJSValue callback)
@@ -73,8 +67,9 @@ int QFAppDispatcher::addListener(QJSValue callback)
 
 void QFAppDispatcher::removeListener(int id)
 {
-    if (m_listeners.contains(id))
+    if (m_listeners.contains(id)) {
         m_listeners.remove(id);
+    }
 }
 
 QFAppDispatcher *QFAppDispatcher::instance(QQmlEngine *engine)

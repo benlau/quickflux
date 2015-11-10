@@ -85,7 +85,7 @@ private:
     QMap<int,bool> pendingListeners;
 
     // List of listeners blocked in waitFor()
-    QList<int> waitingListeners;
+    QMap<int,bool> waitingListeners;
 };
 
 #endif // APPDISPATCHER_H
