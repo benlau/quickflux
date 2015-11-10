@@ -47,6 +47,8 @@ public slots:
 
 public:
 
+    int addListener(QFListener* listener);
+
     /// Obtain the singleton instance of AppDispatcher for specific QQmlEngine
     static QFAppDispatcher* instance(QQmlEngine* engine);
 

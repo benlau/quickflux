@@ -7,6 +7,8 @@
 #include <QQuickItem>
 #include <QQmlParserStatus>
 #include <QMap>
+#include "priv/qflistener.h"
+#include "qfappdispatcher.h"
 
 class QFAppListener : public QQuickItem
 {
@@ -14,6 +16,7 @@ class QFAppListener : public QQuickItem
     Q_PROPERTY(QString filter READ filter WRITE setFilter NOTIFY filterChanged)
     Q_PROPERTY(QStringList filters READ filters WRITE setFilters NOTIFY filtersChanged)
     Q_PROPERTY(bool alwaysOn READ alwaysOn WRITE setAlwaysOn NOTIFY alwaysOnChanged)
+    Q_PROPERTY(int listenerId READ listenerId WRITE setListenerId NOTIFY listenerIdChanged)
 
 public:
     explicit QFAppListener(QQuickItem *parent = 0);
@@ -23,7 +26,7 @@ public:
     QObject *target() const;
 
     /// Set the listening target. If the class is constructed by QQmlComponent. It will be set automatically.
-    void setTarget(QObject *target);
+    void setTarget(QFAppDispatcher *target);
 
     /// Add a listener to the end of the listeners array for the specified message.  Multiple calls passing the same combination of event and listener will result in the listener being added multiple times.
     Q_INVOKABLE QFAppListener* on(QString type,QJSValue callback);
@@ -49,6 +52,9 @@ public:
     bool alwaysOn() const;
     void setAlwaysOn(bool alwaysOn);
 
+    int listenerId() const;
+    void setListenerId(int listenerId);
+
 signals:
     /// It is emitted whatever it has received a dispatched message from AppDispatcher.
     void dispatched(QString type,QJSValue message);
@@ -59,19 +65,24 @@ signals:
 
     void alwaysOnChanged();
 
+    void listenerIdChanged();
+
 public slots:
 
 private:
     virtual void componentComplete();
     Q_INVOKABLE void onMessageReceived(QString name,QJSValue message);
 
-    QPointer<QObject> m_target;
+    QPointer<QFAppDispatcher> m_target;
 
     QMap<QString,QList<QJSValue> >  mapping;
 
     QString m_filter;
     QStringList m_filters;
     bool m_alwaysOn;
+
+    int m_listenerId;
+    QFListener* m_listener;
 };
 
 #endif // QFAPPLISTENER_H

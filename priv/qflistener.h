@@ -19,6 +19,10 @@ public:
 
     void dispatch(QString type, QJSValue message);
 
+    int listenerId() const;
+
+    void setListenerId(int listenerId);
+
 signals:
     void dispatched(QString type, QJSValue message);
 
@@ -26,6 +30,7 @@ public slots:
 
 private:
     QJSValue m_callback;
+    int m_listenerId;
 };
 
 #endif // QFLISTENER_H

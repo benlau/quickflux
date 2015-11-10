@@ -19,6 +19,7 @@ TestCase {
 
     function test_on() {
         var test1, test2;
+        compare(listener.listenerId > 0,true);
         listener.on("test_on_Test1",function(value) {
             test1 = value;
         }).on("test_on_Test2",function(value) {

@@ -3,6 +3,7 @@
 
 QFListener::QFListener(QObject *parent) : QObject(parent)
 {
+    m_listenerId = 0;
 }
 
 QFListener::~QFListener()
@@ -38,5 +39,15 @@ void QFListener::dispatch(QString type, QJSValue message)
     }
 
     emit dispatched(type,message);
+}
+
+int QFListener::listenerId() const
+{
+    return m_listenerId;
+}
+
+void QFListener::setListenerId(int listenerId)
+{
+    m_listenerId = listenerId;
 }
 

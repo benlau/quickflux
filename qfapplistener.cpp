@@ -6,11 +6,15 @@
 QFAppListener::QFAppListener(QQuickItem *parent) : QQuickItem(parent)
 {
     m_alwaysOn = false;
+    m_listener = 0;
+    m_listenerId = 0;
 }
 
 QFAppListener::~QFAppListener()
 {
-
+    if (!m_target.isNull()) {
+        m_target->removeListener(m_listenerId);
+    }
 }
 
 QObject *QFAppListener::target() const
@@ -18,19 +22,26 @@ QObject *QFAppListener::target() const
     return m_target;
 }
 
-void QFAppListener::setTarget(QObject *target)
+void QFAppListener::setTarget(QFAppDispatcher *target)
 {
     if (!m_target.isNull()) {
-        m_target->disconnect(this);
+        m_target->removeListener(m_listenerId);
+        m_listener->disconnect(this);
+        m_listener->deleteLater();
+        m_listener = 0;
+        setListenerId(0);
     }
 
     m_target = target;
 
     if (!m_target.isNull()) {
 
-        connect(m_target.data(),SIGNAL(dispatched(QString,QJSValue)),
-                this,SLOT(onMessageReceived(QString,QJSValue)));
+        m_listener = new QFListener(this);
 
+        setListenerId(m_target->addListener(m_listener));
+
+        connect(m_listener,SIGNAL(dispatched(QString,QJSValue)),
+                this,SLOT(onMessageReceived(QString,QJSValue)));
     }
 }
 
@@ -88,7 +99,7 @@ void QFAppListener::componentComplete()
     QQmlEngine *engine = qmlEngine(this);
     Q_ASSERT(engine);    
 
-    QObject* dispatcher = qobject_cast<QObject*>(QFAppDispatcher::instance(engine));
+    QFAppDispatcher* dispatcher = qobject_cast<QFAppDispatcher*>(QFAppDispatcher::instance(engine));
     if (!dispatcher) {
         qWarning() << "Unknown error: Unable to access AppDispatcher";
     } else {
@@ -139,6 +150,17 @@ void QFAppListener::onMessageReceived(QString type, QJSValue message)
         }
     }
 
+}
+
+int QFAppListener::listenerId() const
+{
+    return m_listenerId;
+}
+
+void QFAppListener::setListenerId(int listenerId)
+{
+    m_listenerId = listenerId;
+    emit listenerIdChanged();
 }
 
 bool QFAppListener::alwaysOn() const

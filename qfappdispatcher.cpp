@@ -64,7 +64,13 @@ int QFAppDispatcher::addListener(QJSValue callback)
     QFListener* listener = new QFListener(this);
     listener->setCallback(callback);
 
+    return addListener(listener);
+}
+
+int QFAppDispatcher::addListener(QFListener *listener)
+{
     m_listeners[nextListenerId] = listener;
+    listener->setListenerId(nextListenerId);
     return nextListenerId++;
 }
 
