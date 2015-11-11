@@ -40,6 +40,8 @@ void QFAppListener::setTarget(QFAppDispatcher *target)
 
         setListenerId(m_target->addListener(m_listener));
 
+        setListenerWaitFor();
+
         connect(m_listener,SIGNAL(dispatched(QString,QJSValue)),
                 this,SLOT(onMessageReceived(QString,QJSValue)));
     }
@@ -150,6 +152,28 @@ void QFAppListener::onMessageReceived(QString type, QJSValue message)
         }
     }
 
+}
+
+void QFAppListener::setListenerWaitFor()
+{
+    if (!m_listener) {
+        return;
+    }
+
+    m_listener->setWaitFor(m_waitFor);
+}
+
+
+QList<int> QFAppListener::waitFor() const
+{
+    return m_waitFor;
+}
+
+void QFAppListener::setWaitFor(const QList<int> &waitFor)
+{
+    m_waitFor = waitFor;
+    setListenerWaitFor();
+    emit waitForChanged();
 }
 
 int QFAppListener::listenerId() const

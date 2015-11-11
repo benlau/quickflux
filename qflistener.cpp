@@ -1,4 +1,5 @@
 #include <QtCore>
+#include "qfappdispatcher.h"
 #include "priv/qflistener.h"
 
 QFListener::QFListener(QObject *parent) : QObject(parent)
@@ -20,8 +21,12 @@ void QFListener::setCallback(const QJSValue &callback)
     m_callback = callback;
 }
 
-void QFListener::dispatch(QString type, QJSValue message)
+void QFListener::dispatch(QFAppDispatcher *dispatcher,QString type, QJSValue message)
 {
+
+    if (m_waitFor.size() > 0) {
+        dispatcher->waitFor(m_waitFor);
+    }
 
     if (m_callback.isCallable()) {
         QJSValueList args;
@@ -49,5 +54,15 @@ int QFListener::listenerId() const
 void QFListener::setListenerId(int listenerId)
 {
     m_listenerId = listenerId;
+}
+
+QList<int> QFListener::waitFor() const
+{
+    return m_waitFor;
+}
+
+void QFListener::setWaitFor(const QList<int> &waitFor)
+{
+    m_waitFor = waitFor;
 }
 

@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QJSValue>
 
+class QFAppDispatcher;
+
 /// A listener class for AppDispatcher.
 
 class QFListener : public QObject
@@ -17,11 +19,15 @@ public:
 
     void setCallback(const QJSValue &callback);
 
-    void dispatch(QString type, QJSValue message);
+    void dispatch(QFAppDispatcher* dispatcher, QString type, QJSValue message);
 
     int listenerId() const;
 
     void setListenerId(int listenerId);
+
+    QList<int> waitFor() const;
+
+    void setWaitFor(const QList<int> &waitFor);
 
 signals:
     void dispatched(QString type, QJSValue message);
@@ -30,7 +36,10 @@ public slots:
 
 private:
     QJSValue m_callback;
+
     int m_listenerId;
+
+    QList<int> m_waitFor;
 };
 
 #endif // QFLISTENER_H

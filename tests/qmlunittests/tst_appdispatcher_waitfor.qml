@@ -136,7 +136,7 @@ TestCase {
         compare(count2,1);
         compare(count3,1);
 
-        compare(realSeq,["callback1","callback2","callback3"]);
+        compare(realSeq,["callback1","callback3","callback2"]);
         compare(seq,["callback2","callback3","callback1"]);
 
         AppDispatcher.removeListener(id1);

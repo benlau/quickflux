@@ -35,27 +35,13 @@ void QFAppDispatcher::dispatch(QString type, QJSValue message)
 
 void QFAppDispatcher::waitFor(QList<int> ids)
 {
-    if (!m_dispatching)
+    if (!m_dispatching || ids.size() == 0)
         return;
 
     int id = dispatchingListenerId;
-    bool shouldWait = false;
-
-    for (int i = 0 ; i < ids.size() ; i++) {
-        int id = ids[i];
-        if (pendingListeners.contains(id)) {
-            shouldWait = true;
-        } else if (waitingListeners.contains(id)) {
-            qWarning() << "AppDispatcher: Cyclic dependency detected";
-        }
-    }
-
-    if (!shouldWait) {
-        return;
-    }
 
     waitingListeners[id] = true;
-    invokeListeners();
+    invokeListeners(ids);
     waitingListeners.remove(id);
 }
 
@@ -129,27 +115,37 @@ void QFAppDispatcher::emitDispatched(QString type, QJSValue message)
     waitingListeners.clear();
 
     QMapIterator<int, QPointer<QFListener> > iter(m_listeners);
+    QList<int> ids;
     while (iter.hasNext()) {
         iter.next();
         pendingListeners[iter.key()] = true;
+        ids << iter.key();
     }
 
-    invokeListeners();
+    invokeListeners(ids);
 
     emit dispatched(type,message);
 }
 
-void QFAppDispatcher::invokeListeners()
+void QFAppDispatcher::invokeListeners(QList<int> ids)
 {
-    while (!pendingListeners.empty()) {
-        int next = pendingListeners.firstKey();
+    for (int i = 0 ; i < ids.size() ; i++) {
+        int next = ids.at(i);
+
+        if (waitingListeners.contains(next)) {
+            qWarning() << "AppDispatcher: Cyclic dependency detected";
+        }
+
+        if (!pendingListeners.contains(next))
+            continue;
+
         pendingListeners.remove(next);
         dispatchingListenerId = next;
 
         QFListener* listener = m_listeners[next].data();
 
         if (listener) {
-            listener->dispatch(dispatchingMessageType,dispatchingMessage);
+            listener->dispatch(this,dispatchingMessageType,dispatchingMessage);
         }
     }
 }

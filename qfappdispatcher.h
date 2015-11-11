@@ -62,7 +62,7 @@ private:
 
     void emitDispatched(QString type,QJSValue message);
 
-    void invokeListeners();
+    void invokeListeners(QList<int> ids);
 
     bool m_dispatching;
 
