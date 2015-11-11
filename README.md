@@ -9,9 +9,10 @@ Their code could be more readable and reusable.
 
 Features
 
- 1. Singleton Message Dispatcher/Queue per QML Engine.
+ 1. Singleton Message Dispatcher / Message Queue per QML Engine.
  2. Write QML application in a Flux way.
  3. Helper function for C++ code to listen on QML event / obtain QML singleton instance
+ 4. Helper components for handling asynchronous sequential workflow.
 
 Concept and Motivation
 ======================
@@ -66,7 +67,9 @@ AppDispatcher is a singleton object in QML scope for message delivery.
 **AppDispatcher.dispatch(string type,object message)**
 
 Dispatch a message with type via the AppDispatcher.
-Listeners should listen on the "dispatched" signal to be notified.
+The message will be placed on a queue and delivery via the "dispatched" signal.
+Listeners may listen to the "dispatched" signal directly, 
+or using helper components like AppListener / AppScript to capture signal.
 
 ```
 MouseArea {
