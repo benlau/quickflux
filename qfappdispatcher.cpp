@@ -150,21 +150,3 @@ void QFAppDispatcher::invokeListeners(QList<int> ids)
     }
 }
 
-static QObject *provider(QQmlEngine *engine, QJSEngine *scriptEngine) {
-    Q_UNUSED(engine);
-    Q_UNUSED(scriptEngine);
-
-    QFAppDispatcher* object = new QFAppDispatcher();
-
-    return object;
-}
-
-class QFAppDispatcherRegisterHelper {
-
-public:
-    QFAppDispatcherRegisterHelper() {
-        qmlRegisterSingletonType<QFAppDispatcher>("QuickFlux", 1, 0, "AppDispatcher", provider);
-    }
-};
-
-static QFAppDispatcherRegisterHelper registerHelper;

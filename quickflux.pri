@@ -17,4 +17,5 @@ SOURCES += \
     $$PWD/qfappscript.cpp \
     $$PWD/qfappscriptrunnable.cpp \
     $$PWD/qfappscriptdispatcherwrapper.cpp \
-    $$PWD/qflistener.cpp
+    $$PWD/qflistener.cpp \
+    $$PWD/qfqmltypes.cpp

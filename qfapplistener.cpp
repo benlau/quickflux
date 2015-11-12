@@ -219,15 +219,3 @@ void QFAppListener::setFilter(const QString &filter)
     m_filter = filter;
     emit filterChanged();
 }
-
-
-class QFAppListenerRegisterHelper {
-    
-public:
-    QFAppListenerRegisterHelper() {
-        qmlRegisterType<QFAppListener>("QuickFlux", 1, 0, "AppListener");
-    }
-};
-
-static QFAppListenerRegisterHelper registerHelper;
-

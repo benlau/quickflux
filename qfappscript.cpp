@@ -208,14 +208,3 @@ void QFAppScript::setScript(const QQmlScriptString &script)
     m_script = script;
     emit scriptChanged();
 }
-
-class QFAppScriptRegisterHelper {
-
-public:
-    QFAppScriptRegisterHelper() {
-        qmlRegisterType<QFAppScript>("QuickFlux", 1, 0, "AppScript");
-        qmlRegisterType<QFAppScriptRunnable>();
-    }
-};
-
-static QFAppScriptRegisterHelper registerHelper;
