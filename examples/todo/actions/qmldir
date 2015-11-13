@@ -1,2 +1,2 @@
-singleton TodoActions 0.1 TodoActions.qml
+singleton AppActions 0.1 AppActions.qml
 singleton ActionTypes 0.1 ActionTypes.qml

@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>actions/TodoActions.qml</file>
+        <file>actions/AppActions.qml</file>
         <file>views/Footer.qml</file>
         <file>views/TodoItem.qml</file>
         <file>views/TodoList.qml</file>

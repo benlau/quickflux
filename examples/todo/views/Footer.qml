@@ -7,7 +7,7 @@ Item {
     height: 56
 
     function add() {
-        TodoActions.add(textField.text);
+        AppActions.add(textField.text);
         textField.text = "";
     }
 

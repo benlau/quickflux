@@ -3,9 +3,9 @@ import QtQuick 2.0
 
 QtObject {
 
-    property string todo_add;
-    property string todo_setDone;
-    property string todo_showCompleted;
+    property string addTask;
+    property string setTaskDone;
+    property string showCompletedTasks;
 
     Component.onCompleted:  {
         for (var prop in this) {

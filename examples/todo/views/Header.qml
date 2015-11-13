@@ -12,7 +12,7 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
 
         onCheckedChanged: {
-            TodoActions.showCompleted(checked);
+            AppActions.showCompleted(checked);
         }
     }
 
