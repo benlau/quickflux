@@ -324,7 +324,7 @@ Explanation: Coding in a promise way requires you to handle every reject conditi
 promise will leave in memory and their behaviour will be unexpected.
 AppScript.run() / exit() clear all the registered callback completely. You can write less code.
 
-*AppScript.script[Property]*
+**AppScript.script[Property]**
 The code to be executed at run()
 
 **AppScript.run()**
