@@ -148,7 +148,7 @@ Example
 
 // Only listen for specific message
 AppListener {
-    filter: "messageType1"; // filter property will be added in v1.0.1
+    filter: "messageType1";
     onDispatched: {
       // Your code here
     }
