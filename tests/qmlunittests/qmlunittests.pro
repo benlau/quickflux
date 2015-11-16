@@ -22,5 +22,6 @@ DISTFILES += \
     tst_appscript.qml \
     tst_appdispatcher_waitfor.qml \
     tst_applistener_waitfor.qml \
-    tst_applistenergroup.qml
+    tst_applistenergroup.qml \
+    tst_appscriptgroup.qml
 

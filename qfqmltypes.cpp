@@ -4,6 +4,7 @@
 #include "qfapplistener.h"
 #include "qfappscript.h"
 #include "qfapplistenergroup.h"
+#include "qfappscriptgroup.h"
 #include "priv/qfappscriptrunnable.h"
 
 static QObject *appDispatcherProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
@@ -23,6 +24,7 @@ public:
         qmlRegisterType<QFAppListener>("QuickFlux", 1, 0, "AppListener");
         qmlRegisterType<QFAppScript>("QuickFlux", 1, 0, "AppScript");
         qmlRegisterType<QFAppListenerGroup>("QuickFlux", 1, 0, "AppListenerGroup");
+        qmlRegisterType<QFAppScriptGroup>("QuickFlux", 1, 0, "AppScriptGroup");
         qmlRegisterType<QFAppScriptRunnable>();
     }
 };
