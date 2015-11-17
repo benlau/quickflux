@@ -1,0 +1,22 @@
+{
+  "name": "com.github.benlau.quickflux",
+  "description": "Message Dispatcher/Queue for Qt/QML",
+  "author": {
+    "name": "Ben Lau",
+    "email": "xbenlau@gmail.com"
+  },
+  "repository": {
+    "type": "GITHUB",
+    "url": "git@github.com:benlau/quickflux.git"
+  },
+  "version": {
+    "label": "1.0.2",
+    "revision": "1",
+    "fingerprint": ""
+  },
+  "dependencies": [
+  ],
+  "license": "APACHE_2_0",
+  "pri_filename": "quickflux.pri",
+  "webpage": "https://github.com/benlau/quickflux"
+}
