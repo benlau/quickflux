@@ -41,6 +41,29 @@ or
 An example program is available for demonstrate how to write QML application in a Flux way
 [quickflux/examples/todo](https://github.com/benlau/quickflux/tree/master/examples/todo)
 
+Installation Instruction (with qpm)
+===================================
+
+ 1) Run `qpm install`
+
+```
+$ qpm install com.github.benlau.quickflux
+```
+
+ 2) Include vendor/vendor.pri in your .pro file
+
+You may skip this step if you are already using qpm.
+
+```
+include(vendor/vendor.pri)
+```
+
+ 3) Add import statement in your QML file
+
+```
+import QuickFlux 1.0
+```
+
 Installation Instruction
 ========================
 
