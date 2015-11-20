@@ -281,6 +281,30 @@ If it is not set, it will dispatch every message.
 
 This property holds a value to indicate if the listener should remain listening message when it is not enabled.
 
+**listenerId[Property]**
+
+The listener ID of this component.
+It could be used with AppListener.waitFor/AppDispatcher.waitFor to control the order of message delivery.
+
+**waitFor[Property]**
+
+If it is set, it will block the emission of dispatched signal until all the specificed listeners has been invoked.
+
+Example code:
+
+```
+AppListener {
+  id: listener1
+}
+
+AppListener {
+   id: listener2
+   waitFor: [listener1.listenerId]
+}
+```
+
+
+
 QFAppDispatcher
 ---------------
 
