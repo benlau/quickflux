@@ -125,6 +125,21 @@ AppListener {
 
 ```
 
+**AppDispatcher.addListener(callback)**
+(will available at 1.0.3)
+
+Registers a callback to be invoked with every dispatched message. Returns a listener ID that can be used with waitFor().
+
+**AppDispatcher.removeLister(listenerId)**
+(will available at 1.0.3)
+
+Remove a callback by the listenerId returned by addListener
+
+**AppDispatcher.waitFor(array of ids)**
+(will available at 1.0.3)
+
+Waits for the callbacks specified to be invoked before continuing execution of the current callback. This method should only be used by a callback in response to a dispatched message.
+
 **AppDispatcher.dispatched(string type,object message)[Signal]**
 
 Listeners may listen on this signal to get the latest dispatched message from AppDispatcher.
@@ -155,6 +170,21 @@ AppListener {
     onDispatched: {
       /// ...
     }
+}
+
+// Method 3 - Using addListener
+
+Component.onCompleted: {
+   AppDispatcher.addListener(function() {
+     switch (type) {
+        case "OpenItem";
+          // ...
+            break;
+        case "DeleteItem";
+          // ...
+            break;
+     }
+   });
 }
 
 ```
