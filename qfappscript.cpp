@@ -4,11 +4,14 @@
 #include <QQmlExpression>
 #include <QtCore>
 #include "qfappscript.h"
+#include "qfapplistener.h"
 
 QFAppScript::QFAppScript(QQuickItem *parent) : QQuickItem(parent)
 {
     m_running = false;
     m_processing = false;
+    m_listenerId = 0;
+    m_listener = 0;
 }
 
 void QFAppScript::exit(int returnCode)
@@ -143,9 +146,16 @@ void QFAppScript::componentComplete()
     QQmlEngine *engine = qmlEngine(this);
     Q_ASSERT(engine);
 
-    m_dispatcher = qobject_cast<QFAppDispatcher*>(QFAppDispatcher::instance(engine));
 
-    connect(m_dispatcher.data(),SIGNAL(dispatched(QString,QJSValue)),
+    m_dispatcher = QFAppDispatcher::instance(engine);
+
+    m_listener = new QFListener(this);
+
+    setListenerId(m_dispatcher->addListener(m_listener));
+
+    setListenerWaitFor();
+
+    connect(m_listener,SIGNAL(dispatched(QString,QJSValue)),
             this,SLOT(onDispatched(QString,QJSValue)));
 }
 
@@ -174,6 +184,38 @@ void QFAppScript::setRunning(bool running)
     }
     m_running = running;
     emit runningChanged();
+}
+
+QList<int> QFAppScript::waitFor() const
+{
+    return m_waitFor;
+}
+
+void QFAppScript::setWaitFor(const QList<int> &waitFor)
+{
+    m_waitFor = waitFor;
+    setListenerWaitFor();
+    emit waitForChanged();
+}
+
+void QFAppScript::setListenerWaitFor()
+{
+    if (!m_listener) {
+        return;
+    }
+
+    m_listener->setWaitFor(m_waitFor);
+}
+
+int QFAppScript::listenerId() const
+{
+    return m_listenerId;
+}
+
+void QFAppScript::setListenerId(int listenerId)
+{
+    m_listenerId = listenerId;
+    emit listenerIdChanged();
 }
 
 QJSValue QFAppScript::message() const

@@ -17,6 +17,8 @@ class QFAppScript : public QQuickItem
     Q_PROPERTY(bool running READ running WRITE setRunning NOTIFY runningChanged)
     Q_PROPERTY(QString runWhen READ runWhen WRITE setRunWhen NOTIFY runWhenChanged)
     Q_PROPERTY(QJSValue message READ message NOTIFY messageChanged)
+    Q_PROPERTY(int listenerId READ listenerId WRITE setListenerId NOTIFY listenerIdChanged)
+    Q_PROPERTY(QList<int> waitFor READ waitFor WRITE setWaitFor NOTIFY waitForChanged)
 
 public:
     explicit QFAppScript(QQuickItem *parent = 0);
@@ -32,6 +34,12 @@ public:
     QJSValue message() const;
     void setMessage(const QJSValue &message);
 
+    int listenerId() const;
+    void setListenerId(int listenerId);
+
+    QList<int> waitFor() const;
+    void setWaitFor(const QList<int> &waitFor);
+
 signals:
     void started();
     void finished(int returnCode);
@@ -40,6 +48,8 @@ signals:
     void runningChanged();
     void runWhenChanged();
     void messageChanged();
+    void listenerIdChanged();
+    void waitForChanged();
 
 public slots:
     void exit(int returnCode = 0);
@@ -57,6 +67,8 @@ private:
     void clear();
     void setRunning(bool running);
 
+    void setListenerWaitFor();
+
     QQmlScriptString m_script;
     QList<QFAppScriptRunnable*> m_runnables;
     QPointer<QFAppDispatcher> m_dispatcher;
@@ -65,8 +77,13 @@ private:
     bool m_running;
     bool m_processing;
 
+    int m_listenerId;
+
     // The message object passed to run()
     QJSValue m_message;
+    QFListener* m_listener;
+
+    QList<int> m_waitFor;
 };
 
 #endif // QFAPPSCRIPT_H

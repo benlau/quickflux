@@ -36,6 +36,7 @@ TestCase {
     }
 
     function test_parallel() {
+        compare(script1.listenerId > 0, true);
         script1.run(["a","b","c"]);
         compare(script1.started,true);
         compare(script1.runMessage,["a","b","c"]);
