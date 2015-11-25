@@ -79,6 +79,13 @@ Installation Instruction
 import QuickFlux 1.0
 ```
 
+Example Projects
+================
+
+There are few example programs available at examples folder:
+
+[Examples](https://github.com/benlau/quickflux/tree/master/examples)
+
 Class Reference
 ===============
 
@@ -126,17 +133,14 @@ AppListener {
 ```
 
 **AppDispatcher.addListener(callback)**
-(will available at 1.0.3)
 
 Registers a callback to be invoked with every dispatched message. Returns a listener ID that can be used with waitFor().
 
 **AppDispatcher.removeLister(listenerId)**
-(will available at 1.0.3)
 
 Remove a callback by the listenerId returned by addListener
 
 **AppDispatcher.waitFor(array of ids)**
-(will available at 1.0.3)
 
 Waits for the callbacks specified to be invoked before continuing execution of the current callback. This method should only be used by a callback in response to a dispatched message.
 
@@ -331,7 +335,6 @@ It is useful when you need to get singleton Actions component.
 
 AppScript
 ---------
-(Will avaiable at 1.0.3)
 
 AppScript is a helper component to handle asynchronous sequential workflow.
 The immediate benefit of using AppScript  is the centralisation of code in a place.
@@ -381,8 +384,6 @@ Example Code:
             once(ActionTypes.navigateBack,exit.bind(this,0));
         }
     }
-
-
 ```
 
 **Benefit of using AppScript**
