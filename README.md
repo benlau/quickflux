@@ -307,6 +307,30 @@ AppListener {
 }
 ```
 
+AppListenerGroup
+----------------
+
+AppListenerGroup collects listener ID from all of its child AppListener and initialize their waitFor property.
+It could be used as the base type of a Store component for setup dependence between them.
+
+MyStore1.qml
+
+```
+AppListenerGroup {
+    AppListener {
+    }
+    AppListener {
+    }
+}
+```
+
+MyStore2.qml
+
+```
+AppListenerGroup {
+   waitFor: MyStore1.listenerIds
+}
+```
 
 
 QFAppDispatcher
