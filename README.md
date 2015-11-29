@@ -44,6 +44,8 @@ An example program is available for demonstrate how to write QML application in 
 Installation Instruction (with qpm)
 ===================================
 
+For user who are already using qpm from [qpm.io](https://qpm.io)
+
  1) Run `qpm install`
 
 ```
