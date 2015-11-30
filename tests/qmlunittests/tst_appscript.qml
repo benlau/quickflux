@@ -333,5 +333,39 @@ TestCase {
         compare(script10.step2,2);
     }
 
+    AppScript {
+        id: script11
+        autoExit: false;
+        property int step1 : 0;
+        property int step2 : 0;
+
+        script: {
+            once("step1",function() {
+                step1++;
+            });
+
+            once("step2",function() {
+                step2++;
+            });
+        }
+    }
+
+    function test_autoExit_false() {
+        script11.run();
+        compare(script11.running,true);
+        compare(script11.step1,0);
+        AppDispatcher.dispatch("step1");
+        compare(script11.step1,1);
+
+        compare(script11.step2,0);
+        AppDispatcher.dispatch("step2");
+        compare(script11.step2,1);
+
+        // It will be still running.
+        compare(script11.running,true);
+
+        script11.exit();
+    }
+
 }
 

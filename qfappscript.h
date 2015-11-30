@@ -19,6 +19,7 @@ class QFAppScript : public QQuickItem
     Q_PROPERTY(QJSValue message READ message NOTIFY messageChanged)
     Q_PROPERTY(int listenerId READ listenerId WRITE setListenerId NOTIFY listenerIdChanged)
     Q_PROPERTY(QList<int> waitFor READ waitFor WRITE setWaitFor NOTIFY waitForChanged)
+    Q_PROPERTY(bool autoExit READ autoExit WRITE setAutoExit NOTIFY autoExitChanged)
 
 public:
     explicit QFAppScript(QQuickItem *parent = 0);
@@ -40,6 +41,9 @@ public:
     QList<int> waitFor() const;
     void setWaitFor(const QList<int> &waitFor);
 
+    bool autoExit() const;
+    void setAutoExit(bool autoExit);
+
 signals:
     void started();
     void finished(int returnCode);
@@ -50,6 +54,7 @@ signals:
     void messageChanged();
     void listenerIdChanged();
     void waitForChanged();
+    void autoExitChanged();
 
 public slots:
     void exit(int returnCode = 0);
@@ -78,6 +83,8 @@ private:
     bool m_processing;
 
     int m_listenerId;
+
+    bool m_autoExit;
 
     // The message object passed to run()
     QJSValue m_message;

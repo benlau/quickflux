@@ -12,6 +12,7 @@ QFAppScript::QFAppScript(QQuickItem *parent) : QQuickItem(parent)
     m_processing = false;
     m_listenerId = 0;
     m_listener = 0;
+    m_autoExit = true;
 }
 
 void QFAppScript::exit(int returnCode)
@@ -134,7 +135,7 @@ void QFAppScript::onDispatched(QString type, QJSValue message)
     m_processing = false;
 
     // All the tasks are finished
-    if (m_runnables.size() == 0) {
+    if (m_runnables.size() == 0 && m_autoExit) {
         exit(0);
     }
 }
@@ -205,6 +206,17 @@ void QFAppScript::setListenerWaitFor()
     }
 
     m_listener->setWaitFor(m_waitFor);
+}
+
+bool QFAppScript::autoExit() const
+{
+    return m_autoExit;
+}
+
+void QFAppScript::setAutoExit(bool autoExit)
+{
+    m_autoExit = autoExit;
+    emit autoExitChanged();
 }
 
 int QFAppScript::listenerId() const
