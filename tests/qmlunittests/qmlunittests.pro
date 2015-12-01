@@ -7,7 +7,8 @@ CONFIG   -= app_bundle
 
 TEMPLATE = app
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    testenv.cpp
 
 include(../../quickflux.pri)
 
@@ -23,5 +24,9 @@ DISTFILES += \
     tst_appdispatcher_waitfor.qml \
     tst_applistener_waitfor.qml \
     tst_applistenergroup.qml \
-    tst_appscriptgroup.qml
+    tst_appscriptgroup.qml \
+    tst_qimage.qml
+
+HEADERS += \
+    testenv.h
 
