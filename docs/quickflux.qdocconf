@@ -1,0 +1,21 @@
+project = QuickFlux
+url = https://github.com/benlau/quickflux
+description = Message Dispatcher/Queue for Qt/QML
+sourcedirs = ./
+sourcedirs += ../
+exampledirs += ../examples
+sources.fileextensions = "*.qml *.qdoc *.cpp"
+headers.fileextensions = "*.h"
+version = 1.0
+syntaxhighlighting = true
+sourceencoding = UTF-8
+outputencoding = UTF-8
+outputdir                  = html
+outputformats              = HTML
+
+HTML.templatedir = .
+HTML.stylesheets = $$QT_INSTALL_DOCS/global/html/style/offline.css
+
+HTML.headerstyles = \
+    "  <link rel=\"stylesheet\" type=\"text/css\" href=\"style/offline.css\" />\n"
+

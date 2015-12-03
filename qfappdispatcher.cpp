@@ -5,6 +5,12 @@
 #include <QPointer>
 #include "qfappdispatcher.h"
 
+/*!
+   \qmltype AppDispatcher
+   \inqmlmodule QuickFlux 1.0
+   \brief Message Dispatcher
+ */
+
 QFAppDispatcher::QFAppDispatcher(QObject *parent) : QObject(parent)
 {
     m_dispatching = false;
