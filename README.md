@@ -368,6 +368,8 @@ Instead of placing them within onXXXX code block in several components in severa
 
 AppScript also manage the life cycle of registered callbacks. You could remove them by a single function. Nothing will leave in memory.
 
+**Remarks: AppScript is not a solution for making Store component**
+
 Example Code:
 [quickflux/ImagePickerScript.qml at master · benlau/quickflux](https://github.com/benlau/quickflux/blob/master/examples/photoalbum/scripts/ImagePickerScript.qml)
 
