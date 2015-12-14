@@ -138,7 +138,7 @@ AppListener {
 
 Registers a callback to be invoked with every dispatched message. Returns a listener ID that can be used with waitFor().
 
-**AppDispatcher.removeLister(listenerId)**
+**AppDispatcher.removeListener(listenerId)**
 
 Remove a callback by the listenerId returned by addListener
 
