@@ -9,8 +9,65 @@
    \qmltype AppDispatcher
    \inqmlmodule QuickFlux 1.0
    \brief Message Dispatcher
+
+    AppDispatcher is a singleton object in QML scope for message delivery.
+
  */
 
+/*!
+  \qmlsignal AppDispatcher::dispatched(string type, object message)
+
+  This signal is emitted when a message is ready to dispatch by AppDispatcher.
+
+  There has several methods to listen this signal:
+
+Method 1 - Using Connections component
+
+\code
+import QuickFlux 1.0
+
+Connections {
+    target: AppDispatcher
+    onDispatched: {
+        switch (type) {
+            case "OpenItem";
+                // ...
+                break;
+            case "DeleteItem";
+                // ...
+                break;
+        }
+    }
+}
+\endcode
+
+Method 2 - Using helper component, AppListener
+\code
+AppListener {
+    filter: "ItemOpen";
+    onDispatched: {
+      /// ...
+    }
+}
+\endcode
+
+Method 3 - Using addListener
+\code
+Component.onCompleted: {
+   AppDispatcher.addListener(function() {
+     switch (type) {
+        case "OpenItem";
+          // ...
+            break;
+        case "DeleteItem";
+          // ...
+            break;
+     }
+   });
+}
+\endcode
+
+ */
 QFAppDispatcher::QFAppDispatcher(QObject *parent) : QObject(parent)
 {
     m_dispatching = false;
@@ -21,6 +78,47 @@ QFAppDispatcher::~QFAppDispatcher()
 {
 
 }
+
+/*!
+  \qmlmethod AppDispatcher::dispatch(string type, object message)
+
+  Dispatch a message with type via the AppDispatcher.
+  The message will be placed on a queue and delivery via the "dispatched" signal.
+  Listeners may listen on the "dispatched" signal directly,
+  or using helper components like AppListener / AppScript to capture signal.
+
+\code
+MouseArea {
+    anchors.fill: parent
+    onClicked: {
+        AppDispatcher.dispatch(ActionTypes.askToRemoveItem, { uid: uid });
+    }
+}
+\endcode
+
+Usually, it will emit "dispatched" signal immediately after calling dispatch().
+However, if AppDispatcher is still dispatching messages,
+the new messages will be placed on a queue,
+and wait until it is finished.
+It guarantees the order of messages are arrived in sequence to listeners
+
+\code
+
+AppListener {
+    filter: ActionTypes.askToRemoveItem
+    onDispatched: {
+        if (options.skipRemoveConfirmation) {
+            AppDispatcher.dispatch(ActionTypes.removeItem,message);
+            // Because AppDispatcher is still dispatching ActionTypes.askToRemoveItem,
+            // ActionTypes.removeItem will be placed in a queue and will dispatch when
+            // all the listeners received current message.
+        }
+    }
+}
+
+\endcode
+
+ */
 
 void QFAppDispatcher::dispatch(QString type, QJSValue message)
 {
@@ -51,6 +149,14 @@ void QFAppDispatcher::waitFor(QList<int> ids)
     waitingListeners.remove(id);
 }
 
+/*!
+
+  \qmlmethod AppDispatcher::addListener(func callback)
+
+  Registers a callback to be invoked with every dispatched message. Returns a listener ID that can be used with waitFor().
+
+ */
+
 int QFAppDispatcher::addListener(QJSValue callback)
 {
     QFListener* listener = new QFListener(this);
@@ -65,6 +171,12 @@ int QFAppDispatcher::addListener(QFListener *listener)
     listener->setListenerId(nextListenerId);
     return nextListenerId++;
 }
+
+/*!
+  \qmlmethod AppDispatcher::removeListener(int listenerId)
+
+  Remove a callback by the listenerId returned by addListener
+ */
 
 void QFAppDispatcher::removeListener(int id)
 {
