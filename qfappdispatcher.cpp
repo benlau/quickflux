@@ -10,7 +10,7 @@
    \inqmlmodule QuickFlux 1.0
    \brief Message Dispatcher
 
-    AppDispatcher is a singleton object in QML scope for message delivery.
+    AppDispatcher is a singleton object in QML scope for action message delivery.
 
  */
 
@@ -151,7 +151,7 @@ void QFAppDispatcher::waitFor(QList<int> ids)
 
 /*!
 
-  \qmlmethod AppDispatcher::addListener(func callback)
+  \qmlmethod int AppDispatcher::addListener(func callback)
 
   Registers a callback to be invoked with every dispatched message. Returns a listener ID that can be used with waitFor().
 
