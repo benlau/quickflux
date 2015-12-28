@@ -465,7 +465,10 @@ Terming current executing script by removing all the registered callbacks.
 
 It is true when the script is running or there still has registered callback leave.
 
+Class Reference (HTML)
+----------------------
 
+[QuickFlux 1.0 Class Reference](http://benlau.github.io/quickflux/)
 
 Related Projects
 ----------------
