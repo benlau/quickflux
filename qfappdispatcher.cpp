@@ -68,6 +68,20 @@ Component.onCompleted: {
 \endcode
 
  */
+
+/*!
+  \class QFAppDispatcher
+  \inmodule QuickFlux
+
+  QFAppDispatcher is the C++ implementation of AppDispatcher in QML scope.
+  You may need this class to setup communication between C++ and QML.
+
+\code
+#include "qfappdispatcher.h"
+\endcode
+
+ */
+
 QFAppDispatcher::QFAppDispatcher(QObject *parent) : QObject(parent)
 {
     m_dispatching = false;
@@ -165,6 +179,11 @@ int QFAppDispatcher::addListener(QJSValue callback)
     return addListener(listener);
 }
 
+/*! \fn int QFAppDispatcher::addListener(QFListener *listener)
+
+  It is private API. Do not use it.
+
+ */
 int QFAppDispatcher::addListener(QFListener *listener)
 {
     m_listeners[nextListenerId] = listener;
@@ -189,12 +208,37 @@ void QFAppDispatcher::removeListener(int id)
     }
 }
 
+/*! \fn QFAppDispatcher *QFAppDispatcher::instance(QQmlEngine *engine)
+
+  \a engine The instance of QQmlEngine
+
+  Obtain the singleton instance of AppDispatcher for specific QQmlEngine
+
+ */
+
 QFAppDispatcher *QFAppDispatcher::instance(QQmlEngine *engine)
 {
     QFAppDispatcher *dispatcher = qobject_cast<QFAppDispatcher*>(singletonObject(engine,"QuickFlux",1,0,"AppDispatcher"));
 
     return dispatcher;
 }
+
+/*! \fn QObject *QFAppDispatcher::singletonObject(QQmlEngine *engine, QString package, int versionMajor, int versionMinor, QString typeName)
+
+ \a engine QQmlEngine instance
+
+ \a package The package name of the singleton object
+
+ \a versionMajor The major version no. of the singleton object
+
+ \a versionMinor The minor version no. of the singleton object
+
+ \a typeName The name of the singleton object
+
+  Obtain a singleton object from a package for specific QQmlEngine instance.
+  It is useful when you need to get a singleton Actions object from C++.
+
+ */
 
 QObject *QFAppDispatcher::singletonObject(QQmlEngine *engine, QString package, int versionMajor, int versionMinor, QString typeName)
 {

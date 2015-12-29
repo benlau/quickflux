@@ -85,11 +85,11 @@ AppScript::run() / AppScript::exit() clear all the registered callback completel
 
  */
 
-/*! \qmlsignal started
+/*! \qmlsignal AppScript::started()
  This signal is emitted when the script is started.
 */
 
-/*! \qmlsignal finished(int returnCode)
+/*! \qmlsignal AppScript::finished(int returnCode)
  This signal is emitted when the script is finished.
  */
 
