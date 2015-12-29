@@ -1,9 +1,75 @@
 #include "qfappscriptgroup.h"
 
+/*! \qmltype AppScriptGroup
+    \inqmlmodule QuickFlux
+
+    AppScriptGroup hold a group of AppScript objects which are mutually exclusive in execution.
+    Whatever a AppScript is going to start, it will terminate all other AppScript objects.
+    So that only one AppScript is running at a time.
+
+\code
+
+Item {
+
+    AppScript {
+        id: script1
+        script: {
+            // write script here
+        }
+    }
+
+    AppScript {
+        id: script2
+        script: {
+            // write script here
+        }
+    }
+
+    AppScriptGroup {
+        scripts: [script1, script2]
+    }
+
+    Component.onCompleted: {
+
+        script1.run();
+
+        script2.run();
+
+        // At this point, AppScriptGroup will force script1 to terminate since script2 has been started.
+
+    }
+
+}
+
+\endcode
+
+ */
+
 QFAppScriptGroup::QFAppScriptGroup(QQuickItem* parent) : QQuickItem(parent)
 {
 
 }
+
+/*! \qmlproperty array AppScriptGroup::scripts
+   This property hold an array of AppScript object.
+   They are mutually exclusive in execution.
+
+\code
+
+AppScript {
+    id: script1
+}
+
+AppScript {
+    id: script2
+}
+
+AppScriptGroup {
+    scripts: [script1, script2]
+}
+
+\endcode
+ */
 
 QJSValue QFAppScriptGroup::scripts() const
 {
@@ -49,6 +115,12 @@ void QFAppScriptGroup::setScripts(const QJSValue &scripts)
 
     emit scriptsChanged();
 }
+
+/*! \qmlmethod AppScriptGroup::exitAll()
+
+  Terminate all AppScript objects
+
+ */
 
 void QFAppScriptGroup::exitAll()
 {
