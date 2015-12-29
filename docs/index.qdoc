@@ -2,7 +2,7 @@
     \page index.html
     \title QuickFlux
 
-QML Singleton
+QML Singleton Object
 \list
     \li \l AppDispatcher
 \endlist

@@ -431,7 +431,7 @@ promise will leave in memory and their behaviour will be unexpected.
 AppScript.run() / exit() clear all the registered callback completely. You can write less code.
 
 **AppScript.script[Property]**
-The code to be executed at run()
+This property holds the script to run.
 
 **AppScript.run()**
 Execute the code within the script property.
@@ -451,7 +451,7 @@ Users should call this function within the script code block.
 
 Similar to once() function, it will register a callback to be executed once only.
 But its registration is deferred until the previous callback triggered.
-then() is a chain able function, users may place as many as possible as they like.
+then() is a chainable function, users may place as many as possible as they like.
 
 **AppScript.on(type,callback)**
 
