@@ -7,7 +7,7 @@ before_install:
     - sudo add-apt-repository --yes ppa:beineri/opt-qt532
     - sudo apt-get update -qq
     - apt-cache search qt5
-    - sudo apt-get install -qq qt53quickcontrols  qt53declarative qt53script qt53graphicaleffects qtbase5-dev
+    - sudo apt-get install -qq qt53quickcontrols  qt53declarative qt53script qt53graphicaleffects
     - sh -e /etc/init.d/xvfb start
 script:
     - source /opt/qt53/bin/qt53-env.sh 
@@ -22,6 +22,6 @@ script:
     - ls
     - ./cppunittests
     - cd ../../docs
-    - export QT_INSTALL_DOCS=/usr/share/qt5/doc
+    - export QT_INSTALL_DOCS=/opt/qt53/doc
     - qdoc quickflux.qdocconf
    
