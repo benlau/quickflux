@@ -157,16 +157,24 @@ TestCase {
 
     AppScript {
         id: script5
+        property var runMessage;
         runWhen: "start";
         script: {
+            runMessage = message;
             once("step1",function() {
             });
         }
     }
 
     function test_runWhen() {
-        AppDispatcher.dispatch("start");
+        AppDispatcher.dispatch("start", {
+                                value1: 2,
+                                value2: function() {
+                              }});
         compare(script5.running,true);
+        compare(script5.runMessage.value1, 2);
+        compare(typeof(script5.runMessage.value2) === "function", true);
+
         script5.exit();
     }
 
