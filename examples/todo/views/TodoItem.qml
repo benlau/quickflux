@@ -27,7 +27,7 @@ Rectangle {
     }
 
     onCheckedChanged: {
-        AppActions.setDone(uid,checked);
+        AppActions.setTaskDone(uid,checked);
     }
 }
 

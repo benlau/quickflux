@@ -11,7 +11,7 @@ QtObject {
     }
 
     // Set/unset done on a task
-    function setDone(uid,done) {
+    function setTaskDone(uid,done) {
         AppDispatcher.dispatch(ActionTypes.setTaskDone,{uid: uid,done: done })
     }
 

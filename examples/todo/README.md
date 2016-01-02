@@ -56,7 +56,7 @@ Example:
 header.qml
 ```
 onCheckedChanged: {
-    AppActions.setDone(uid,checked);
+    AppActions.setTaskDone(uid,checked);
 }
 ```
 
