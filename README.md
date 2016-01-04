@@ -17,22 +17,23 @@ Features
 Concept and Motivation
 ======================
 
-Generally speaking, you should avoid writing a big QML file. 
+Generally speaking, you should avoid creating a big QML file. 
 Break down into smaller piece of files is more readable and reusable. 
-But sometimes it is not true due to event/signal propagation. 
+But it may not true due to event/signal propagation.
 Managing code dependence is very troublesome.
 
 Writing QML in a Flux way is a solution for this problem. 
 Using a global AppDispatcher for communication between components. 
 It breaks the dependence and simplify your code by taking out unnecessary signal binding. 
 
-This project provides an implementation of Flux application architecture in QML for user to get started easily.
+This project provides an implementation of dispatcher in QML for user to get started.
 
 What is Flux and How to use in QML Application? 
 ===============================================
 
 Please refer to this article for detail : 
-[Writing QML Application in a Flux way | Qt Forum](http://forum.qt.io/topic/55213/writing-qml-application-in-a-flux-way)
+
+[Action-Dispatcher Design Pattern for QML — Medium](https://medium.com/@benlaud/action-dispatcher-design-pattern-for-qml-c350b1d2a7e7#.2dpjhcpt1)
 
 or
 
