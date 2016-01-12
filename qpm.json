@@ -7,11 +7,11 @@
   },
   "repository": {
     "type": "GITHUB",
-    "url": "git@github.com:benlau/quickflux.git"
+    "url": "https://github.com/benlau/quickflux.git"
   },
   "version": {
     "label": "1.0.3",
-    "revision": "1",
+    "revision": "2",
     "fingerprint": ""
   },
   "dependencies": [
