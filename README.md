@@ -97,4 +97,6 @@ Class Reference
 Related Projects
 ----------------
  1. [benlau/quickpromise](https://github.com/benlau/quickpromise) - Promise library for QML
+ 2. [benlau/quickcross](https://github.com/benlau/quickcross) - QML Cross Platform Utility Library
+ 3. [benlau/qsyncable](https://github.com/benlau/qsyncable) - Synchronize data between models
 
