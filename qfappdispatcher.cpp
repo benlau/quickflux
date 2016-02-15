@@ -151,6 +151,14 @@ void QFAppDispatcher::dispatch(QString type, QJSValue message)
     m_dispatching = false;
 }
 
+/*!
+  \qmlmethod AppDispatcher::waitFor(int listenerId)
+
+  Waits for a callback specifed via the listenerId to be executed before continue execution of current callback.
+  You should call this method only by a callback registered via addListener.
+
+ */
+
 void QFAppDispatcher::waitFor(QList<int> ids)
 {
     if (!m_dispatching || ids.size() == 0)
