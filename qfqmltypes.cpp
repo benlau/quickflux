@@ -6,6 +6,7 @@
 #include "qfapplistenergroup.h"
 #include "qfappscriptgroup.h"
 #include "priv/qfappscriptrunnable.h"
+#include "qffilter.h"
 
 static QObject *appDispatcherProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
     Q_UNUSED(engine);
@@ -26,6 +27,7 @@ public:
         qmlRegisterType<QFAppListenerGroup>("QuickFlux", 1, 0, "AppListenerGroup");
         qmlRegisterType<QFAppScriptGroup>("QuickFlux", 1, 0, "AppScriptGroup");
         qmlRegisterType<QFAppScriptRunnable>();
+        qmlRegisterType<QFFilter>("QuickFlux", 1, 0, "Filter");
     }
 };
 

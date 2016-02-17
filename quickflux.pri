@@ -11,7 +11,8 @@ HEADERS += \
     $$PWD/priv/qfappscriptdispatcherwrapper.h \
     $$PWD/priv/qflistener.h \
     $$PWD/qfapplistenergroup.h \
-    $$PWD/qfappscriptgroup.h
+    $$PWD/qfappscriptgroup.h \
+    $$PWD/qffilter.h
 
 SOURCES += \
     $$PWD/qfapplistener.cpp \
@@ -22,4 +23,5 @@ SOURCES += \
     $$PWD/qflistener.cpp \
     $$PWD/qfqmltypes.cpp \
     $$PWD/qfapplistenergroup.cpp \
-    $$PWD/qfappscriptgroup.cpp
+    $$PWD/qfappscriptgroup.cpp \
+    $$PWD/qffilter.cpp
