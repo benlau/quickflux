@@ -26,7 +26,8 @@ DISTFILES += \
     tst_applistenergroup.qml \
     tst_appscriptgroup.qml \
     tst_qimage.qml \
-    tst_filter.qml
+    tst_filter.qml \
+    tst_stringtable.qml
 
 HEADERS += \
     testenv.h
