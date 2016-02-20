@@ -22,6 +22,6 @@ script:
     - ls
     - ./cppunittests
     - cd ../../docs
-    - export QT_INSTALL_DOCS=/opt/qt53/doc
+    - export QT_DOCS_STYLE=/opt/qt53/doc/global/html/style/offline.css
     - qdoc quickflux.qdocconf
    
