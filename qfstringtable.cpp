@@ -2,6 +2,33 @@
 #include <QMetaObject>
 #include "qfstringtable.h"
 
+/*!
+  \qmltype StringTable
+  \brief Defines a string table
+
+  StringTable is a utility component to define a string table. Once it's construction is completed,
+  it will search all of its string property. If it is a string type and not assigned to any value,
+  it will set its value by its name. It can be used to create ActionTypes.qml in QuickFlux Application.
+
+Example
+
+\code
+
+StringTable {
+
+    // It will be set to "customField1" in Component.onCompleted callback.
+    property string customField1;
+
+    // Since it is already assigned a value, StringTable will not modify this property.
+    property string customField2 : "value";
+
+}
+
+\endcode
+
+
+ */
+
 QFStringTable::QFStringTable(QObject *parent) : QObject(parent)
 {
 

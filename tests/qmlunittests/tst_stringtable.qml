@@ -26,7 +26,6 @@ TestCase {
         compare(table1.value3 , "value3");
         compare(table1.custom , "customValue");
 
-
     }
 
 

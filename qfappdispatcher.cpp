@@ -10,7 +10,7 @@
    \inqmlmodule QuickFlux
    \brief Message Dispatcher
 
-    AppDispatcher is a singleton object in QML scope for action message delivery.
+    AppDispatcher is a singleton object in QML scope for delivering action message.
 
  */
 
