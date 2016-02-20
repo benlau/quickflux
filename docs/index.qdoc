@@ -12,6 +12,7 @@ QML Components
     \li \l AppListener
     \li \l AppScript
     \li \l AppScriptGroup
+    \li \l Filter
     \li \l StringTable
 \endlist
 

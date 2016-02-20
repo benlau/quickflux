@@ -324,7 +324,7 @@ void QFAppListener::setAlwaysOn(bool alwaysOn)
 
 /*! \qmlproperty array AppListener::filters
 
-  Set a list of filter to incoming messages. Only message with type matched with the filters will emit "dispatched" signal.
+  Set a list of filter to incoming messages. Only message with type matched by the filters will emit "dispatched" signal.
   If it is not set, it will dispatch every message.
 
  */
