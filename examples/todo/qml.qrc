@@ -11,5 +11,7 @@
         <file>views/TodoVisualModel.qml</file>
         <file>views/Header.qml</file>
         <file>actions/ActionTypes.qml</file>
+        <file>stores/UserPrefsStore.qml</file>
+        <file>adapters/StoreAdapter.qml</file>
     </qresource>
 </RCC>

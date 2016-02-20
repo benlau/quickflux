@@ -19,7 +19,7 @@ QtObject {
     // @Remarks: Unlike other actions, TodoStore do not listen on this
     // message.
     function showCompleted(value) {
-        AppDispatcher.dispatch(ActionTypes.showCompletedTasks,{value: value })
+        AppDispatcher.dispatch(ActionTypes.setShowCompletedTasks, {value: value })
     }
 
 }

@@ -1,6 +1,6 @@
 /** Todo Item Store
 
-  A centralized data store of Todo list item.
+  A centralized data store of Todo list.
 
  */
 pragma Singleton
@@ -8,8 +8,10 @@ import QtQuick 2.0
 import QuickFlux 1.0
 import "../actions"
 
-Item {
+AppListener {
+
     property alias model: model
+
     property int nextUid: 4;
 
     ListModel {
@@ -41,8 +43,8 @@ Item {
         }
     }
 
-    AppListener {
-        filter: ActionTypes.addTask
+    Filter {
+        type: ActionTypes.addTask
         onDispatched: {
             var item = {
                 uid: nextUid++,
@@ -53,8 +55,8 @@ Item {
         }
     }
 
-    AppListener {
-        filter: ActionTypes.setTaskDone
+    Filter {
+        type: ActionTypes.setTaskDone
         onDispatched: {
             for (var i = 0 ; i < model.count ; i++) {
                 var item  = model.get(i);
