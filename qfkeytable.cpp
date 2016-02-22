@@ -1,12 +1,12 @@
 #include <QtCore>
 #include <QMetaObject>
-#include "qfstringtable.h"
+#include "qfkeytable.h"
 
 /*!
-  \qmltype StringTable
+  \qmltype KeyTable
   \brief Defines a string table
 
-  StringTable is a object with properties equeal to its key name. Once it's construction is completed,
+  KeyTable is a object with properties equeal to its key name. Once it's construction is completed,
   it will search all of its string property. If it is a string type and not assigned to any value,
   it will set its value by its name. It can be used to create ActionTypes.qml in QuickFlux Application.
 
@@ -14,12 +14,12 @@ Example
 
 \code
 
-StringTable {
+KeyTable {
 
     // It will be set to "customField1" in Component.onCompleted callback.
     property string customField1;
 
-    // Since it is already assigned a value, StringTable will not modify this property.
+    // Since it is already assigned a value, KeyTable will not modify this property.
     property string customField2 : "value";
 
 }
@@ -29,17 +29,17 @@ StringTable {
 
  */
 
-QFStringTable::QFStringTable(QObject *parent) : QObject(parent)
+QFKeyTable::QFKeyTable(QObject *parent) : QObject(parent)
 {
 
 }
 
-void QFStringTable::classBegin()
+void QFKeyTable::classBegin()
 {
 
 }
 
-void QFStringTable::componentComplete()
+void QFKeyTable::componentComplete()
 {
     const QMetaObject* meta = metaObject();
 

@@ -4,9 +4,9 @@ import QtTest 1.0
 import QuickFlux 1.0
 
 TestCase {
-    name : "StringTableTests"
+    name : "KeyTableTests"
 
-    StringTable {
+    KeyTable {
         id: table1
 
         property string value1;

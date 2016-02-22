@@ -2,9 +2,9 @@ pragma Singleton
 import QtQuick 2.0
 import QuickFlux 1.0
 
-StringTable {
+KeyTable {
 
-    // StringTable is a object with properties equeal to its key name
+    // KeyTable is a object with properties equeal to its key name
 
     property string addTask;
 

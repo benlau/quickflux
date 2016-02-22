@@ -13,7 +13,7 @@ QML Components
     \li \l AppScript
     \li \l AppScriptGroup
     \li \l Filter
-    \li \l StringTable
+    \li \l KeyTable
 \endlist
 
 C++ Classes

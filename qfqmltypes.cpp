@@ -7,7 +7,7 @@
 #include "qfappscriptgroup.h"
 #include "priv/qfappscriptrunnable.h"
 #include "qffilter.h"
-#include "qfstringtable.h"
+#include "qfkeytable.h"
 
 static QObject *appDispatcherProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
     Q_UNUSED(engine);
@@ -29,7 +29,7 @@ public:
         qmlRegisterType<QFAppScriptGroup>("QuickFlux", 1, 0, "AppScriptGroup");
         qmlRegisterType<QFAppScriptRunnable>();
         qmlRegisterType<QFFilter>("QuickFlux", 1, 0, "Filter");
-        qmlRegisterType<QFStringTable>("QuickFlux", 1, 0, "StringTable");
+        qmlRegisterType<QFKeyTable>("QuickFlux", 1, 0, "KeyTable");
 
     }
 };
