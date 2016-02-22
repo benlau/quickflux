@@ -6,11 +6,11 @@ Purpose: Demonstrate how to write a QML application in a Flux way.
 File Structure
 --------------
 
-/actions/ActionTypes.qml
-/actions/AppActions.qml
-/views
-/stores/
-/adapters/
+    /actions/ActionTypes.qml
+    /actions/AppActions.qml
+    /stores/
+    /adapters/
+    /views/
 
 **ActionTypes.qml**
 
