@@ -1,9 +1,114 @@
 Todo List Example
 =================
 
-Purpose: Demonstrate the use of Action, Store and AppDispatcher
+Purpose: Demonstrate how to write a QML application in a Flux way.
 
-**Design Principles**
+File Structure
+--------------
+
+/actions/ActionTypes.qml
+/actions/AppActions.qml
+/views
+/stores/
+/adapters/
+
+**ActionTypes.qml**
+
+ActionTypes is a constant table (singleton component) to store all the available action types.
+
+Example:
+
+```
+pragma Singleton
+import QtQuick 2.0
+import QuickFlux 1.0
+
+StringTable {
+    // StringTable is a object with properties equeal to its key name
+
+    property string addTask;
+
+    property string setTaskDone;
+
+    property string setShowCompletedTasks;
+
+}
+```
+
+It is not recommended to name an action by combing sender and event like removeItemButtonClicked.
+It is suggested to tell what users do (e.g. askToRemoveItem) or what it should actually do (e.g. removeItem).
+You may add a prefix of scope to its name if needed. (e.g. itemRemove)
+
+**AppActions.qml**
+
+AppActions is an action creator, a helper component to create and dispatch actions via the central dispatcher. It has no knowledge about the data model and who will use it. As it only depends on AppDispatcher, it could be used anywhere.
+
+AppDispatcher is the central dispatcher. It is also a singleton object. Actions sent by dispatch() function call will be placed on a queue. Then, the Dispatcher will emit a“dispatched” signal.
+
+Moreover, there has a side benefit in using ActionTypes and AppActions. Since they stores all the actions, when a new developer joins the project. He/she may open theses two files and know the entire API.
+
+**Stores**
+
+Stores contain application data, state and logic.
+Somehow it is similar to MVVM's View Model.
+However, Stores are read-only to Views.
+Views could only query data from Stores.
+"Update" should be done via Actions.
+Therefore, the "queries" and "updates" operations are in fact separated.
+
+UserPrefsStore.qml
+
+```
+pragma Singleton
+import QtQuick 2.0
+import QuickFlux 1.0
+import "../actions"
+
+AppListener {
+
+    property bool showCompletedTasks: false
+
+    Filter {
+        // Views do not write to showCompeletedTasks directly.
+        // It asks AppActions.setShowCompletedTasks() to do so.
+        type: ActionTypes.setShowCompletedTasks
+        onDispatched: {
+            showCompletedTasks = message.value;
+        }
+    }
+
+}
+
+```
+
+**Adapter**
+
+Adapter is not an element in Flux application.
+However, we need an adapter to setup data dependence and handle asynchronous event flow across stores due to QTBUG-49370.
+
+[[QTBUG-49370] Use Singleton object from another Singleton object within a same package will hang - Qt Bug Tracker](https://bugreports.qt.io/browse/QTBUG-49370)
+
+To setup the dependencies between stores, it could be done via waitFor property.
+
+StoreAdapter.qml
+
+```
+import QtQuick 2.0
+import "../stores"
+
+Item {
+
+    Component.onCompleted: {
+        TodoStore.waitFor = [UserPrefsStore.listenerId];
+    }
+
+}
+
+```
+
+
+Design Principles
+-----------------
 
 **1. Avoid writing a big QML file. Break down into smaller pieces**
 

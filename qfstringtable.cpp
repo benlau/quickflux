@@ -6,7 +6,7 @@
   \qmltype StringTable
   \brief Defines a string table
 
-  StringTable is a utility component to define a string table. Once it's construction is completed,
+  StringTable is a object with properties equeal to its key name. Once it's construction is completed,
   it will search all of its string property. If it is a string type and not assigned to any value,
   it will set its value by its name. It can be used to create ActionTypes.qml in QuickFlux Application.
 
