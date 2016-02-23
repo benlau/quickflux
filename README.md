@@ -9,7 +9,9 @@ Their code could be more readable and reusable.
 
 Features
 
- 1. Singleton Message Dispatcher / Message Queue per QML Engine.
+ 1. AppDispatcher
+  1. A singleton Message Dispatcher / Message Queue per QML Engine.
+  2. It guarantees the order of messages are arrived in sequence to listeners (First come first served)
  2. Write QML application in a Flux way.
  3. Helper function for C++ code to listen on QML event / obtain QML singleton instance
  4. Helper components for handling asynchronous sequential workflow.
