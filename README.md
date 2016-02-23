@@ -96,6 +96,50 @@ Class Reference
 
 [QuickFlux 1.0 Class Reference](http://benlau.github.io/quickflux/)
 
+FAQ
+===
+
+Q1
+---
+Why use AppDispatcher instead of listening from AppActions directly?
+
+Example:
+```
+import QtQuick 2.2
+pragma Singleton
+
+QtObject {
+
+  signal openItem(string id);
+
+  signal removeItem(string id);
+
+}
+```
+
+ANS: Of course you could implement in this way. However, AppDispatcher offer two advantages over that approach:
+
+1) Avoid out-of-order message processing.
+
+Signal emission in QML is , in fact, on last come, first served basis. If you emit another signal while in a callback, it will process the latest signal immediately. That means the sequence of message processing will be out-of-order.
+However, AppDispatcher will not dispatch a new message while in a callback. It will be placed in a queue until all of the listeners received the current message. So that the order of message is guaranteed to arrive in sequence.
+
+2) Setup dependence between stores.
+
+Quoted from [Why We Need a Dispatcher](https://facebook.github.io/react/blog/2014/07/30/flux-actions-and-the-dispatcher.html#why-we-need-a-dispatcher):
+
+    As an application grows, dependencies across different stores are a near certainty. 
+    Store A will inevitably need Store B to update itself first, so that Store A can know 
+    how to update itself. We need the dispatcher to be able to invoke the callback for Store B, 
+    and finish that callback, before moving forward with Store A. To declaratively assert this 
+    dependency, a store needs to be able to say to the dispatcher, "I need to wait for Store B 
+    to finish processing this action." The dispatcher provides this functionality through its 
+    waitFor() method."
+
+AppListener supports “waitFor” property to setup dependencies on another AppListener. 
+It won't process the emitted signal and wait until the other listener received the message.
+Therefore, you could control the order of message delivary.
+
 Related Projects
 ----------------
  1. [benlau/quickpromise](https://github.com/benlau/quickpromise) - Promise library for QML
