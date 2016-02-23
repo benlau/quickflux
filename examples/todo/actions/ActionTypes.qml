@@ -4,7 +4,7 @@ import QuickFlux 1.0
 
 KeyTable {
 
-    // KeyTable is a object with properties equeal to its key name
+    // KeyTable is an object with properties equal to its key name
 
     property string addTask;
 
