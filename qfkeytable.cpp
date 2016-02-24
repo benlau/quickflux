@@ -4,9 +4,9 @@
 
 /*!
   \qmltype KeyTable
-  \brief Defines a string table
+  \brief Defines a key table
 
-  KeyTable is a object with properties equeal to its key name. Once it's construction is completed,
+  KeyTable is an object with properties equal to its key name. Once it's construction is completed,
   it will search all of its string property. If it is a string type and not assigned to any value,
   it will set its value by its name. It can be used to create ActionTypes.qml in QuickFlux Application.
 
