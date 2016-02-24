@@ -10,8 +10,8 @@
     "url": "https://github.com/benlau/quickflux.git"
   },
   "version": {
-    "label": "1.0.3",
-    "revision": "2",
+    "label": "1.0.4",
+    "revision": "1",
     "fingerprint": ""
   },
   "dependencies": [
