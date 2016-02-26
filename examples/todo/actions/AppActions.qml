@@ -18,7 +18,7 @@ QtObject {
     // Show/hide completed task
     // @Remarks: Unlike other actions, TodoStore do not listen on this
     // message.
-    function showCompleted(value) {
+    function setShowCompletedTasks(value) {
         AppDispatcher.dispatch(ActionTypes.setShowCompletedTasks, {value: value })
     }
 
