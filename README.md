@@ -138,7 +138,7 @@ Quoted from [Why We Need a Dispatcher](https://facebook.github.io/react/blog/201
 
 AppListener supports “waitFor” property to setup dependencies on another AppListener. 
 It won't process the emitted signal and wait until the other listener received the message.
-Therefore, you could control the order of message delivary.
+Therefore, you could control the order of message delivery among stores.
 
 Related Projects
 ----------------
