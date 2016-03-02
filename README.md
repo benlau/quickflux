@@ -11,7 +11,8 @@ Features
 
  1. AppDispatcher
   1. A singleton Message Dispatcher / Message Queue per QML Engine.
-  2. It guarantees the order of messages are arrived in sequence to listeners (First come first served)
+  2. Avoid out-of-order message processing - It guarantees the order of messages are arrived in sequence to listeners (First come first served)
+  3. Support to setup dependence between listeners / stores
  2. Write QML application in a Flux way.
  3. Helper function for C++ code to listen on QML event / obtain QML singleton instance
  4. Helper components for handling asynchronous sequential workflow.
@@ -23,9 +24,10 @@ Generally speaking, you should avoid creating a big QML file.
 Break down into smaller piece of files is more readable and reusable. 
 But it may not true due to event/signal propagation.
 Managing code dependence is very troublesome.
+( See [reason](https://medium.com/@benlaud/action-dispatcher-design-pattern-for-qml-c350b1d2a7e7#.2dpjhcpt1) )
 
-Writing QML in a Flux way is a solution for this problem. 
-Using a global AppDispatcher for communication between components. 
+Using Action and Dispatcher is a solution for this problem
+With a global AppDispatcher for communication between components. 
 It breaks the dependence and simplify your code by taking out unnecessary signal binding. 
 
 This project provides an implementation of dispatcher in QML for user to get started.
@@ -33,13 +35,15 @@ This project provides an implementation of dispatcher in QML for user to get sta
 What is Flux and How to use in QML Application? 
 ===============================================
 
-Please refer to this article for detail : 
-
-[Action-Dispatcher Design Pattern for QML — Medium](https://medium.com/@benlaud/action-dispatcher-design-pattern-for-qml-c350b1d2a7e7#.2dpjhcpt1)
-
-or
+What is Flux?
 
 [A cartoon guide to Flux — Code Cartoons — Medium](https://medium.com/code-cartoons/a-cartoon-guide-to-flux-6157355ab207)
+
+
+How to use in QML Application?
+
+ 1. [QML Application Architecture Guide with Flux — Medium](https://medium.com/@benlaud/qml-application-architecture-guide-with-flux-b4e970374635#.e4g0tzo78)
+ 2. [Action-Dispatcher Design Pattern for QML — Medium](https://medium.com/@benlaud/action-dispatcher-design-pattern-for-qml-c350b1d2a7e7#.2dpjhcpt1)
 
 An example program is available for demonstrate how to write QML application in a Flux way
 [quickflux/examples/todo](https://github.com/benlau/quickflux/tree/master/examples/todo)
