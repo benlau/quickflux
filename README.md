@@ -37,16 +37,14 @@ What is Flux and How to use in QML Application?
 
 What is Flux?
 
-[A cartoon guide to Flux — Code Cartoons — Medium](https://medium.com/code-cartoons/a-cartoon-guide-to-flux-6157355ab207)
+ 1. [A cartoon guide to Flux — Code Cartoons — Medium](https://medium.com/code-cartoons/a-cartoon-guide-to-flux-6157355ab207)
 
-
-How to use in QML Application?
+How to use it in a QML Application?
 
  1. [QML Application Architecture Guide with Flux — Medium](https://medium.com/@benlaud/qml-application-architecture-guide-with-flux-b4e970374635#.e4g0tzo78)
  2. [Action-Dispatcher Design Pattern for QML — Medium](https://medium.com/@benlaud/action-dispatcher-design-pattern-for-qml-c350b1d2a7e7#.2dpjhcpt1)
 
-An example program is available for demonstrate how to write QML application in a Flux way
-[quickflux/examples/todo](https://github.com/benlau/quickflux/tree/master/examples/todo)
+An example program is available at: [quickflux/examples/todo](https://github.com/benlau/quickflux/tree/master/examples/todo)
 
 Installation Instruction (with qpm)
 ===================================
@@ -99,6 +97,13 @@ Class Reference
 ---------------
 
 [QuickFlux 1.0 Class Reference](http://benlau.github.io/quickflux/)
+
+Wish List / Under Development
+---------
+
+ 1. More example code
+ 2. Better C++ integration
+ 3. SignalProxy - Bind signals from a QObject to AppDispatcher
 
 FAQ
 ===
