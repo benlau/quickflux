@@ -154,4 +154,5 @@ Related Projects
  1. [benlau/quickpromise](https://github.com/benlau/quickpromise) - Promise library for QML
  2. [benlau/quickcross](https://github.com/benlau/quickcross) - QML Cross Platform Utility Library
  3. [benlau/qsyncable](https://github.com/benlau/qsyncable) - Synchronize data between models
-
+ 4. [benlau/testable](https://github.com/benlau/testable) - QML Unit Test Utilities
+ 5. [benlau/qtci](https://github.com/benlau/qtci) -  A set of scripts to install Qt in Linux command line environment (e.g travis)
