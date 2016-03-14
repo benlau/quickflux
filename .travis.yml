@@ -12,12 +12,7 @@ before_install:
     - sh -e /etc/init.d/xvfb start
 script:
     - source /opt/qt53/bin/qt53-env.sh 
-    - cd tests/qmlunittests
-    - qmake
-    - make
-    - ls
-    - ./qmlunittests
-    - cd ../quickfluxunittests
+    - cd tests/quickfluxunittests
     - qpm install
     - qmake
     - make

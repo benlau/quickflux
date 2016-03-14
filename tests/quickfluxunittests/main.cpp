@@ -9,6 +9,7 @@ int main(int argc, char *argv[])
 
     TestRunner runner;
     runner.add<QuickFluxUnitTests>();
+    runner.add(QString(SRCDIR) + "/qmltests");
 
     bool error = runner.exec(app.arguments());
 
