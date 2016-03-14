@@ -13,7 +13,8 @@ HEADERS += \
     $$PWD/qfapplistenergroup.h \
     $$PWD/qfappscriptgroup.h \
     $$PWD/qffilter.h \
-    $$PWD/qfkeytable.h
+    $$PWD/qfkeytable.h \
+    $$PWD/priv/qfsignalproxy.h
 
 SOURCES += \
     $$PWD/qfapplistener.cpp \
@@ -26,4 +27,5 @@ SOURCES += \
     $$PWD/qfapplistenergroup.cpp \
     $$PWD/qfappscriptgroup.cpp \
     $$PWD/qffilter.cpp \
-    $$PWD/qfkeytable.cpp
+    $$PWD/qfkeytable.cpp \
+    $$PWD/priv/qfsignalproxy.cpp

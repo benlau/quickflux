@@ -7,8 +7,10 @@
 #include <QQuickWindow>
 #include <QQuickView>
 #include <QQuickItem>
+#include "automator.h"
 #include "qfappdispatcher.h"
 #include "quickfluxunittests.h"
+#include "priv/qfsignalproxy.h"
 
 QuickFluxUnitTests::QuickFluxUnitTests()
 {
@@ -59,5 +61,20 @@ void QuickFluxUnitTests::singletonObject()
 
     QVERIFY(dummyAction);
     QVERIFY(dummyAction->property("value").toInt() == 13);
+}
+
+void QuickFluxUnitTests::signalProxy()
+{
+    QFSignalProxy proxy;
+
+    const QMetaObject* meta = metaObject();
+
+    int idx = meta->indexOfMethod("dummySignal(int,int)");
+
+    proxy.bind(this, idx);
+
+    emit dummySignal(1,999);
+
+
 }
 

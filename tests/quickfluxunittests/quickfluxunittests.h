@@ -10,11 +10,17 @@ class QuickFluxUnitTests : public QObject
 public:
     QuickFluxUnitTests();
 
+signals:
+    void dummySignal(int v1);
+    void dummySignal(int v1,int v2);
+
 private Q_SLOTS:
     void initTestCase();
     void cleanupTestCase();
     void instance();
     void singletonObject();
+
+    void signalProxy();
 };
 
 #endif // QUICKFLUXUNITTESTS_H
