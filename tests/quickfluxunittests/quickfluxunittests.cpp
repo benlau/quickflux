@@ -8,34 +8,21 @@
 #include <QQuickView>
 #include <QQuickItem>
 #include "qfappdispatcher.h"
+#include "quickfluxunittests.h"
 
-class AppDispatcherTests : public QObject
-{
-    Q_OBJECT
-
-public:
-    AppDispatcherTests();
-
-private Q_SLOTS:
-    void initTestCase();
-    void cleanupTestCase();
-    void instance();
-    void singletonObject();
-};
-
-AppDispatcherTests::AppDispatcherTests()
+QuickFluxUnitTests::QuickFluxUnitTests()
 {
 }
 
-void AppDispatcherTests::initTestCase()
+void QuickFluxUnitTests::initTestCase()
 {
 }
 
-void AppDispatcherTests::cleanupTestCase()
+void QuickFluxUnitTests::cleanupTestCase()
 {
 }
 
-void AppDispatcherTests::instance()
+void QuickFluxUnitTests::instance()
 {
     QQmlApplicationEngine engine;
 
@@ -55,7 +42,7 @@ void AppDispatcherTests::instance()
 
 }
 
-void AppDispatcherTests::singletonObject()
+void QuickFluxUnitTests::singletonObject()
 {
     QQmlApplicationEngine engine;
 
@@ -74,11 +61,3 @@ void AppDispatcherTests::singletonObject()
     QVERIFY(dummyAction->property("value").toInt() == 13);
 }
 
-int main(int argc, char *argv[])
-{
-    QCoreApplication app(argc,argv);
-    AppDispatcherTests tc;
-    return QTest::qExec(&tc, argc, argv);
-}
-
-#include "tst_appdispatchertests.moc"

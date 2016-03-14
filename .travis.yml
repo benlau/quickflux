@@ -5,9 +5,10 @@ compiler:
   - gcc
 before_install:
     - sudo add-apt-repository --yes ppa:beineri/opt-qt532
+    - sudo add-apt-repository --yes "deb http://download.opensuse.org/repositories/home:/benlau/xUbuntu_15.10 ./"
     - sudo apt-get update -qq
     - apt-cache search qt5
-    - sudo apt-get install -qq qt53quickcontrols  qt53declarative qt53script qt53graphicaleffects
+    - sudo apt-get install --force-yes -qq qt53quickcontrols  qt53declarative qt53script qt53graphicaleffects qpm
     - sh -e /etc/init.d/xvfb start
 script:
     - source /opt/qt53/bin/qt53-env.sh 
@@ -16,11 +17,12 @@ script:
     - make
     - ls
     - ./qmlunittests
-    - cd ../cppunittests
+    - cd ../quickfluxunittests
+    - qpm install
     - qmake
     - make
     - ls
-    - ./cppunittests
+    - ./quickfluxunittests
     - cd ../../docs
     - export QT_DOCS_STYLE=/opt/qt53/doc/global/html/style/offline.css
     - qdoc quickflux.qdocconf
