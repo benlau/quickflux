@@ -7,18 +7,21 @@ QFSignalProxy::QFSignalProxy(QObject *parent) : QObject(parent)
 
 }
 
-void QFSignalProxy::bind(QObject *source, int signalIdx)
+void QFSignalProxy::bind(QObject *source, int signalIdx, QQmlEngine* engine, QFAppDispatcher* dispatcher)
 {
     const int memberOffset = QObject::staticMetaObject.methodCount();
 
     QMetaMethod method = source->metaObject()->method(signalIdx);
 
-    types = QVector<int>(method.parameterCount());
-    names = QVector<QString>(method.parameterCount());
+    parameterTypes = QVector<int>(method.parameterCount());
+    parameterNames = QVector<QString>(method.parameterCount());
+    type = method.name();
+    m_engine = engine;
+    m_dispatcher = dispatcher;
 
     for (int i = 0 ; i < method.parameterCount() ; i++) {
-        types[i] = method.parameterType(i);
-        names[i] = QString(method.parameterNames().at(i));
+        parameterTypes[i] = method.parameterType(i);
+        parameterNames[i] = QString(method.parameterNames().at(i));
     }
 
     if (!QMetaObject::connect(source, signalIdx, this, memberOffset, Qt::AutoConnection, 0)) {
@@ -39,8 +42,8 @@ int QFSignalProxy::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         if (methodId == 0) {
             QVariantMap message;
 
-            for (int i = 0 ; i < types.count() ; i++) {
-                const QMetaType::Type type = static_cast<QMetaType::Type>(types.at(i));
+            for (int i = 0 ; i < parameterTypes.count() ; i++) {
+                const QMetaType::Type type = static_cast<QMetaType::Type>(parameterTypes.at(i));
                 QVariant v;
 
                 if (type == QMetaType::QVariant) {
@@ -49,12 +52,31 @@ int QFSignalProxy::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
                     v = QVariant(type, _a[i + 1]);
                 }
 
-                message[names.at(i)] = v;
+                message[parameterNames.at(i)] = v;
             }
-            //@TODO - Dispatch message
+
+            dispatch(message);
         }
         methodId--;
     }
 
     return methodId;
+}
+
+void QFSignalProxy::dispatch(const QVariantMap &message)
+{
+    if (m_engine.isNull() || m_dispatcher.isNull()) {
+        return;
+    }
+
+    QJSValue value = m_engine->newObject();
+
+    QMapIterator<QString, QVariant> iter(message);
+    while (iter.hasNext()) {
+        iter.next();
+        QJSValue v = m_engine->toScriptValue<QVariant>(iter.value());
+        value.setProperty(iter.key(), v);
+    }
+
+    m_dispatcher->dispatch(type, value);
 }

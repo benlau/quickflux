@@ -7,6 +7,7 @@
 #include <QQuickWindow>
 #include <QQuickView>
 #include <QQuickItem>
+#include <QSignalSpy>
 #include "automator.h"
 #include "qfappdispatcher.h"
 #include "quickfluxunittests.h"
@@ -65,16 +66,40 @@ void QuickFluxUnitTests::singletonObject()
 
 void QuickFluxUnitTests::signalProxy()
 {
+
+    QQmlApplicationEngine engine;
+
+    engine.addImportPath("qrc:/");
+
+    QUrl url("qrc:///dummy.qml");
+    engine.load(url);
+
     QFSignalProxy proxy;
 
     const QMetaObject* meta = metaObject();
 
     int idx = meta->indexOfMethod("dummySignal(int,int)");
 
-    proxy.bind(this, idx);
+    QFAppDispatcher *dispatcher = QFAppDispatcher::instance(&engine);
+
+    QSignalSpy spy(dispatcher,SIGNAL(dispatched(QString,QJSValue)));
+    QVERIFY(spy.count() == 0);
+
+    proxy.bind(this, idx, &engine, dispatcher);
 
     emit dummySignal(1,999);
 
+    QCOMPARE(spy.count(), 1);
+
+    QVariantList list = spy[0];
+    QVERIFY(list.size() == 2);
+
+    QString type = list.at(0).toString();
+    QVERIFY(type == "dummySignal");
+
+    QJSValue message = list.at(1).value<QJSValue>();
+    QCOMPARE(message.property("v1").toInt(), 1);
+    QCOMPARE(message.property("v2").toInt(), 999);
 
 }
 
