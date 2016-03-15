@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QVariant>
 #include <QQmlEngine>
+#include <QVector>
+#include <QPointer>
 #include "qfappdispatcher.h"
 
 class QFSignalProxy : public QObject

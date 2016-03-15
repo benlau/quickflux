@@ -38,4 +38,5 @@ DISTFILES += \
     qmltests/tst_appscriptgroup.qml \
     qmltests/tst_filter.qml \
     qmltests/tst_keytable.qml \
-    qmltests/tst_qimage.qml
+    qmltests/tst_qimage.qml \
+    qmltests/tst_actioncreator.qml
