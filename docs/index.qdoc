@@ -14,6 +14,7 @@ QML Components
     \li \l AppScriptGroup
     \li \l Filter
     \li \l KeyTable
+    \li \l ActionCreator
 \endlist
 
 C++ Classes

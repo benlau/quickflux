@@ -5,6 +5,40 @@
 #include "priv/qfsignalproxy.h"
 #include "qfappdispatcher.h"
 
+/*!
+  \qmltype ActionCreator
+  \brief Create message from signal then dispatch via AppDispatcher
+
+ActionCreator is a helper component that listens on its own signal, convert it to message then dispatch via AppDispatcher. The message type will be same as the signal name. There has no limitation on number of arguments and data type.
+
+For example, you may declare an ActionCreator based component as:
+
+\code
+import QtQuick 2.0
+import QuickFlux 1.0
+pragma singleton
+
+ActionCreator {
+   signal open(string url);
+}
+\endcode
+
+It is equivalent to:
+
+\code
+import QtQuick 2.0
+import QuickFlux 1.0
+pragma singleton
+
+Item {
+   function open(url) {
+     AppDispatcher.dispatch(“open”, {url: url});
+   }
+}
+\endcode
+
+ */
+
 QFActionCreator::QFActionCreator(QObject *parent) : QObject(parent)
 {
 
