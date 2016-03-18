@@ -12,6 +12,7 @@
 #include "qfappdispatcher.h"
 #include "quickfluxunittests.h"
 #include "priv/qfsignalproxy.h"
+#include "automator.h"
 
 QuickFluxUnitTests::QuickFluxUnitTests()
 {
@@ -100,6 +101,52 @@ void QuickFluxUnitTests::signalProxy()
     QJSValue message = list.at(1).value<QJSValue>();
     QCOMPARE(message.property("v1").toInt(), 1);
     QCOMPARE(message.property("v2").toInt(), 999);
+
+}
+
+void QuickFluxUnitTests::dispatch_qvariant()
+{
+    QQmlApplicationEngine engine;
+
+    engine.addImportPath("qrc:/");
+
+    QUrl url("qrc:///QuickFluxTests/DispatcherTests.qml");
+    engine.load(url);
+
+    Automator automator(&engine);
+
+    QObject* root = automator.findObject("DispatcherTests");
+
+    QVERIFY(root);
+
+    QFAppDispatcher* dispatcher = QFAppDispatcher::instance(&engine);
+    dispatcher->dispatch("test1", QVariant(123));
+
+    QVariantList list = root->property("messages").toList();
+    QCOMPARE(list.count() , 1);
+    QVariantList item = list.at(0).toList();
+    QString type = item.at(0).toString();
+    QVariant v = item.at(1);
+
+    QVERIFY(type == "test1");
+    QCOMPARE(v.toInt(), 123);
+
+    QVariantMap message;
+    message["v1"] = 1;
+    message["v2"] = "2";
+    message["v3"] = 3.0;
+
+    dispatcher->dispatch("test2", message);
+
+    list = root->property("messages").toList();
+    QCOMPARE(list.count() , 2);
+
+    item = list.at(1).toList();
+    type = item.at(0).toString();
+    v = item.at(1);
+
+    QVERIFY(type == "test2");
+    QVERIFY(v.toMap() == message);
 
 }
 

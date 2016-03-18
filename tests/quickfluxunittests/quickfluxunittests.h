@@ -18,9 +18,12 @@ private Q_SLOTS:
     void initTestCase();
     void cleanupTestCase();
     void instance();
+
     void singletonObject();
 
     void signalProxy();
+
+    void dispatch_qvariant();
 };
 
 #endif // QUICKFLUXUNITTESTS_H

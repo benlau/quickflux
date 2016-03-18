@@ -216,6 +216,18 @@ void QFAppDispatcher::removeListener(int id)
     }
 }
 
+void QFAppDispatcher::dispatch(const QString &type, const QVariant &message)
+{
+    if (m_engine.isNull()) {
+        qWarning() << "QFAppDispatcher::dispatch() - Unexpected error: engine is not available.";
+        return;
+    }
+
+    QJSValue value = m_engine->toScriptValue<QVariant>(message);
+
+    dispatch(type, value);
+}
+
 /*! \fn QFAppDispatcher *QFAppDispatcher::instance(QQmlEngine *engine)
 
   \a engine The instance of QQmlEngine
@@ -318,5 +330,15 @@ void QFAppDispatcher::invokeListeners(QList<int> ids)
             listener->dispatch(this,dispatchingMessageType,dispatchingMessage);
         }
     }
+}
+
+QQmlEngine *QFAppDispatcher::engine() const
+{
+    return m_engine.data();
+}
+
+void QFAppDispatcher::setEngine(QQmlEngine *engine)
+{
+    m_engine = engine;
 }
 

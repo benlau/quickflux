@@ -7,8 +7,8 @@
 #include <QQueue>
 #include <QPair>
 #include <QQmlEngine>
+#include <QPointer>
 #include "priv/qflistener.h"
-
 
 /// Message Dispatcher
 
@@ -48,6 +48,8 @@ public slots:
 
 public:
 
+    void dispatch(const QString& type, const QVariant& message);
+
     int addListener(QFListener* listener);
 
     /// Obtain the singleton instance of AppDispatcher for specific QQmlEngine
@@ -59,6 +61,10 @@ public:
                                     int versionMinor,
                                     QString typeName);
 
+    QQmlEngine *engine() const;
+
+    void setEngine(QQmlEngine *engine);
+
 private:
 
     void emitDispatched(QString type,QJSValue message);
@@ -66,6 +72,8 @@ private:
     void invokeListeners(QList<int> ids);
 
     bool m_dispatching;
+
+    QPointer<QQmlEngine> m_engine;
 
     // Queue for dispatching messages
     QQueue<QPair<QString,QJSValue > > m_queue;

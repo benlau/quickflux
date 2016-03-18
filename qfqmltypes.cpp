@@ -15,6 +15,7 @@ static QObject *appDispatcherProvider(QQmlEngine *engine, QJSEngine *scriptEngin
     Q_UNUSED(scriptEngine);
 
     QFAppDispatcher* object = new QFAppDispatcher();
+    object->setEngine(engine);
 
     return object;
 }
