@@ -69,6 +69,13 @@ Component.onCompleted: {
 
  */
 
+/*! \fn QFAppDispatcher::dispatched(QString type,QJSValue message)
+
+  This signal is emitted when a message is ready to dispatch by AppDispatcher.
+
+ */
+
+
 /*!
   \class QFAppDispatcher
   \inmodule QuickFlux
@@ -215,6 +222,15 @@ void QFAppDispatcher::removeListener(int id)
         m_listeners.remove(id);
     }
 }
+
+
+/*! \fn QFAppDispatcher::dispatch(const QString& type, const QVariant& message)
+
+  Dispatch a message with type via the AppDispatcher.
+  The message will be placed on a queue and delivery via the "dispatched" signal.
+  Listeners may listen on the "dispatched" signal directly,
+  or using helper components like AppListener / AppScript to capture signal.
+ */
 
 void QFAppDispatcher::dispatch(const QString &type, const QVariant &message)
 {
