@@ -103,8 +103,8 @@ Wish List / Under Development
 
  1. More example code
  2. Better C++ integration
- 3. SignalProxy - Bind signals from a QObject to AppDispatcher
-
+  1. Code generator to convert KeyTable to C++ friendly class.
+  
 FAQ
 ===
 
