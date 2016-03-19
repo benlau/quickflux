@@ -9,7 +9,7 @@
   \qmltype ActionCreator
   \brief Create message from signal then dispatch via AppDispatcher
 
-ActionCreator is a helper component that listens on its own signal, convert it to message then dispatch via AppDispatcher. The message type will be same as the signal name. There has no limitation on number of arguments and data type.
+ActionCreator is a component that listens on its own signal, convert to message then dispatch via AppDispatcher. The message type will be same as the signal name. There has no limitation on number of arguments and their data type.
 
 For example, you may declare an ActionCreator based component as:
 
