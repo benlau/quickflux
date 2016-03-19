@@ -246,9 +246,7 @@ void QFAppDispatcher::dispatch(const QString &type, const QVariant &message)
 
 /*! \fn QFAppDispatcher *QFAppDispatcher::instance(QQmlEngine *engine)
 
-  \a engine The instance of QQmlEngine
-
-  Obtain the singleton instance of AppDispatcher for specific QQmlEngine
+  Obtain the singleton instance of AppDispatcher for specific \a engine
 
  */
 
@@ -348,10 +346,22 @@ void QFAppDispatcher::invokeListeners(QList<int> ids)
     }
 }
 
+/*! \fn QQmlEngine *QFAppDispatcher::engine() const
+
+  Obtain the associated engine to this dispatcher.
+
+ */
+
 QQmlEngine *QFAppDispatcher::engine() const
 {
     return m_engine.data();
 }
+
+/*! \fn QFAppDispatcher::setEngine(QQmlEngine *engine)
+
+  Set the associated \a engine. It is private API. Do not call it.
+
+ */
 
 void QFAppDispatcher::setEngine(QQmlEngine *engine)
 {
