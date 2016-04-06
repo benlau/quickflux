@@ -24,6 +24,8 @@ private Q_SLOTS:
     void signalProxy();
 
     void dispatch_qvariant();
+
+    void keyTable();
 };
 
 #endif // QUICKFLUXUNITTESTS_H

@@ -13,14 +13,16 @@ DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 SOURCES += main.cpp \
     quickfluxunittests.cpp \
-    testenv.cpp
+    testenv.cpp \
+    actiontypes.cpp
 
 include(vendor/vendor.pri)
 include(../../quickflux.pri)
 
 HEADERS += \
     quickfluxunittests.h \
-    testenv.h
+    testenv.h \
+    actiontypes.h
 
 RESOURCES += \
     qml.qrc

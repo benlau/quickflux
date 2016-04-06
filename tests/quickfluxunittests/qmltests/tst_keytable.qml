@@ -28,6 +28,11 @@ TestCase {
 
     }
 
+    function test_code_generator() {
+
+        console.log(table1.genHeaderFile("ActionTypes"));
+        console.log(table1.genSourceFile("ActionTypes","actiontypes.h"));
+    }
 
 }
 
