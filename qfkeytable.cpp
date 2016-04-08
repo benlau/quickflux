@@ -29,6 +29,14 @@ KeyTable {
 
  */
 
+static QMap<int,QString> createTypes() {
+    QMap<int,QString> types;
+    types[QVariant::String] = "QString";
+    types[QVariant::Int] = "int";
+
+    return types;
+}
+
 QFKeyTable::QFKeyTable(QObject *parent) : QObject(parent)
 {
 
@@ -46,16 +54,21 @@ QString QFKeyTable::genHeaderFile(const QString& className)
 
     const QMetaObject* meta = metaObject();
 
+    QMap<int,QString> types = createTypes();
+
     int count = meta->propertyCount();
     for (int i = 0 ; i < count ; i++) {
         const QMetaProperty p = meta->property(i);
+
         QString name(p.name());
-        if (p.type() != QVariant::String ||
-            name == "objectName") {
+
+        if (name == "objectName") {
             continue;
         }
 
-        header << QString("    static QString %1;\n").arg(p.name());
+        if (types.contains(p.type())) {
+            header << QString("    static %2 %1;\n").arg(name).arg(types[p.type()]);
+        }
 
     }
 
@@ -66,6 +79,8 @@ QString QFKeyTable::genHeaderFile(const QString& className)
 
 QString QFKeyTable::genSourceFile(const QString &className, const QString &headerFile)
 {
+    QMap<int,QString> types = createTypes();
+
     QStringList source;
 
     source << QString("#include \"%1\"\n").arg(headerFile);
@@ -76,14 +91,29 @@ QString QFKeyTable::genSourceFile(const QString &className, const QString &heade
     for (int i = 0 ; i < count ; i++) {
         const QMetaProperty p = meta->property(i);
         QString name(p.name());
-        if (p.type() != QVariant::String ||
-            name == "objectName") {
+        if (name == "objectName") {
             continue;
         }
 
-        QVariant v = property(p.name());
+        if (types.contains(p.type())) {
+            QVariant v = property(p.name());
 
-        source << QString("QString %1::%2 = \"%3\";\n").arg(className).arg(p.name()).arg(v.toString());
+            if (p.type() == QVariant::String) {
+                source << QString("%4 %1::%2 = \"%3\";\n")
+                          .arg(className)
+                          .arg(p.name())
+                          .arg(v.toString())
+                          .arg(types[p.type()]);
+
+            } else {
+
+                source << QString("%4 %1::%2 = %3;\n")
+                          .arg(className)
+                          .arg(p.name())
+                          .arg(v.toString())
+                          .arg(types[p.type()]);
+            }
+        }
     }
 
     return source.join("\n");

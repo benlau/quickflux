@@ -8,6 +8,8 @@ public:
 
     static QString value1;
 
+    static int value2;
+
     static QString value3;
 
     static QString custom;
