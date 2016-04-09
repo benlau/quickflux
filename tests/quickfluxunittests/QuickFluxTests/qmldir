@@ -1,1 +1,3 @@
-singleton DummyAction 3.2 DummyAction.qml
+module QuickFluxTests
+singleton DummyAction 1.0 DummyAction.qml
+singleton ActionTypes 1.0 ActionTypes.qml

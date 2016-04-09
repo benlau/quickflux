@@ -4,5 +4,6 @@
         <file>QuickFluxTests/DummyAction.qml</file>
         <file>QuickFluxTests/qmldir</file>
         <file>QuickFluxTests/DispatcherTests.qml</file>
+        <file>QuickFluxTests/ActionTypes.qml</file>
     </qresource>
 </RCC>

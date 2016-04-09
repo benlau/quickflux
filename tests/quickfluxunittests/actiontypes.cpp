@@ -2,8 +2,14 @@
 
 QString ActionTypes::value1 = "value1";
 
-int ActionTypes::value2 = 0;
+int ActionTypes::value2 = 2;
 
-QString ActionTypes::value3 = "value3";
+qreal ActionTypes::value3 = 3.2999999999999998;
 
-QString ActionTypes::custom = "customValue";
+bool ActionTypes::value4 = true;
+
+bool ActionTypes::value4b = false;
+
+QPointF ActionTypes::value5 = QPointF(5,6);
+
+QRectF ActionTypes::value6 = QRect(6,7,8,9);

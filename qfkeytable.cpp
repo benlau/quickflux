@@ -34,6 +34,9 @@ static QMap<int,QString> createTypes() {
     types[QVariant::String] = "QString";
     types[QVariant::Int] = "int";
     types[QVariant::Double] = "qreal";
+    types[QVariant::Bool] = "bool";
+    types[QVariant::PointF] = "QPointF";
+    types[QVariant::RectF] = "QRectF";
 
     return types;
 }
@@ -47,11 +50,15 @@ QString QFKeyTable::genHeaderFile(const QString& className)
 {
 
     QStringList header;
+    QStringList clazz;
+    bool includedPointHeader = false;
+    bool includedRectHeader = false;
 
     header << "#pragma once";
     header << "#include <QString>\n";
-    header << QString("class %1 {\n").arg(className);
-    header << "public:\n";
+
+    clazz << QString("class %1 {\n").arg(className);
+    clazz << "public:\n";
 
     const QMetaObject* meta = metaObject();
 
@@ -68,14 +75,25 @@ QString QFKeyTable::genHeaderFile(const QString& className)
         }
 
         if (types.contains(p.type())) {
-            header << QString("    static %2 %1;\n").arg(name).arg(types[p.type()]);
+            clazz << QString("    static %2 %1;\n").arg(name).arg(types[p.type()]);
+
+            if (p.type() == QVariant::PointF && !includedPointHeader) {
+                includedPointHeader = true;
+                header << "#include <QPointF>";
+            } else if (p.type() == QVariant::RectF && !includedRectHeader) {
+                includedRectHeader = true;
+                header << "#include <QRectF>";
+            }
         }
 
     }
 
-    header << "};\n";
+    clazz << "};\n";
 
-    return header.join("\n");
+    QStringList content;
+    content << header << clazz;
+
+    return content.join("\n");
 }
 
 QString QFKeyTable::genSourceFile(const QString &className, const QString &headerFile)
@@ -105,6 +123,27 @@ QString QFKeyTable::genSourceFile(const QString &className, const QString &heade
                           .arg(p.name())
                           .arg(v.toString())
                           .arg(types[p.type()]);
+
+            } else if (p.type() == QVariant::PointF) {
+                QPointF pt = v.toPointF();
+
+                source << QString("QPointF %1::%2 = QPointF(%3,%4);\n")
+                          .arg(className)
+                          .arg(p.name())
+                          .arg(pt.x())
+                          .arg(pt.y());
+
+            } else if (p.type() == QVariant::RectF) {
+
+                QRectF rect = v.toRectF();
+
+                source << QString("QRectF %1::%2 = QRect(%3,%4,%5,%6);\n")
+                          .arg(className)
+                          .arg(p.name())
+                          .arg(rect.x())
+                          .arg(rect.y())
+                          .arg(rect.width())
+                          .arg(rect.height());
 
             } else {
 
