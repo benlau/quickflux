@@ -14,4 +14,6 @@ public:
 
     static QString custom;
 
+    static qreal value4;
+
 };

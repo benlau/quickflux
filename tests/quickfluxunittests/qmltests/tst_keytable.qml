@@ -16,6 +16,8 @@ TestCase {
         property string value3;
 
         property string custom: "customValue";
+
+        property real value4 : 5.5;
     }
 
 

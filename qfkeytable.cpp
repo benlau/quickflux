@@ -33,6 +33,7 @@ static QMap<int,QString> createTypes() {
     QMap<int,QString> types;
     types[QVariant::String] = "QString";
     types[QVariant::Int] = "int";
+    types[QVariant::Double] = "qreal";
 
     return types;
 }
