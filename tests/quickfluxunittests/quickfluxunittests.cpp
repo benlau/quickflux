@@ -8,8 +8,8 @@
 #include <QQuickView>
 #include <QQuickItem>
 #include <QSignalSpy>
+#include <QFAppDispatcher>
 #include "automator.h"
-#include "qfappdispatcher.h"
 #include "quickfluxunittests.h"
 #include "priv/qfsignalproxy.h"
 #include "automator.h"

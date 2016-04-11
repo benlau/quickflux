@@ -21,4 +21,5 @@ script:
     - cd ../../docs
     - export QT_DOCS_STYLE=/opt/qt53/doc/global/html/style/offline.css
     - qdoc quickflux.qdocconf
+    - git diff
    
