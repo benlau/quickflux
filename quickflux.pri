@@ -16,7 +16,8 @@ HEADERS += \
     $$PWD/qfkeytable.h \
     $$PWD/priv/qfsignalproxy.h \
     $$PWD/qfactioncreator.h \
-    $$PWD/QFAppDispatcher
+    $$PWD/QFAppDispatcher \
+    $$PWD/QFKeyTable
 
 SOURCES += \
     $$PWD/qfapplistener.cpp \

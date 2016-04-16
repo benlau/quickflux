@@ -9,12 +9,12 @@
 #include <QQuickItem>
 #include <QSignalSpy>
 #include <QFAppDispatcher>
+#include <QFKeyTable>
 #include "automator.h"
 #include "quickfluxunittests.h"
 #include "priv/qfsignalproxy.h"
 #include "automator.h"
 #include "actiontypes.h"
-#include "qfkeytable.h"
 
 QuickFluxUnitTests::QuickFluxUnitTests()
 {
