@@ -26,6 +26,8 @@ private Q_SLOTS:
     void dispatch_qvariant();
 
     void keyTable();
+
+    void actionCreator();
 };
 
 #endif // QUICKFLUXUNITTESTS_H

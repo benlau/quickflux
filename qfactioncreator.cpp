@@ -44,6 +44,37 @@ QFActionCreator::QFActionCreator(QObject *parent) : QObject(parent)
 
 }
 
+QString QFActionCreator::genKeyTable()
+{
+    QStringList imports, header, footer, properties;
+
+    imports << "pragma Singleton"
+            << "import QtQuick 2.0"
+            << "import QuickFlux 1.0\n";
+
+    header << "KeyTable {\n";
+
+    footer <<  "}";
+
+    const int memberOffset = QObject::staticMetaObject.methodCount();
+
+    const QMetaObject* meta = metaObject();
+
+    int count = meta->methodCount();
+
+    for (int i = memberOffset ; i < count ;i++) {
+        QMetaMethod method = meta->method(i);
+        if (method.methodType() == QMetaMethod::Signal) {
+            properties << QString("    property string %1;\n").arg(QString(method.name()));
+        }
+    }
+
+    QStringList content;
+    content << imports << header << properties << footer;
+
+    return content.join("\n");
+}
+
 void QFActionCreator::classBegin()
 {
 

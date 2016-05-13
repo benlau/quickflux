@@ -1,3 +1,5 @@
 module QuickFluxTests
 singleton DummyAction 1.0 DummyAction.qml
 singleton ActionTypes 1.0 ActionTypes.qml
+singleton AppActions 1.0 AppActions.qml
+singleton AppActionsKeyTable 1.0 AppActionsKeyTable.qml

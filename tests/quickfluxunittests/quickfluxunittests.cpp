@@ -15,6 +15,7 @@
 #include "priv/qfsignalproxy.h"
 #include "automator.h"
 #include "actiontypes.h"
+#include "qfactioncreator.h"
 
 QuickFluxUnitTests::QuickFluxUnitTests()
 {
@@ -204,5 +205,32 @@ void QuickFluxUnitTests::keyTable()
     QVERIFY(ActionTypes::value5 == QPointF(5,6));
     QVERIFY(ActionTypes::value6 == QRectF(6,7,8,9));
 
+}
+
+void QuickFluxUnitTests::actionCreator()
+{
+    QQmlApplicationEngine engine;
+    engine.addImportPath("qrc:///");
+
+    QFActionCreator* actionCreator = qobject_cast<QFActionCreator*>(QFAppDispatcher::singletonObject(&engine, "QuickFluxTests" , 1,0,"AppActions"));
+
+    QVERIFY(actionCreator);
+
+    QString content = actionCreator->genKeyTable();
+
+    QString output = QString(SRCDIR) + "/QuickFluxTests/AppActionsKeyTable.qml";
+
+    QFile file(output);
+
+    QVERIFY(file.open(QIODevice::WriteOnly));
+
+    file.write(content.toLocal8Bit());
+    file.close();
+
+    QObject* keyTable = QFAppDispatcher::singletonObject(&engine, "QuickFluxTests",1,0,"AppActionsKeyTable");
+
+    QVERIFY(keyTable);
+    QVERIFY(keyTable->property("test1").toString() == "test1");
+    QVERIFY(keyTable->property("test2").toString() == "test2");
 }
 

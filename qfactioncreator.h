@@ -12,6 +12,9 @@ class QFActionCreator : public QObject, public QQmlParserStatus
 public:
     explicit QFActionCreator(QObject *parent = 0);
 
+public slots:
+    QString genKeyTable();
+
 protected:
     void classBegin();
     void componentComplete();
