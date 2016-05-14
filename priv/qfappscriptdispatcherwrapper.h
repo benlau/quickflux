@@ -5,7 +5,7 @@
 #include <QPointer>
 #include "qfappdispatcher.h"
 
-class QFAppScriptDispatcherWrapper : public QQuickItem
+class QFAppScriptDispatcherWrapper : public QObject
 {
     Q_OBJECT
 public:
