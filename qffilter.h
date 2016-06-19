@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QQmlParserStatus>
 #include <QJSValue>
+#include <QVariant>
 
 // Filter represents a filter rule in AppListener
 
@@ -31,6 +32,7 @@ protected:
 
 private slots:
     void filter(QString type, QJSValue message);
+    void filter(QString type, QVariant message);
 
 private:
     QString m_type;

@@ -87,12 +87,22 @@ void QFFilter::componentComplete()
     QObject* object = parent();
 
     if (!object) {
-        qDebug() << "Filter - Disabled due to missing parent. ";
+        qDebug() << "Filter - Disabled due to missing parent.";
         return;
     }
 
-    connect(object,SIGNAL(dispatched(QString,QJSValue)),
-            this,SLOT(filter(QString,QJSValue)));
+    const QMetaObject* meta = object->metaObject();
+
+    if (meta->indexOfSignal("dispatched(QString,QJSValue)") >= 0) {
+        connect(object,SIGNAL(dispatched(QString,QJSValue)),
+                this,SLOT(filter(QString,QJSValue)));
+    } else if (meta->indexOfSignal("dispatched(QString,QVariant)") >= 0) {
+        connect(object,SIGNAL(dispatched(QString,QVariant)),
+                this,SLOT(filter(QString,QVariant)));
+    } else {
+        qDebug() << "Filter - Disabled due to missing dispatched signal in parent object.";
+        return;
+    }
 
 }
 
@@ -100,5 +110,12 @@ void QFFilter::filter(QString type, QJSValue message)
 {
     if (type == m_type) {
         emit dispatched(type, message);
+    }
+}
+
+void QFFilter::filter(QString type, QVariant message)
+{
+    if (type == m_type) {
+        emit dispatched(type, message.value<QJSValue>());
     }
 }
