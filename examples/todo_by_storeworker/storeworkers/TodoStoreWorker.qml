@@ -3,9 +3,7 @@ import QuickFlux 1.0
 import "../stores"
 import "../actions"
 
-Item {
-
-    signal dispatched(string type, var message)
+StoreWorker {
 
     Filter {
 

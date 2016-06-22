@@ -3,7 +3,7 @@ import QuickFlux 1.0
 import "../stores"
 import "../actions"
 
-AppListener {
+StoreWorker {
 
     Filter {
         // Views do not write to showCompeletedTasks directly.

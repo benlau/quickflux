@@ -18,7 +18,7 @@ AppListener {
     }
 
     onDispatched: {
-        var workers = container.children;
+        var workers = container.data;
 
         for (var i in workers) {
             workers[i].dispatched(type, message);
