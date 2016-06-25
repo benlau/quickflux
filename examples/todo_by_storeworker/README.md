@@ -9,13 +9,13 @@ A workaround solution is to use an StoreAdapter out of stores package to initial
 StoreAdapter {
  Binding {
    target: BStore
-   property: BStore.aStoreValue1
+   property: "aStoreValue1"
    value: AStore.value1
  }
 
  Binding {
    target: BStore
-   property: BStore.aStoreValue2
+   property: "aStoreValue2"
    value: AStore.value2
  }
 
