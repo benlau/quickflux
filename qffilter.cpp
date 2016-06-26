@@ -50,7 +50,7 @@ for above problem.
 /*!
   \qmlsignal Filter::dispatched(string type, object message)
 
-  It is a proxy of parent's dispatched signal. If the parent emits a signal matched by the Filter::type property,
+  It is a proxy of parent's dispatched signal. If the parent emits a signal matched with the Filter::type / Filter::types property,
   it will emit this signal
  */
 
@@ -62,19 +62,37 @@ QFFilter::QFFilter(QObject *parent) : QObject(parent)
 
 /*! \qmlproperty string Filter::type
 
-  Set a filter to incoming messages. Only message with type matched by the filter will emit "dispatched" signal.
+  These types determine the filtering rule for incoming message. Only type matched will emit the "dispatched" signal.
+
+\code
+  AppListener {
+    Filter {
+      type: "action1"
+      onDispatched: {
+        // handle the action
+      }
+    }
+  }
+\endcode
+
+\sa Filter::types
  */
 
 
 QString QFFilter::type() const
 {
-    return m_type;
+    if (m_types.size() == 0) {
+        return "";
+    } else {
+        return m_types[0];
+    }
 }
 
 void QFFilter::setType(const QString &type)
 {
-    m_type = type;
+    m_types = QStringList() << type;
     emit typeChanged();
+    emit typesChanged();
 }
 
 void QFFilter::classBegin()
@@ -108,14 +126,44 @@ void QFFilter::componentComplete()
 
 void QFFilter::filter(QString type, QJSValue message)
 {
-    if (type == m_type) {
+    if (m_types.indexOf(type) >= 0) {
         emit dispatched(type, message);
     }
 }
 
 void QFFilter::filter(QString type, QVariant message)
 {
-    if (type == m_type) {
+    if (m_types.indexOf(type) >= 0) {
         emit dispatched(type, message.value<QJSValue>());
     }
+}
+
+/*! \qmlproperty array Filter::types
+
+  These types determine the filtering rule for incoming message. Only type matched will emit the "dispatched" signal.
+
+\code
+  AppListener {
+    Filter {
+      types: ["action1", "action2"]
+      onDispatched: {
+        // handle the action
+      }
+    }
+  }
+\endcode
+
+\sa Filter::type
+
+ */
+
+
+QStringList QFFilter::types() const
+{
+    return m_types;
+}
+
+void QFFilter::setTypes(const QStringList &types)
+{
+    m_types = types;
 }

@@ -64,6 +64,34 @@ TestCase {
 
     }
 
+    AppListener {
+
+        id: listener3
+        property int count: 0
+
+        property var messages: ([]);
+
+        Filter {
+            id: filter3
+            types: ["action1" , "action2"]
+            onDispatched: {
+                listener3.count++;
+                listener3.messages.push(type);
+            }
+        }
+    }
+
+    function test_types() {
+        listener3.count = 0;
+        AppDispatcher.dispatch("action1");
+        compare(listener3.count, 1);
+        AppDispatcher.dispatch("action2");
+        compare(listener3.count, 2);
+        AppDispatcher.dispatch("action3");
+        compare(listener3.count, 2);
+        compare(listener3.messages, ["action1", "action2"]);
+    }
+
 
 }
 

@@ -12,6 +12,7 @@ class QFFilter : public QObject, public QQmlParserStatus
 {
     Q_OBJECT
     Q_PROPERTY(QString type READ type WRITE setType NOTIFY typeChanged)
+    Q_PROPERTY(QStringList types READ types WRITE setTypes NOTIFY typesChanged)
     Q_INTERFACES(QQmlParserStatus)
 
 public:
@@ -21,10 +22,16 @@ public:
 
     void setType(const QString &type);
 
+    QStringList types() const;
+
+    void setTypes(const QStringList &types);
+
 signals:
     void dispatched(QString type, QJSValue message);
 
     void typeChanged();
+
+    void typesChanged();
 
 protected:
     void classBegin();
@@ -35,7 +42,7 @@ private slots:
     void filter(QString type, QVariant message);
 
 private:
-    QString m_type;
+    QStringList m_types;
 };
 
 #endif // QFFILTER_H
