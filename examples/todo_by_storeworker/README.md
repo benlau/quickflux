@@ -141,3 +141,6 @@ The benefit of using StoreWorker
  * Update logic is centralized in a place and it could update multiple store in a single process.
  * You could control the order of message delivery to StoreWorker by an sequential array
 
+In fact, StoreWorker is inspired by the Redux framework. It modify the original Flux application structure by reducing the no. of stores into one. And it takes out update logic from store to a set of component called reducer.
+
+StoreWorker is somehow similar to reducer. Both of them hold the update logic. The different is a reducer take a state object (data model in store) as input and return a new state object. It don’t update store directly. Multiple reducer is usually chained and only the final result will be taken to update store. Therefore, StoreWorker is not same as reducer.
