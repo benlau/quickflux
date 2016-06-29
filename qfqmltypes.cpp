@@ -10,7 +10,8 @@
 #include "qfkeytable.h"
 #include "qfactioncreator.h"
 
-static QObject *appDispatcherProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
+static QObject *appDispatcherProvider(QQmlEngine *engine, QJSEngine *scriptEngine)
+{
     Q_UNUSED(engine);
     Q_UNUSED(scriptEngine);
 
@@ -20,20 +21,17 @@ static QObject *appDispatcherProvider(QQmlEngine *engine, QJSEngine *scriptEngin
     return object;
 }
 
-class QFQmlTypes {
+static void registerTypes()
+{
+    qmlRegisterSingletonType<QFAppDispatcher>("QuickFlux", 1, 0, "AppDispatcher", appDispatcherProvider);
+    qmlRegisterType<QFAppListener>("QuickFlux", 1, 0, "AppListener");
+    qmlRegisterType<QFAppScript>("QuickFlux", 1, 0, "AppScript");
+    qmlRegisterType<QFAppListenerGroup>("QuickFlux", 1, 0, "AppListenerGroup");
+    qmlRegisterType<QFAppScriptGroup>("QuickFlux", 1, 0, "AppScriptGroup");
+    qmlRegisterType<QFAppScriptRunnable>();
+    qmlRegisterType<QFFilter>("QuickFlux", 1, 0, "Filter");
+    qmlRegisterType<QFKeyTable>("QuickFlux", 1, 0, "KeyTable");
+    qmlRegisterType<QFActionCreator>("QuickFlux", 1, 0, "ActionCreator");
+}
 
-public:
-    QFQmlTypes() {
-        qmlRegisterSingletonType<QFAppDispatcher>("QuickFlux", 1, 0, "AppDispatcher", appDispatcherProvider);
-        qmlRegisterType<QFAppListener>("QuickFlux", 1, 0, "AppListener");
-        qmlRegisterType<QFAppScript>("QuickFlux", 1, 0, "AppScript");
-        qmlRegisterType<QFAppListenerGroup>("QuickFlux", 1, 0, "AppListenerGroup");
-        qmlRegisterType<QFAppScriptGroup>("QuickFlux", 1, 0, "AppScriptGroup");
-        qmlRegisterType<QFAppScriptRunnable>();
-        qmlRegisterType<QFFilter>("QuickFlux", 1, 0, "Filter");
-        qmlRegisterType<QFKeyTable>("QuickFlux", 1, 0, "KeyTable");
-        qmlRegisterType<QFActionCreator>("QuickFlux", 1, 0, "ActionCreator");
-    }
-};
-
-static QFQmlTypes registerHelper;
+Q_COREAPP_STARTUP_FUNCTION(registerTypes)
