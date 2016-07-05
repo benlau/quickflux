@@ -1,5 +1,6 @@
 /// QML Type Registration Helper
 #include <QtQml>
+#include "QuickFlux"
 #include "qfappdispatcher.h"
 #include "qfapplistener.h"
 #include "qfappscript.h"
@@ -21,7 +22,7 @@ static QObject *appDispatcherProvider(QQmlEngine *engine, QJSEngine *scriptEngin
     return object;
 }
 
-static void registerTypes()
+void registerQuickFluxQmlTypes()
 {
     qmlRegisterSingletonType<QFAppDispatcher>("QuickFlux", 1, 0, "AppDispatcher", appDispatcherProvider);
     qmlRegisterType<QFAppListener>("QuickFlux", 1, 0, "AppListener");
@@ -34,4 +35,7 @@ static void registerTypes()
     qmlRegisterType<QFActionCreator>("QuickFlux", 1, 0, "ActionCreator");
 }
 
-Q_COREAPP_STARTUP_FUNCTION(registerTypes)
+// Allow to disable QML types auto registration as required by #9
+#ifndef QUICK_FLUX_DISABLE_AUTO_QML_REGISTER
+Q_COREAPP_STARTUP_FUNCTION(registerQuickFluxQmlTypes)
+#endif
