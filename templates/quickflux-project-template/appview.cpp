@@ -12,9 +12,6 @@ AppView::AppView(QObject *parent) : QObject(parent)
 
 int AppView::exec()
 {
-    QDir dir;
-    dir.mkpath(QStandardPaths::standardLocations(QStandardPaths::TempLocation)[0] + "/preview");
-
     m_engine.addImportPath("qrc:///");
     m_engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
