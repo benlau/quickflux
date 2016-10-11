@@ -5,6 +5,7 @@
 #include <QQmlParserStatus>
 #include <QJSValue>
 #include <QVariant>
+#include <QQmlListProperty>
 
 // Filter represents a filter rule in AppListener
 
@@ -14,6 +15,8 @@ class QFFilter : public QObject, public QQmlParserStatus
     Q_PROPERTY(QString type READ type WRITE setType NOTIFY typeChanged)
     Q_PROPERTY(QStringList types READ types WRITE setTypes NOTIFY typesChanged)
     Q_INTERFACES(QQmlParserStatus)
+    Q_PROPERTY(QQmlListProperty<QObject> __children READ children)
+    Q_CLASSINFO("DefaultProperty", "__children")
 
 public:
     explicit QFFilter(QObject *parent = 0);
@@ -25,6 +28,8 @@ public:
     QStringList types() const;
 
     void setTypes(const QStringList &types);
+
+    QQmlListProperty<QObject> children();
 
 signals:
     void dispatched(QString type, QJSValue message);
@@ -43,6 +48,7 @@ private slots:
 
 private:
     QStringList m_types;
+    QList<QObject*> m_children;
 };
 
 #endif // QFFILTER_H

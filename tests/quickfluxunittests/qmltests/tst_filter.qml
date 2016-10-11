@@ -92,6 +92,18 @@ TestCase {
         compare(listener3.messages, ["action1", "action2"]);
     }
 
+    AppListener {
+        id: listener4
+
+        Filter {
+            id: filter4
+
+            Connections {
+                // Test can a filter object hold children
+            }
+        }
+    }
+
 
 }
 
