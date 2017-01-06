@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.7
 import QuickFlux 1.0
 import "../stores"
 import "../actions"
