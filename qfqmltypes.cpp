@@ -10,6 +10,7 @@
 #include "qffilter.h"
 #include "qfkeytable.h"
 #include "qfactioncreator.h"
+#include "qfobject.h"
 
 static QObject *appDispatcherProvider(QQmlEngine *engine, QJSEngine *scriptEngine)
 {
@@ -33,6 +34,7 @@ void registerQuickFluxQmlTypes()
     qmlRegisterType<QFFilter>("QuickFlux", 1, 0, "Filter");
     qmlRegisterType<QFKeyTable>("QuickFlux", 1, 0, "KeyTable");
     qmlRegisterType<QFActionCreator>("QuickFlux", 1, 0, "ActionCreator");
+    qmlRegisterType<QFAppListener>("QuickFlux", 1, 0, "Object");
 }
 
 // Allow to disable QML types auto registration as required by #9

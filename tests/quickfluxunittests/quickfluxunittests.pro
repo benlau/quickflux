@@ -41,4 +41,5 @@ DISTFILES += \
     qmltests/tst_filter.qml \
     qmltests/tst_keytable.qml \
     qmltests/tst_qimage.qml \
-    qmltests/tst_actioncreator.qml
+    qmltests/tst_actioncreator.qml \
+    qmltests/tst_object.qml
