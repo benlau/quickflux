@@ -206,7 +206,7 @@ void QuickFluxUnitTests::keyTable()
 
 }
 
-void QuickFluxUnitTests::actionCreator()
+void QuickFluxUnitTests::actionCreator_genKeyTable()
 {
     QQmlApplicationEngine engine;
     engine.addImportPath("qrc:///");
@@ -231,5 +231,42 @@ void QuickFluxUnitTests::actionCreator()
     QVERIFY(keyTable);
     QVERIFY(keyTable->property("test1").toString() == "test1");
     QVERIFY(keyTable->property("test2").toString() == "test2");
+}
+
+void QuickFluxUnitTests::actionCreator_changeDispatcher()
+{
+    QQmlApplicationEngine engine;
+    engine.addImportPath("qrc:///");
+
+    QFActionCreator* actionCreator = qobject_cast<QFActionCreator*>(QFAppDispatcher::singletonObject(&engine, "QuickFluxTests" , 1,0,"AppActions"));
+    QVERIFY(actionCreator);
+
+    QFAppDispatcher* globalDispatcher = QFAppDispatcher::instance(&engine);
+
+    QCOMPARE(actionCreator->dispatcher(), globalDispatcher);
+
+    QFAppDispatcher* dispatcher = new QFAppDispatcher(&engine); // local custom dispatcher
+    dispatcher->setEngine(&engine);
+
+    int count = 0;
+    QStringList typeList;
+
+    connect(dispatcher, &QFAppDispatcher::dispatched, [&](QString type, QJSValue message) {
+        Q_UNUSED(message);
+        typeList << type;
+        count++;
+    });
+
+    actionCreator->setDispatcher(dispatcher); // replace by our dispatcher
+
+    QMetaObject::invokeMethod(actionCreator,"test1");
+
+    QCOMPARE(count, 1);
+    QCOMPARE(typeList.size(), 1);
+    QVERIFY(typeList[0] == "test1");
+
+    QMetaObject::invokeMethod(actionCreator,"test2");
+    QCOMPARE(typeList.size(), 2);
+    QVERIFY(typeList[1] == "test2");
 }
 

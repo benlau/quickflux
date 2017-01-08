@@ -17,6 +17,10 @@ public:
 
     int qt_metacall(QMetaObject::Call _c, int _id, void **_a);
 
+    QFAppDispatcher *dispatcher() const;
+
+    void setDispatcher(QFAppDispatcher *dispatcher);
+
 private:
     void dispatch(const QVariantMap &message);
 

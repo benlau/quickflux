@@ -96,7 +96,22 @@ void QFActionCreator::componentComplete()
         if (method.methodType() == QMetaMethod::Signal) {
             QFSignalProxy* proxy = new QFSignalProxy(this);
             proxy->bind(this, i, engine, dispatcher);
+            m_proxyList << proxy;
         }
     }
 
+    setDispatcher(dispatcher);
+}
+
+QFAppDispatcher *QFActionCreator::dispatcher() const
+{
+    return m_dispatcher;
+}
+
+void QFActionCreator::setDispatcher(QFAppDispatcher *value)
+{
+    m_dispatcher = value;
+    for (int i = 0 ; i < m_proxyList.size();i++) {
+        m_proxyList[i]->setDispatcher(m_dispatcher);
+    }
 }

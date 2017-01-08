@@ -27,7 +27,9 @@ private Q_SLOTS:
 
     void keyTable();
 
-    void actionCreator();
+    void actionCreator_genKeyTable();
+
+    void actionCreator_changeDispatcher();
 };
 
 #endif // QUICKFLUXUNITTESTS_H

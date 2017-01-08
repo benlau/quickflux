@@ -80,3 +80,13 @@ void QFSignalProxy::dispatch(const QVariantMap &message)
 
     m_dispatcher->dispatch(type, value);
 }
+
+QFAppDispatcher *QFSignalProxy::dispatcher() const
+{
+    return m_dispatcher;
+}
+
+void QFSignalProxy::setDispatcher(QFAppDispatcher *dispatcher)
+{
+    m_dispatcher = dispatcher;
+}
