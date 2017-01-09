@@ -30,6 +30,8 @@ private Q_SLOTS:
     void actionCreator_genKeyTable();
 
     void actionCreator_changeDispatcher();
+
+    void dispatcherHook();
 };
 
 #endif // QUICKFLUXUNITTESTS_H

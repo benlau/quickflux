@@ -143,17 +143,25 @@ AppListener {
 
 void QFAppDispatcher::dispatch(QString type, QJSValue message)
 {
+    auto process = [=](QString type, QJSValue message) {
+        if (m_hook.isNull()) {
+            send(type, message);
+        } else {
+            m_hook->dispatch(type, message);
+        }
+    };
+
     if (m_dispatching) {
         m_queue.enqueue(QPair<QString,QJSValue> (type,message) );
         return;
     }
 
     m_dispatching = true;
-    emitDispatched(type,message);
+    process(type,message);
 
     while (m_queue.size() > 0) {
         QPair<QString,QJSValue> pair = m_queue.dequeue();
-        emitDispatched(pair.first,pair.second);
+        process(pair.first,pair.second);
     }
     m_dispatching = false;
 }
@@ -303,7 +311,7 @@ QObject *QFAppDispatcher::singletonObject(QQmlEngine *engine, QString package, i
     return object;
 }
 
-void QFAppDispatcher::emitDispatched(QString type, QJSValue message)
+void QFAppDispatcher::send(QString type, QJSValue message)
 {
     dispatchingMessage = message;
     dispatchingMessageType = type;
@@ -346,10 +354,30 @@ void QFAppDispatcher::invokeListeners(QList<int> ids)
     }
 }
 
+QFHook *QFAppDispatcher::hook() const
+{
+    return m_hook;
+}
+
+void QFAppDispatcher::setHook(QFHook *hook)
+{
+    if (!m_hook.isNull()) {
+        m_hook->disconnect(this);
+    }
+
+    m_hook = hook;
+
+    if (!m_hook.isNull()) {
+        connect(m_hook.data(), SIGNAL(send(QString,QJSValue)),
+                this,SLOT(send(QString,QJSValue)));
+    }
+
+}
+
 /*! \fn QQmlEngine *QFAppDispatcher::engine() const
-
+  
   Obtain the associated engine to this dispatcher.
-
+  
  */
 
 QQmlEngine *QFAppDispatcher::engine() const

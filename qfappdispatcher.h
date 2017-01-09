@@ -9,7 +9,7 @@
 #include <QQmlEngine>
 #include <QPointer>
 #include "priv/qflistener.h"
-
+#include "priv/qfhook.h"
 /// Message Dispatcher
 
 class QFAppDispatcher : public QObject
@@ -65,10 +65,15 @@ public:
 
     void setEngine(QQmlEngine *engine);
 
+    QFHook *hook() const;
+
+    void setHook(QFHook *hook);
+
+private slots:
+    /// Invoke listener and emit the dispatched signal
+    void send(QString type,QJSValue message);
+
 private:
-
-    void emitDispatched(QString type,QJSValue message);
-
     void invokeListeners(QList<int> ids);
 
     bool m_dispatching;
@@ -98,6 +103,8 @@ private:
 
     // List of listeners blocked in waitFor()
     QMap<int,bool> waitingListeners;
+
+    QPointer<QFHook> m_hook;
 };
 
 #endif // APPDISPATCHER_H

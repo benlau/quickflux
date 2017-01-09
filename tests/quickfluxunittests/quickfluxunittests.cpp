@@ -270,3 +270,55 @@ void QuickFluxUnitTests::actionCreator_changeDispatcher()
     QVERIFY(typeList[1] == "test2");
 }
 
+void QuickFluxUnitTests::dispatcherHook()
+{
+    QQmlEngine engine;
+    QFAppDispatcher dispatcher;
+    dispatcher.setEngine(&engine);
+
+    int count = 0;
+    QStringList typeList;
+
+    connect(&dispatcher, &QFAppDispatcher::dispatched, [&](QString type, QJSValue message) {
+        Q_UNUSED(message);
+        typeList << type;
+        count++;
+    });
+
+    class Hook1: public QFHook {
+    public:
+        void dispatch(QString type, QJSValue message) {
+            Q_UNUSED(type);
+            Q_UNUSED(message);
+        }
+    };
+
+    Hook1 hook1;
+    dispatcher.setHook(&hook1);
+
+    dispatcher.dispatch("action1");
+    QCOMPARE(count, 0);
+
+
+    class Hook2: public QFHook {
+    public:
+        void dispatch(QString type, QJSValue message) {
+            for (int i = 0 ; i < 3;i++) {
+                QMetaObject::invokeMethod(this,"send",Q_ARG(QString, type), Q_ARG(QJSValue, message));
+            }
+        }
+    };
+
+    Hook2 hook2;
+    dispatcher.setHook(&hook2);
+
+    dispatcher.dispatch("action1");
+    QCOMPARE(count, 3);
+
+    dispatcher.setHook(0);
+
+    dispatcher.dispatch("action1");
+    QCOMPARE(count, 4);
+
+}
+
