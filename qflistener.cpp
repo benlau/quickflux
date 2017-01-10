@@ -1,5 +1,5 @@
 #include <QtCore>
-#include "qfappdispatcher.h"
+#include "qfdispatcher.h"
 #include "priv/qflistener.h"
 
 QFListener::QFListener(QObject *parent) : QObject(parent)
@@ -21,7 +21,7 @@ void QFListener::setCallback(const QJSValue &callback)
     m_callback = callback;
 }
 
-void QFListener::dispatch(QFAppDispatcher *dispatcher,QString type, QJSValue message)
+void QFListener::dispatch(QFDispatcher *dispatcher,QString type, QJSValue message)
 {
 
     if (m_waitFor.size() > 0) {

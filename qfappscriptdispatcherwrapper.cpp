@@ -1,5 +1,5 @@
 #include <QQmlEngine>
-#include "qfappdispatcher.h"
+#include "qfdispatcher.h"
 #include "priv/qfappscriptdispatcherwrapper.h"
 
 QFAppScriptDispatcherWrapper::QFAppScriptDispatcherWrapper()
@@ -27,12 +27,12 @@ void QFAppScriptDispatcherWrapper::dispatch(QJSValue arguments)
     m_dispatcher->dispatch(m_type,arguments);
 }
 
-QFAppDispatcher *QFAppScriptDispatcherWrapper::dispatcher() const
+QFDispatcher *QFAppScriptDispatcherWrapper::dispatcher() const
 {
     return m_dispatcher;
 }
 
-void QFAppScriptDispatcherWrapper::setDispatcher(QFAppDispatcher *dispatcher)
+void QFAppScriptDispatcherWrapper::setDispatcher(QFDispatcher *dispatcher)
 {
     m_dispatcher = dispatcher;
 }

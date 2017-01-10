@@ -1,3 +1,4 @@
+#include <QFAppDispatcher>
 #include "qfapplistenergroup.h"
 #include "qfapplistener.h"
 #include "priv/qflistener.h"
@@ -26,7 +27,7 @@ void QFAppListenerGroup::componentComplete()
     QQmlEngine *engine = qmlEngine(this);
     Q_ASSERT(engine);
 
-    QFAppDispatcher* dispatcher = qobject_cast<QFAppDispatcher*>(QFAppDispatcher::instance(engine));
+    QFAppDispatcher* dispatcher = QFAppDispatcher::instance(engine);
 
     m_listener = new QFListener(this);
     m_listenerId = dispatcher->addListener(m_listener);

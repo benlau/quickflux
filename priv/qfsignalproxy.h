@@ -6,20 +6,20 @@
 #include <QQmlEngine>
 #include <QVector>
 #include <QPointer>
-#include "qfappdispatcher.h"
+#include "qfdispatcher.h"
 
 class QFSignalProxy : public QObject
 {
 public:
     explicit QFSignalProxy(QObject *parent = 0);
 
-    void bind(QObject* source, int signalIdx, QQmlEngine* engine, QFAppDispatcher* dispatcher);
+    void bind(QObject* source, int signalIdx, QQmlEngine* engine, QFDispatcher* dispatcher);
 
     int qt_metacall(QMetaObject::Call _c, int _id, void **_a);
 
-    QFAppDispatcher *dispatcher() const;
+    QFDispatcher *dispatcher() const;
 
-    void setDispatcher(QFAppDispatcher *dispatcher);
+    void setDispatcher(QFDispatcher *dispatcher);
 
 private:
     void dispatch(const QVariantMap &message);
@@ -28,7 +28,7 @@ private:
     QVector<int> parameterTypes;
     QVector<QString> parameterNames;
     QPointer<QQmlEngine> m_engine;
-    QPointer<QFAppDispatcher> m_dispatcher;
+    QPointer<QFDispatcher> m_dispatcher;
 
 };
 

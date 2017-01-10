@@ -101,7 +101,7 @@ QObject *QFAppListener::target() const
     return m_target;
 }
 
-void QFAppListener::setTarget(QFAppDispatcher *target)
+void QFAppListener::setTarget(QFDispatcher *target)
 {
     if (!m_target.isNull()) {
         m_target->removeListener(m_listenerId);
@@ -196,7 +196,7 @@ void QFAppListener::componentComplete()
     QQmlEngine *engine = qmlEngine(this);
     Q_ASSERT(engine);    
 
-    QFAppDispatcher* dispatcher = qobject_cast<QFAppDispatcher*>(QFAppDispatcher::instance(engine));
+    QFAppDispatcher* dispatcher = QFAppDispatcher::instance(engine);
     if (!dispatcher) {
         qWarning() << "Unknown error: Unable to access AppDispatcher";
     } else {

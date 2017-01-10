@@ -15,6 +15,7 @@
 #include "automator.h"
 #include "actiontypes.h"
 #include "qfactioncreator.h"
+#include <QFAppDispatcher>
 
 QuickFluxUnitTests::QuickFluxUnitTests()
 {

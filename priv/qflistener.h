@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QJSValue>
 
-class QFAppDispatcher;
+class QFDispatcher;
 
 /// A listener class for AppDispatcher.
 
@@ -19,7 +19,7 @@ public:
 
     void setCallback(const QJSValue &callback);
 
-    void dispatch(QFAppDispatcher* dispatcher, QString type, QJSValue message);
+    void dispatch(QFDispatcher* dispatcher, QString type, QJSValue message);
 
     int listenerId() const;
 

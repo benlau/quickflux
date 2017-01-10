@@ -3,7 +3,7 @@
 
 #include <QQuickItem>
 #include <QPointer>
-#include "qfappdispatcher.h"
+#include "qfdispatcher.h"
 
 class QFAppScriptDispatcherWrapper : public QObject
 {
@@ -14,15 +14,15 @@ public:
     QString type() const;
     void setType(const QString &type);
 
-    QFAppDispatcher *dispatcher() const;
-    void setDispatcher(QFAppDispatcher *dispatcher);
+    QFDispatcher *dispatcher() const;
+    void setDispatcher(QFDispatcher *dispatcher);
 
 public slots:
     void dispatch(QJSValue arguments);
 
 private:
     QString m_type;
-    QPointer<QFAppDispatcher> m_dispatcher;
+    QPointer<QFDispatcher> m_dispatcher;
 
 };
 

@@ -1,6 +1,6 @@
 #include <QtCore>
 #include <QUuid>
-#include "qfappdispatcher.h"
+#include <QFAppDispatcher>
 #include "priv/qfappscriptrunnable.h"
 #include "priv/qfappscriptdispatcherwrapper.h"
 

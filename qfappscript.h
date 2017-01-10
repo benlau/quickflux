@@ -7,7 +7,7 @@
 #include <QQuickItem>
 #include <QQmlParserStatus>
 #include <QPointer>
-#include "qfappdispatcher.h"
+#include <QFAppDispatcher>
 #include "priv/qfappscriptrunnable.h"
 
 class QFAppScript : public QQuickItem

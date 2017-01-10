@@ -1,7 +1,8 @@
 /// QML Type Registration Helper
 #include <QtQml>
+#include <QFAppDispatcher>
 #include "QuickFlux"
-#include "qfappdispatcher.h"
+#include "qfdispatcher.h"
 #include "qfapplistener.h"
 #include "qfappscript.h"
 #include "qfapplistenergroup.h"

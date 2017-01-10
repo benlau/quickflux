@@ -7,7 +7,7 @@ QFSignalProxy::QFSignalProxy(QObject *parent) : QObject(parent)
 
 }
 
-void QFSignalProxy::bind(QObject *source, int signalIdx, QQmlEngine* engine, QFAppDispatcher* dispatcher)
+void QFSignalProxy::bind(QObject *source, int signalIdx, QQmlEngine* engine, QFDispatcher* dispatcher)
 {
     const int memberOffset = QObject::staticMetaObject.methodCount();
 
@@ -81,12 +81,12 @@ void QFSignalProxy::dispatch(const QVariantMap &message)
     m_dispatcher->dispatch(type, value);
 }
 
-QFAppDispatcher *QFSignalProxy::dispatcher() const
+QFDispatcher *QFSignalProxy::dispatcher() const
 {
     return m_dispatcher;
 }
 
-void QFSignalProxy::setDispatcher(QFAppDispatcher *dispatcher)
+void QFSignalProxy::setDispatcher(QFDispatcher *dispatcher)
 {
     m_dispatcher = dispatcher;
 }

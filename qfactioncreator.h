@@ -15,8 +15,8 @@ class QFActionCreator : public QObject, public QQmlParserStatus
 public:
     explicit QFActionCreator(QObject *parent = 0);
 
-    QFAppDispatcher *dispatcher() const;
-    void setDispatcher(QFAppDispatcher *value);
+    QFDispatcher *dispatcher() const;
+    void setDispatcher(QFDispatcher *value);
 
 public slots:
     QString genKeyTable();
@@ -26,7 +26,7 @@ protected:
     void componentComplete();
 
 private:
-    QPointer<QFAppDispatcher> m_dispatcher;
+    QPointer<QFDispatcher> m_dispatcher;
     QList<QFSignalProxy*> m_proxyList;
 };
 

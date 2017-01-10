@@ -4,7 +4,6 @@ DISTFILES += \
     $$PWD/README.md
 
 HEADERS += \
-    $$PWD/qfappdispatcher.h \
     $$PWD/qfapplistener.h \
     $$PWD/qfappscript.h \
     $$PWD/priv/qfappscriptrunnable.h \
@@ -20,11 +19,12 @@ HEADERS += \
     $$PWD/QFKeyTable \
     $$PWD/QuickFlux \
     $$PWD/qfobject.h \
-    $$PWD/priv/qfhook.h
+    $$PWD/priv/qfhook.h \
+    $$PWD/qfdispatcher.h \
+    $$PWD/qfappdispatcher.h
 
 SOURCES += \
     $$PWD/qfapplistener.cpp \
-    $$PWD/qfappdispatcher.cpp \
     $$PWD/qfappscript.cpp \
     $$PWD/qfappscriptrunnable.cpp \
     $$PWD/qfappscriptdispatcherwrapper.cpp \
@@ -37,4 +37,6 @@ SOURCES += \
     $$PWD/priv/qfsignalproxy.cpp \
     $$PWD/qfactioncreator.cpp \
     $$PWD/qfobject.cpp \
-    $$PWD/priv/qfhook.cpp
+    $$PWD/priv/qfhook.cpp \
+    $$PWD/qfdispatcher.cpp \
+    $$PWD/qfappdispatcher.cpp

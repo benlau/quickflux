@@ -8,7 +8,7 @@
 #include <QQmlParserStatus>
 #include <QMap>
 #include "priv/qflistener.h"
-#include "qfappdispatcher.h"
+#include "qfdispatcher.h"
 
 class QFAppListener : public QQuickItem
 {
@@ -27,7 +27,7 @@ public:
     QObject *target() const;
 
     /// Set the listening target. If the class is constructed by QQmlComponent. It will be set automatically.
-    void setTarget(QFAppDispatcher *target);
+    void setTarget(QFDispatcher *target);
 
     /// Add a listener to the end of the listeners array for the specified message.  Multiple calls passing the same combination of event and listener will result in the listener being added multiple times.
     Q_INVOKABLE QFAppListener* on(QString type,QJSValue callback);
@@ -83,7 +83,7 @@ private:
 
     void setListenerWaitFor();
 
-    QPointer<QFAppDispatcher> m_target;
+    QPointer<QFDispatcher> m_target;
 
     QMap<QString,QList<QJSValue> >  mapping;
 

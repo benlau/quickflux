@@ -3,7 +3,7 @@
 #include <QtQml>
 #include "qfactioncreator.h"
 #include "priv/qfsignalproxy.h"
-#include "qfappdispatcher.h"
+#include "qfdispatcher.h"
 
 /*!
   \qmltype ActionCreator
@@ -83,7 +83,7 @@ void QFActionCreator::classBegin()
 void QFActionCreator::componentComplete()
 {
     QQmlEngine* engine = qmlEngine(this);
-    QFAppDispatcher* dispatcher = QFAppDispatcher::instance(engine);
+    QFDispatcher* dispatcher = qobject_cast<QFDispatcher*>(QFAppDispatcher::instance(engine));
 
     const int memberOffset = QObject::staticMetaObject.methodCount();
 
@@ -103,12 +103,12 @@ void QFActionCreator::componentComplete()
     setDispatcher(dispatcher);
 }
 
-QFAppDispatcher *QFActionCreator::dispatcher() const
+QFDispatcher *QFActionCreator::dispatcher() const
 {
     return m_dispatcher;
 }
 
-void QFActionCreator::setDispatcher(QFAppDispatcher *value)
+void QFActionCreator::setDispatcher(QFDispatcher *value)
 {
     m_dispatcher = value;
     for (int i = 0 ; i < m_proxyList.size();i++) {
