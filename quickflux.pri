@@ -21,7 +21,8 @@ HEADERS += \
     $$PWD/qfobject.h \
     $$PWD/priv/qfhook.h \
     $$PWD/qfdispatcher.h \
-    $$PWD/qfappdispatcher.h
+    $$PWD/qfappdispatcher.h \
+    $$PWD/qfmiddlewares.h
 
 SOURCES += \
     $$PWD/qfapplistener.cpp \
@@ -39,4 +40,5 @@ SOURCES += \
     $$PWD/qfobject.cpp \
     $$PWD/priv/qfhook.cpp \
     $$PWD/qfdispatcher.cpp \
-    $$PWD/qfappdispatcher.cpp
+    $$PWD/qfappdispatcher.cpp \
+    $$PWD/qfmiddlewares.cpp
