@@ -20,7 +20,7 @@ TestCase {
             property var actions : new Array
 
             function dispatch(type , message) {
-                actions.push(type);
+                middleware1.actions.push(type);
                 next(type , message);
             }
         }
@@ -38,12 +38,26 @@ TestCase {
 
     AppListener {
         id: listener1
+        property var actions : new Array
+
+        onDispatched: {
+            listener1.actions.push(type);
+        }
     }
 
     function test_basic() {
         compare(middlewares.data.length, 2);
+        compare(middleware1.next, undefined); // It won't set the next function until the middleware is applied
+
+        middlewares.apply(actions);
         compare(typeof middleware1.next, "function");
         compare(typeof middleware2.next, "function");
+
+        actions.test1();
+
+        compare(middleware1.actions, ["test1"]);
+        compare(listener1.actions, ["test1","test1"]);
+
     }
 
 }

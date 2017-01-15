@@ -2,6 +2,8 @@
 #define QFMIDDLEWARES_H
 
 #include <QQuickItem>
+#include <QPointer>
+#include <qfactioncreator.h>
 
 class QFMiddlewares : public QQuickItem
 {
@@ -13,14 +15,25 @@ signals:
 
 public slots:
 
+    void apply(QObject* source);
+
+    void next(int senderId, QString type, QJSValue message);
+
 protected:
     void classBegin();
     void componentComplete();
 
-private:
-    void registerNext();
+private slots:
 
-    QQmlEngine* m_engine;
+private:
+    void setup(QFActionCreator* creator , QFDispatcher* dispatcher);
+    void registerNextFunction();
+
+    QPointer<QQmlEngine> m_engine;
+
+    QPointer<QFActionCreator> m_actionCreator;
+    QPointer<QFDispatcher> m_dispatcher;
+    QJSValue invoke;
 
 };
 
