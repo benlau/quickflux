@@ -64,6 +64,9 @@ QString QFActionCreator::genKeyTable()
 
     for (int i = memberOffset ; i < count ;i++) {
         QMetaMethod method = meta->method(i);
+        if (method.name() == "dispatcherChanged") {
+            continue;
+        }
         if (method.methodType() == QMetaMethod::Signal) {
             properties << QString("    property string %1;\n").arg(QString(method.name()));
         }
@@ -93,6 +96,10 @@ void QFActionCreator::componentComplete()
 
     for (int i = memberOffset ; i < count ;i++) {
         QMetaMethod method = meta->method(i);
+        if (method.name() == "dispatcherChanged") {
+            continue;
+        }
+
         if (method.methodType() == QMetaMethod::Signal) {
             QFSignalProxy* proxy = new QFSignalProxy(this);
             proxy->bind(this, i, engine, dispatcher);
@@ -114,4 +121,6 @@ void QFActionCreator::setDispatcher(QFDispatcher *value)
     for (int i = 0 ; i < m_proxyList.size();i++) {
         m_proxyList[i]->setDispatcher(m_dispatcher);
     }
+
+    emit dispatcherChanged();
 }

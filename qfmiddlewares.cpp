@@ -12,21 +12,7 @@ QFMiddlewares::QFMiddlewares()
 
 void QFMiddlewares::apply(QObject *source)
 {
-    QFActionCreator *creator = 0;
-    QFDispatcher* dispatcher = 0;
-
-    creator = qobject_cast<QFActionCreator*>(source);
-    if (creator) {
-        dispatcher = creator->dispatcher();
-    } else {
-        dispatcher = qobject_cast<QFDispatcher*>(source);
-    }
-
-    if (creator == 0 && dispatcher == 0) {
-        qWarning() << "Middlewares:bind(): Invalid input";
-    }
-
-    setup(creator, dispatcher);
+    setApplyTarget(source);
 }
 
 void QFMiddlewares::next(int senderIndex, QString type, QJSValue message)
@@ -50,10 +36,27 @@ void QFMiddlewares::classBegin()
 void QFMiddlewares::componentComplete()
 {
     m_engine = qmlEngine(this);
+
+    if (!m_applyTarget.isNull()) {
+        setup();
+    }
 }
 
-void QFMiddlewares::setup(QFActionCreator *creator, QFDispatcher *dispatcher)
+void QFMiddlewares::setup()
 {
+    QFActionCreator *creator = 0;
+    QFDispatcher* dispatcher = 0;
+
+    creator = qobject_cast<QFActionCreator*>(m_applyTarget.data());
+    if (creator) {
+        dispatcher = creator->dispatcher();
+    } else {
+        dispatcher = qobject_cast<QFDispatcher*>(m_applyTarget.data());
+    }
+
+    if (creator == 0 && dispatcher == 0) {
+        qWarning() << "Middlewares.apply(): Invalid input";
+    }
 
     if (m_actionCreator.data() == creator &&
         m_dispatcher.data() == dispatcher) {
@@ -77,12 +80,15 @@ void QFMiddlewares::setup(QFActionCreator *creator, QFDispatcher *dispatcher)
         }
     }
 
-    //@FIXME Listen for action::dispatcherChanged signal
     m_actionCreator = creator;
     m_dispatcher = dispatcher;
 
-    if (!m_dispatcher.isNull()) {
+    if (!m_actionCreator.isNull()) {
+        connect(m_actionCreator.data(),SIGNAL(dispatcherChanged()),
+                this,SLOT(setup()));
+    }
 
+    if (!m_dispatcher.isNull()) {
         QFMiddlewaresHook* hook = new QFMiddlewaresHook();
         hook->setParent(this);
         hook->setup(m_engine.data(), this);
@@ -91,5 +97,20 @@ void QFMiddlewares::setup(QFActionCreator *creator, QFDispatcher *dispatcher)
             m_dispatcher->setHook(hook);
         }
     }
+}
+
+QObject *QFMiddlewares::applyTarget() const
+{
+    return m_applyTarget;
+}
+
+void QFMiddlewares::setApplyTarget(QObject *applyTarget)
+{
+    m_applyTarget = applyTarget;
+    if (!m_engine.isNull()) {
+        setup();
+    }
+
+    emit applyTargetChanged();
 }
 

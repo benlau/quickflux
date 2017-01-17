@@ -21,6 +21,9 @@ public:
 public slots:
     QString genKeyTable();
 
+signals:
+    void dispatcherChanged();
+
 protected:
     void classBegin();
     void componentComplete();

@@ -43,4 +43,5 @@ DISTFILES += \
     qmltests/tst_qimage.qml \
     qmltests/tst_actioncreator.qml \
     qmltests/tst_object.qml \
-    qmltests/tst_middlewares.qml
+    qmltests/tst_middlewares.qml \
+    qmltests/tst_middlewares_applyTarget.qml
