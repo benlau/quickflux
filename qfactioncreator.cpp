@@ -78,6 +78,13 @@ QString QFActionCreator::genKeyTable()
     return content.join("\n");
 }
 
+void QFActionCreator::dispatch(QString type, QJSValue message)
+{
+    if (!m_dispatcher.isNull()) {
+        m_dispatcher->dispatch(type, message);
+    }
+}
+
 void QFActionCreator::classBegin()
 {
 

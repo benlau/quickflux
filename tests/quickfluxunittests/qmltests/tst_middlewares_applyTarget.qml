@@ -13,7 +13,9 @@ TestCase {
     ActionCreator {
         id: actions2
 
-        signal test1();
+        function test1() {
+            dispatch("test1");
+        }
     }
 
     Middlewares {

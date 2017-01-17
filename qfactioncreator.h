@@ -20,6 +20,7 @@ public:
 
 public slots:
     QString genKeyTable();
+    void dispatch(QString type, QJSValue message = QJSValue());
 
 signals:
     void dispatcherChanged();
