@@ -41,6 +41,10 @@ TestCase {
         actions2.test1();
 
         compare(middleware1.actions, ["test1" ,"test1"]); // Both of the actions use sample dispatcher
+
+        middlewares.apply(null);
+        actions1.test1();
+        compare(middleware1.actions, ["test1" ,"test1"]);
     }
 
 }
