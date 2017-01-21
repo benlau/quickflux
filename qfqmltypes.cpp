@@ -36,7 +36,7 @@ void registerQuickFluxQmlTypes()
     qmlRegisterType<QFFilter>("QuickFlux", 1, 0, "Filter");
     qmlRegisterType<QFKeyTable>("QuickFlux", 1, 0, "KeyTable");
     qmlRegisterType<QFActionCreator>("QuickFlux", 1, 0, "ActionCreator");
-    qmlRegisterType<QFAppListener>("QuickFlux", 1, 0, "Object");
+    qmlRegisterType<QFObject>("QuickFlux", 1, 0, "Object");
     qmlRegisterType<QFMiddlewares>("QuickFlux", 1, 0, "Middlewares");
 
 }
