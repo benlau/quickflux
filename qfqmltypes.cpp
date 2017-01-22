@@ -13,6 +13,7 @@
 #include "qfactioncreator.h"
 #include "qfobject.h"
 #include "qfmiddlewares.h"
+#include "qfstore.h"
 
 static QObject *appDispatcherProvider(QQmlEngine *engine, QJSEngine *scriptEngine)
 {
@@ -39,6 +40,7 @@ void registerQuickFluxQmlTypes()
     qmlRegisterType<QFActionCreator>("QuickFlux", 1, 0, "ActionCreator");
     qmlRegisterType<QFObject>("QuickFlux", 1, 0, "Object");
     qmlRegisterType<QFMiddlewares>("QuickFlux", 1, 0, "Middlewares");
+    qmlRegisterType<QFStore>("QuickFlux", 1, 0, "Store");
 
 }
 

@@ -20,7 +20,7 @@ signals:
 
 public slots:
 
-    void apply(QObject* source);
+    void apply(QObject* target);
 
     void next(int senderId, QString type, QJSValue message);
 
