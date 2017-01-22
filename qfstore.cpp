@@ -29,6 +29,15 @@ void QFStore::dispatch(QString type, QJSValue message)
         message = m_engine->toScriptValue<QVariant>(QVariant());
     }
 #endif
+
+    foreach(QObject* child , m_children) {
+        QFStore* store = qobject_cast<QFStore*>(child);
+        if (!store || store->bindSource() != this) {
+            continue;
+        }
+        store->dispatch(type, message);
+    }
+
     emit dispatched(type, message);
 }
 
@@ -95,8 +104,13 @@ void QFStore::componentComplete()
     QQmlEngine *engine = qmlEngine(this);
     Q_ASSERT(engine);
 
-    QFAppDispatcher* dispatcher = QFAppDispatcher::instance(engine);
-    setBindSource(dispatcher);
+    QFStore* storeParent = qobject_cast<QFStore*>(parent());
+    if (storeParent) {
+        setBindSource(storeParent);
+    } else {
+        QFAppDispatcher* dispatcher = QFAppDispatcher::instance(engine);
+        setBindSource(dispatcher);
+    }
 }
 
 QObject *QFStore::bindSource() const
