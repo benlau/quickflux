@@ -28,6 +28,7 @@ static QObject *appDispatcherProvider(QQmlEngine *engine, QJSEngine *scriptEngin
 void registerQuickFluxQmlTypes()
 {
     qmlRegisterSingletonType<QFAppDispatcher>("QuickFlux", 1, 0, "AppDispatcher", appDispatcherProvider);
+    qmlRegisterType<QFDispatcher>("QuickFlux", 1, 0, "Dispatcher");
     qmlRegisterType<QFAppListener>("QuickFlux", 1, 0, "AppListener");
     qmlRegisterType<QFAppScript>("QuickFlux", 1, 0, "AppScript");
     qmlRegisterType<QFAppListenerGroup>("QuickFlux", 1, 0, "AppListenerGroup");

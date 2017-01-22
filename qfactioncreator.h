@@ -11,6 +11,7 @@ class QFActionCreator : public QObject, public QQmlParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)
+    Q_PROPERTY(QFDispatcher* dispatcher READ dispatcher WRITE setDispatcher NOTIFY dispatcherChanged)
 
 public:
     explicit QFActionCreator(QObject *parent = 0);

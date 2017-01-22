@@ -23,7 +23,7 @@ TestCase {
     }
 
     function test_emission() {
-        compare(listener.payload.length, 0);
+        listener.payload = [];
         actionCreator.test1();
         compare(listener.payload.length, 1);
         compare(listener.payload[0].type, "test1");
@@ -46,6 +46,43 @@ TestCase {
     ActionCreator {
         // No signals
         id: dummy
+    }
+
+    ActionCreator {
+        id: actionCreator2
+        objectName: "actionCreator2";
+
+        signal test1
+
+        dispatcher: Dispatcher {
+            id: dispatcher2
+            property var payload: new Array
+            onDispatched: {
+                dispatcher2.payload.push({
+                   type: type,
+                   message: message
+                });
+            }
+        }
+    }
+
+    AppListener {
+        id: listener2
+        signal test1();
+        property var payload: new Array
+        onDispatched: {
+            listener2.payload.push({
+               type: type,
+               message: message
+            });
+        }
+    }
+
+    function test_customDispatcher() {
+        listener2.payload = [];
+        actionCreator2.test1();
+        compare(listener2.payload.length, 0);
+        compare(dispatcher2.payload.length, 1);
     }
 }
 

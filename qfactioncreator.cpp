@@ -93,7 +93,12 @@ void QFActionCreator::classBegin()
 void QFActionCreator::componentComplete()
 {
     QQmlEngine* engine = qmlEngine(this);
-    QFDispatcher* dispatcher = qobject_cast<QFDispatcher*>(QFAppDispatcher::instance(engine));
+
+    if (m_dispatcher.isNull()) {
+        setDispatcher(qobject_cast<QFDispatcher*>(QFAppDispatcher::instance(engine)));
+    }
+
+    QFDispatcher* dispatcher = m_dispatcher.data();
 
     const int memberOffset = QObject::staticMetaObject.methodCount();
 
@@ -113,8 +118,6 @@ void QFActionCreator::componentComplete()
             m_proxyList << proxy;
         }
     }
-
-    setDispatcher(dispatcher);
 }
 
 QFDispatcher *QFActionCreator::dispatcher() const
