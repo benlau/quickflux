@@ -3,15 +3,15 @@ import QtQuick 2.0
 import QuickFlux 1.0
 import "../actions"
 
-Item {
+Store {
     property ListModel photoModel : ListModel {}
 
     function add(url) {
         photoModel.append({ url: url });
     }
 
-    AppListener {
-        filter: ActionTypes.pickPhoto
+    Filter {
+        type: ActionTypes.pickPhoto
         onDispatched: {
             add(message.url);
         }
