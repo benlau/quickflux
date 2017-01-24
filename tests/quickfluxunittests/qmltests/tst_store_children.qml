@@ -62,8 +62,8 @@ TestCase {
     }
 
     function test_dispatch() {
-        compare(child1.bindSource, store);
-        compare(child2.bindSource, store);
+        compare(child1.bindSource, null);
+        compare(child2.bindSource, null);
 
         store.dispatch("test1");
         compare(store.test1, 1);

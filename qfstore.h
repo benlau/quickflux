@@ -9,7 +9,7 @@
 #include "qfactioncreator.h"
 #include "qfdispatcher.h"
 
-class QFStore : public QObject, public QQmlParserStatus
+class QFStore : public QObject
 {
     Q_OBJECT
 public:

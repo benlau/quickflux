@@ -32,24 +32,27 @@ TestCase {
     }
 
     function test_dispatch() {
-        compare(store1.bindSource, AppDispatcher);
+
+        // Unlike AppListener, Store component do not from AppDispatcher directly.
+        compare(store1.bindSource, null);
+
         store1.dispatch("test1");
         compare(store1.test1, 1);
 
         defaultActionCreator.test1();
-        compare(store1.test1, 2);
+        compare(store1.test1, 1);
 
         actionCreator1.test1();
-        compare(store1.test1, 2); // It is not changed
+        compare(store1.test1, 1); // It is not changed
 
         store1.bind(actionCreator1);
         compare(store1.bindSource, actionCreator1);
 
         actionCreator1.test1();
-        compare(store1.test1, 3);
+        compare(store1.test1, 2);
 
         defaultActionCreator.test1();
-        compare(store1.test1, 3);
+        compare(store1.test1, 2);
 
     }
 

@@ -32,7 +32,7 @@ void QFStore::dispatch(QString type, QJSValue message)
 
     foreach(QObject* child , m_children) {
         QFStore* store = qobject_cast<QFStore*>(child);
-        if (!store || store->bindSource() != this) {
+        if (!store) {
             continue;
         }
         store->dispatch(type, message);
@@ -88,29 +88,6 @@ void QFStore::setup()
                 this,SLOT(dispatch(QString,QJSValue)));
     }
 
-}
-
-void QFStore::classBegin()
-{
-
-}
-
-void QFStore::componentComplete()
-{
-    if (!m_bindSource.isNull()) {
-        return;
-    }
-
-    QQmlEngine *engine = qmlEngine(this);
-    Q_ASSERT(engine);
-
-    QFStore* storeParent = qobject_cast<QFStore*>(parent());
-    if (storeParent) {
-        setBindSource(storeParent);
-    } else {
-        QFAppDispatcher* dispatcher = QFAppDispatcher::instance(engine);
-        setBindSource(dispatcher);
-    }
 }
 
 QObject *QFStore::bindSource() const
