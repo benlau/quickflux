@@ -46,4 +46,5 @@ DISTFILES += \
     qmltests/tst_middlewares.qml \
     qmltests/tst_middlewares_applyTarget.qml \
     qmltests/tst_store.qml \
-    qmltests/tst_store_children.qml
+    qmltests/tst_store_children.qml \
+    qmltests/tst_hydrate.qml

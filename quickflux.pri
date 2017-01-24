@@ -25,7 +25,8 @@ HEADERS += \
     $$PWD/qfmiddlewares.h \
     $$PWD/priv/quickfluxfunctions.h \
     $$PWD/priv/qfmiddlewareshook.h \
-    $$PWD/qfstore.h
+    $$PWD/qfstore.h \
+    $$PWD/qfhydrate.h
 
 SOURCES += \
     $$PWD/qfapplistener.cpp \
@@ -47,4 +48,5 @@ SOURCES += \
     $$PWD/qfmiddlewares.cpp \
     $$PWD/priv/quickfluxfunctions.cpp \
     $$PWD/priv/qfmiddlewareshook.cpp \
-    $$PWD/qfstore.cpp
+    $$PWD/qfstore.cpp \
+    $$PWD/qfhydrate.cpp

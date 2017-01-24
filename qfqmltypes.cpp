@@ -14,6 +14,7 @@
 #include "qfobject.h"
 #include "qfmiddlewares.h"
 #include "qfstore.h"
+#include "qfhydrate.h"
 
 static QObject *appDispatcherProvider(QQmlEngine *engine, QJSEngine *scriptEngine)
 {
@@ -23,6 +24,14 @@ static QObject *appDispatcherProvider(QQmlEngine *engine, QJSEngine *scriptEngin
     QFAppDispatcher* object = new QFAppDispatcher();
     object->setEngine(engine);
 
+    return object;
+}
+
+static QObject* hydrateProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
+    Q_UNUSED(engine);
+    Q_UNUSED(scriptEngine);
+
+    QFHydrate* object = new QFHydrate();
     return object;
 }
 
@@ -41,6 +50,10 @@ void registerQuickFluxQmlTypes()
     qmlRegisterType<QFObject>("QuickFlux", 1, 0, "Object");
     qmlRegisterType<QFMiddlewares>("QuickFlux", 1, 0, "Middlewares");
     qmlRegisterType<QFStore>("QuickFlux", 1, 0, "Store");
+
+    /* 1.1 */
+    qmlRegisterSingletonType<QFHydrate>("QuickFlux", 1, 1, "Hydrate", hydrateProvider);
+
 
 }
 
