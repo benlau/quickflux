@@ -47,13 +47,12 @@ void registerQuickFluxQmlTypes()
     qmlRegisterType<QFFilter>("QuickFlux", 1, 0, "Filter");
     qmlRegisterType<QFKeyTable>("QuickFlux", 1, 0, "KeyTable");
     qmlRegisterType<QFActionCreator>("QuickFlux", 1, 0, "ActionCreator");
-    qmlRegisterType<QFObject>("QuickFlux", 1, 0, "Object");
-    qmlRegisterType<QFMiddlewares>("QuickFlux", 1, 0, "Middlewares");
-    qmlRegisterType<QFStore>("QuickFlux", 1, 0, "Store");
 
     /* 1.1 */
     qmlRegisterSingletonType<QFHydrate>("QuickFlux", 1, 1, "Hydrate", hydrateProvider);
-
+    qmlRegisterType<QFStore>("QuickFlux", 1, 1, "Store");
+    qmlRegisterType<QFObject>("QuickFlux", 1, 1, "Object");
+    qmlRegisterType<QFMiddlewares>("QuickFlux", 1, 1, "Middlewares");
 
 }
 
