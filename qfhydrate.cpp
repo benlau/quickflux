@@ -1,33 +1,56 @@
 #include <QtCore>
 #include <QVariantMap>
 #include "qfhydrate.h"
+#include "qfobject.h"
+#include "qfstore.h"
+
+static QVariantMap dehydrator(QObject* source);
+
+static auto dehydratorFunction = [](const QStringList& ignoreList) {
+
+    return [=](QObject* source) {
+        QVariantMap dest;
+        const QMetaObject* meta = source->metaObject();
+
+        for (int i = 0 ; i < meta->propertyCount(); i++) {
+            const QMetaProperty property = meta->property(i);
+            const char* name = property.name();
+            QString stringName = name;
+
+            if (ignoreList.indexOf(stringName) >= 0) {
+                continue;
+            }
+
+            QVariant value = source->property(name);
+
+            if (value.canConvert<QObject*>()) {
+                QObject* object = value.value<QObject*>();
+                if (!object) {
+                    continue;
+                }
+                value = dehydrator(object);
+            }
+            dest[stringName] = value;
+        }
+        return dest;
+    };
+};
+
+static auto dehydrateQObject = dehydratorFunction(QStringList() << "parent" << "objectName");
+static auto dehydrateQFObject = dehydratorFunction(QStringList() << "parent" << "objectName" << "children");
+static auto dehydrateQFStore = dehydratorFunction(QStringList() << "parent" << "objectName" << "children");
 
 /// Default dehydrator function
 static QVariantMap dehydrator(QObject* source) {
-    QVariantMap dest;
-    const QMetaObject* meta = source->metaObject();
-
-    for (int i = 0 ; i < meta->propertyCount(); i++) {
-        const QMetaProperty property = meta->property(i);
-        const char* name = property.name();
-        QString string = name;
-        if (string == "parent" ||
-            string== "objectName") {
-            continue;
-        }
-
-        QVariant value = source->property(name);
-
-        if (value.canConvert<QObject*>()) {
-            QObject* object = value.value<QObject*>();
-            if (!object) {
-                continue;
-            }
-            value = dehydrator(object);
-        }
-        dest[string] = value;
+    QVariantMap ret;
+    if (qobject_cast<QFStore*>(source)) {
+        ret = dehydrateQFStore(source);
+    } else if (qobject_cast<QFObject*>(source)) {
+        ret = dehydrateQFObject(source);
+    } else {
+        ret = dehydrateQObject(source);
     }
-    return dest;
+    return ret;
 }
 
 QFHydrate::QFHydrate(QObject *parent) : QObject(parent)

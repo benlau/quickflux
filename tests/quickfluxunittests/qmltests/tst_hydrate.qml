@@ -13,10 +13,10 @@ Item {
             id: target1
             property int value1 : 0;
             property real value2 : 0;
-            property string value3: "";
+            property string value3: "";            
         }
 
-        function test_assign() {
+        function test_hydrate_qtobject() {
             var input = {
                 value1: 1,
                 value2: 2.0,
@@ -29,7 +29,44 @@ Item {
             compare(target1.value3, "3");
 
             var data = Hydrate.dehydrate(target1);
-            compare(data, input);
+            compare(JSON.stringify(data), JSON.stringify(input));
+        }
+
+        Store {
+            id: target2
+            property int value1 : 0;
+            property real value2 : 0;
+            property string value3: "";
+
+            property var value4 : Object {
+                id: target2Child1
+                property var value41
+            }
+
+            Item {
+                id: dummy
+                property int value1: 0
+            }
+        }
+
+        function test_hydrate_store() {
+            var input = {
+                value1: 1,
+                value2: 2.0,
+                value3: "3",
+                value4: {
+                    value41: 4
+                }
+            }
+
+            Hydrate.rehydrate(target2, input);
+            compare(target2.value1, 1);
+            compare(target2.value2, 2.0);
+            compare(target2.value3, "3");
+            compare(target2.value4.value41, 4);
+
+            var data = Hydrate.dehydrate(target2);
+            compare(JSON.stringify(data), JSON.stringify(input));
         }
 
     }
