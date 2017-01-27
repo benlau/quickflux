@@ -2,7 +2,8 @@
   "name": "",
   "description": "",
   "dependencies": [
-    "com.github.benlau.testable@1.0.1"
+    "com.github.benlau.testable@1.0.1",
+    "com.github.benlau.qtshell@0.3.2"
   ],
   "license": "NONE",
   "pri_filename": "",

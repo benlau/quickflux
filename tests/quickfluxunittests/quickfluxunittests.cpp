@@ -9,13 +9,14 @@
 #include <QQuickItem>
 #include <QSignalSpy>
 #include <QuickFlux>
+#include <QFAppDispatcher>
+#include <QtShell>
 #include "automator.h"
 #include "quickfluxunittests.h"
 #include "priv/qfsignalproxy.h"
 #include "automator.h"
 #include "actiontypes.h"
 #include "qfactioncreator.h"
-#include <QFAppDispatcher>
 
 QuickFluxUnitTests::QuickFluxUnitTests()
 {
@@ -320,6 +321,45 @@ void QuickFluxUnitTests::dispatcherHook()
 
     dispatcher.dispatch("action1");
     QCOMPARE(count, 4);
+
+}
+
+void QuickFluxUnitTests::loading()
+{
+    QFETCH(QString, input);
+
+
+    QQmlEngine engine;
+    engine.addImportPath("qrc:///");
+
+
+    QQmlComponent comp(&engine);
+    comp.loadUrl(QUrl(input));
+
+    if (comp.isError()) {
+        qDebug() << QString("%1 : Load Failed. Reason :  %2").arg(input).arg(comp.errorString());
+    }
+    QVERIFY(!comp.isError());
+
+}
+
+void QuickFluxUnitTests::loading_data()
+{
+    QTest::addColumn<QString>("input");
+    QStringList files;
+    files << QtShell::find(QString(SRCDIR) + "../../examples" , "*.qml");
+
+    foreach (QString file , files) {
+        QString content = QtShell::cat(file);
+        content = content.toLower();
+
+        if (content.indexOf("pragma singleton") != -1) {
+            continue;
+        }
+
+        QTest::newRow(QtShell::basename(file).toLocal8Bit().constData()) << file;
+    }
+
 
 }
 

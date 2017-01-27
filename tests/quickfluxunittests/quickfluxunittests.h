@@ -32,6 +32,10 @@ private Q_SLOTS:
     void actionCreator_changeDispatcher();
 
     void dispatcherHook();
+
+    void loading();
+    void loading_data();
+
 };
 
 #endif // QUICKFLUXUNITTESTS_H

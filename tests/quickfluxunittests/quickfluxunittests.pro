@@ -48,4 +48,5 @@ DISTFILES += \
     qmltests/tst_store.qml \
     qmltests/tst_store_children.qml \
     qmltests/tst_hydrate.qml \
-    qmltests/tst_store_bridge.qml
+    qmltests/tst_store_bridge.qml \
+    qpm.json
