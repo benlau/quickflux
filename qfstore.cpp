@@ -38,6 +38,15 @@ void QFStore::dispatch(QString type, QJSValue message)
         store->dispatch(type, message);
     }
 
+    foreach(QObject* child , m_stores) {
+        QFStore* store = qobject_cast<QFStore*>(child);
+
+        if (!store) {
+            continue;
+        }
+        store->dispatch(type, message);
+    }
+
     emit dispatched(type, message);
 }
 
@@ -88,6 +97,11 @@ void QFStore::setup()
                 this,SLOT(dispatch(QString,QJSValue)));
     }
 
+}
+
+QQmlListProperty<QObject> QFStore::stores()
+{
+    return QQmlListProperty<QObject>(qobject_cast<QObject*>(this), m_stores);
 }
 
 QObject *QFStore::bindSource() const

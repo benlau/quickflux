@@ -16,12 +16,17 @@ public:
     explicit QFStore(QObject *parent = 0);
     Q_PROPERTY(QObject* bindSource READ bindSource WRITE setBindSource NOTIFY bindSourceChanged)
     Q_PROPERTY(QQmlListProperty<QObject> children READ children)
+
+    Q_PROPERTY(QQmlListProperty<QObject> stores READ stores)
+
     Q_CLASSINFO("DefaultProperty", "children")
 
     QQmlListProperty<QObject> children();
 
     QObject* bindSource() const;
     void setBindSource(QObject* source);
+
+    QQmlListProperty<QObject> stores();
 
 signals:
     void dispatched(QString type, QJSValue message);
@@ -47,7 +52,10 @@ private:
     QPointer<QObject> m_bindSource;
 
     QPointer<QFActionCreator> m_actionCreator;
+
     QPointer<QFDispatcher> m_dispatcher;
+
+    QObjectList m_stores;
 
 };
 
