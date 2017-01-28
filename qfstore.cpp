@@ -4,7 +4,7 @@
 #include "qfactioncreator.h"
 #include "qfstore.h"
 
-QFStore::QFStore(QObject *parent) : QObject(parent)
+QFStore::QFStore(QObject *parent) : QObject(parent) , m_filterFunctionEnabled(false)
 {
 
 }
@@ -45,6 +45,27 @@ void QFStore::dispatch(QString type, QJSValue message)
             continue;
         }
         store->dispatch(type, message);
+    }
+
+    if (m_filterFunctionEnabled) {
+        const QMetaObject *meta = metaObject();
+        QByteArray signature;
+        int index;
+
+        signature = QMetaObject::normalizedSignature(QString("%1(QVariant)").arg(type).toUtf8().constData());
+        if ( (index = meta->indexOfMethod(signature.constData())) >= 0 ) {
+            QMetaMethod method = meta->method(index);
+            QVariant value = QVariant::fromValue<QJSValue>(message);
+
+            method.invoke(this,Qt::DirectConnection, Q_ARG(QVariant, value));
+        }
+
+        signature = QMetaObject::normalizedSignature(QString("%1()").arg(type).toUtf8().constData());
+        if ( (index = meta->indexOfMethod(signature.constData())) >= 0 ) {
+            QMetaMethod method = meta->method(index);
+
+            method.invoke(this);
+        }
     }
 
     emit dispatched(type, message);

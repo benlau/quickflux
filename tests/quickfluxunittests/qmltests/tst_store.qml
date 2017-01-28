@@ -56,5 +56,36 @@ TestCase {
 
     }
 
+
+    Store {
+        id: store2
+        property int test1Count: 0
+        property int test2Count: 0
+        property var messages: [];
+
+        function test1(message) {
+            console.log("test1 received");
+            store2.test1Count++;
+            messages.push(message);
+        }
+
+        function test2() {
+            store2.test2Count++;
+        }
+    }
+
+    function test_filterFunctionEnabled() {
+        var m = {value: 1};
+        store2.dispatch("test1", m);
+        compare(store2.test1Count, 0);
+        store2.filterFunctionEnabled = true;
+        store2.dispatch("test1", m);
+        compare(store2.test1Count, 1);
+        compare(store2.messages[0], m);
+
+        store2.dispatch("test2");
+        compare(store2.test2Count, 1);
+    }
+
 }
 

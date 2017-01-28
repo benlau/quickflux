@@ -12,15 +12,16 @@
 class QFStore : public QObject
 {
     Q_OBJECT
-public:
-    explicit QFStore(QObject *parent = 0);
     Q_PROPERTY(QObject* bindSource READ bindSource WRITE setBindSource NOTIFY bindSourceChanged)
     Q_PROPERTY(QQmlListProperty<QObject> children READ children)
-
     Q_PROPERTY(QQmlListProperty<QObject> stores READ stores)
+    Q_PROPERTY(bool filterFunctionEnabled MEMBER m_filterFunctionEnabled NOTIFY filterFunctionEnabledChanged)
 
     Q_CLASSINFO("DefaultProperty", "children")
 
+
+public:
+    explicit QFStore(QObject *parent = 0);
     QQmlListProperty<QObject> children();
 
     QObject* bindSource() const;
@@ -32,6 +33,8 @@ signals:
     void dispatched(QString type, QJSValue message);
 
     void bindSourceChanged();
+
+    void filterFunctionEnabledChanged();
 
 public slots:
     void dispatch(QString type, QJSValue message = QJSValue());
@@ -56,6 +59,8 @@ private:
     QPointer<QFDispatcher> m_dispatcher;
 
     QObjectList m_stores;
+
+    bool m_filterFunctionEnabled;
 
 };
 
