@@ -38,7 +38,6 @@ static QObject* hydrateProvider(QQmlEngine *engine, QJSEngine *scriptEngine) {
 void registerQuickFluxQmlTypes()
 {
     qmlRegisterSingletonType<QFAppDispatcher>("QuickFlux", 1, 0, "AppDispatcher", appDispatcherProvider);
-    qmlRegisterType<QFDispatcher>("QuickFlux", 1, 0, "Dispatcher");
     qmlRegisterType<QFAppListener>("QuickFlux", 1, 0, "AppListener");
     qmlRegisterType<QFAppScript>("QuickFlux", 1, 0, "AppScript");
     qmlRegisterType<QFAppListenerGroup>("QuickFlux", 1, 0, "AppListenerGroup");
@@ -49,6 +48,7 @@ void registerQuickFluxQmlTypes()
     qmlRegisterType<QFActionCreator>("QuickFlux", 1, 0, "ActionCreator");
 
     /* 1.1 */
+    qmlRegisterType<QFDispatcher>("QuickFlux", 1, 1, "Dispatcher");
     qmlRegisterSingletonType<QFHydrate>("QuickFlux", 1, 1, "Hydrate", hydrateProvider);
     qmlRegisterType<QFStore>("QuickFlux", 1, 1, "Store");
     qmlRegisterType<QFObject>("QuickFlux", 1, 1, "Object");
