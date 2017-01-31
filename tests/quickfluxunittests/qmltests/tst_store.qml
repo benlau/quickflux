@@ -64,7 +64,6 @@ TestCase {
         property var messages: [];
 
         function test1(message) {
-            console.log("test1 received");
             store2.test1Count++;
             messages.push(message);
         }

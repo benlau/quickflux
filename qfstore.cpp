@@ -25,8 +25,9 @@ void QFStore::dispatch(QString type, QJSValue message)
        2. https://github.com/benlau/quickflux/issues/13
 
      */
-    if (message.isUndefined() && !m_engine.isNull()) {
-        message = m_engine->toScriptValue<QVariant>(QVariant());
+    QQmlEngine* engine = qmlEngine(this);
+    if (message.isUndefined() && engine) {
+        message = engine->toScriptValue<QVariant>(QVariant());
     }
 #endif
 

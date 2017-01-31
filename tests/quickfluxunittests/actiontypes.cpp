@@ -4,7 +4,7 @@ QString ActionTypes::value1 = "value1";
 
 int ActionTypes::value2 = 2;
 
-qreal ActionTypes::value3 = 3.2999999999999998;
+qreal ActionTypes::value3 = 3.3;
 
 bool ActionTypes::value4 = true;
 
