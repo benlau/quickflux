@@ -17,6 +17,10 @@ Features
  3. Helper function for C++ code to listen on QML event / obtain QML singleton instance
  4. Helper components for handling asynchronous sequential workflow.
 
+> Release 1.1 is coming 
+> New features include non-singleton Dispatcher, Middleware, hydration,  a new mechanism to replace the old overcomplicated `waitFor` etc.
+> Preview of new components is available in qpm release but API is not finalized yet.
+
 Concept and Motivation
 ======================
 

@@ -5,9 +5,9 @@ import "../actions"
 
 VisualDataModel {
 
-    model: TodoStore.model
+    model: MainStore.todo.model
 
-    filterOnGroup: UserPrefsStore.showCompletedTasks ? "" : "nonCompleted"
+    filterOnGroup: MainStore.userPrefs.showCompletedTasks ? "" : "nonCompleted"
 
     groups: [
         VisualDataGroup {

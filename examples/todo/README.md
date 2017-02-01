@@ -3,13 +3,16 @@ Todo List Example
 
 Purpose: Demonstrate how to write a QML application in a Flux way.
 
+> Release 1.1 is coming
+> New features include non-singleton Dispatcher, Middleware, hydration,  a new mechanism to replace the old overcomplicated `waitFor` etc.
+> Preview of new components is available in qpm release but API is not finalized yet.
+
 File Structure
 --------------
 
     /actions/ActionTypes.qml
     /actions/AppActions.qml
     /stores/
-    /adapters/
     /views/
 
 **ActionTypes.qml**
@@ -59,12 +62,11 @@ Therefore, the "queries" and "updates" operations are in fact separated.
 UserPrefsStore.qml
 
 ```
-pragma Singleton
 import QtQuick 2.0
-import QuickFlux 1.0
+import QuickFlux 1.1
 import "../actions"
 
-AppListener {
+Store {
 
     property bool showCompletedTasks: false
 
@@ -78,34 +80,6 @@ AppListener {
     }
 
 }
-
-```
-
-**Adapter**
-
-Adapter is not an element in Flux application.
-However, we need an adapter to setup data dependence and handle asynchronous event flow across stores due to QTBUG-49370.
-
-[[QTBUG-49370] Use Singleton object from another Singleton object within a same package will hang - Qt Bug Tracker](https://bugreports.qt.io/browse/QTBUG-49370)
-
-To setup the dependencies between stores, it could be done via waitFor property.
-
-StoreAdapter.qml
-
-```
-import QtQuick 2.0
-import "../stores"
-
-Item {
-
-    Component.onCompleted: {
-        TodoStore.waitFor = [UserPrefsStore.listenerId];
-    }
-
-}
-
-```
-
 
 Design Principles
 -----------------
