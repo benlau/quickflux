@@ -1,6 +1,7 @@
 #include <QtQml>
 #include <QQmlEngine>
 #include <QFAppDispatcher>
+#include "priv/quickfluxfunctions.h"
 #include "qfactioncreator.h"
 #include "qfstore.h"
 
@@ -16,20 +17,7 @@ QQmlListProperty<QObject> QFStore::children()
 
 void QFStore::dispatch(QString type, QJSValue message)
 {
-#if (QT_VERSION == QT_VERSION_CHECK(5,7,1)) || (QT_VERSION == QT_VERSION_CHECK(5,8,0))
-
-    /* A dirty hack to fix QTBUG-58133 and #13 issue.
-
-       Reference:
-       1. https://bugreports.qt.io/browse/QTBUG-58133
-       2. https://github.com/benlau/quickflux/issues/13
-
-     */
-    QQmlEngine* engine = qmlEngine(this);
-    if (message.isUndefined() && engine) {
-        message = engine->toScriptValue<QVariant>(QVariant());
-    }
-#endif
+    QF_PRECHECK_DISPATCH(m_engine, type, message);
 
     foreach(QObject* child , m_children) {
         QFStore* store = qobject_cast<QFStore*>(child);

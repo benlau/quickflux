@@ -3,6 +3,7 @@
 #include <QVariant>
 #include <QJSValue>
 #include <QPointer>
+#include "priv/quickfluxfunctions.h"
 #include "qfdispatcher.h"
 
 /*!
@@ -143,20 +144,7 @@ AppListener {
 
 void QFDispatcher::dispatch(QString type, QJSValue message)
 {
-
-#if (QT_VERSION == QT_VERSION_CHECK(5,7,1)) || (QT_VERSION == QT_VERSION_CHECK(5,8,0))
-
-    /* A dirty hack to fix QTBUG-58133 and #13 issue.
-
-       Reference:
-       1. https://bugreports.qt.io/browse/QTBUG-58133
-       2. https://github.com/benlau/quickflux/issues/13
-
-     */
-    if (message.isUndefined() && !m_engine.isNull()) {
-        message = m_engine->toScriptValue<QVariant>(QVariant());
-    }
-#endif
+    QF_PRECHECK_DISPATCH(m_engine, type, message);
 
     auto process = [=](QString type, QJSValue message) {
         if (m_hook.isNull()) {
