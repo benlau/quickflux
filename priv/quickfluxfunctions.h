@@ -18,9 +18,9 @@ namespace QuickFlux {
    2. https://github.com/benlau/quickflux/issues/13
  */
 #define QF_PRECHECK_DISPATCH(engine, type, message)  {\
-    if (message.isUndefined() && !m_engine.isNull()) { \
+    if (message.isUndefined() && engine) { \
         message = engine->toScriptValue<QVariant>(QVariant()); \
-    } \
+    }\
 }
 
 #else

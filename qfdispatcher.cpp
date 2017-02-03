@@ -144,7 +144,7 @@ AppListener {
 
 void QFDispatcher::dispatch(QString type, QJSValue message)
 {
-    QF_PRECHECK_DISPATCH(m_engine, type, message);
+    QF_PRECHECK_DISPATCH(m_engine.data(), type, message);
 
     auto process = [=](QString type, QJSValue message) {
         if (m_hook.isNull()) {

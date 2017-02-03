@@ -17,7 +17,8 @@ QQmlListProperty<QObject> QFStore::children()
 
 void QFStore::dispatch(QString type, QJSValue message)
 {
-    QF_PRECHECK_DISPATCH(m_engine, type, message);
+    QQmlEngine* engine = qmlEngine(this);
+    QF_PRECHECK_DISPATCH(engine, type, message);
 
     foreach(QObject* child , m_children) {
         QFStore* store = qobject_cast<QFStore*>(child);
