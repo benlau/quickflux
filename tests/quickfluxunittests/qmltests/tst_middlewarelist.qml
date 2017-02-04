@@ -3,7 +3,7 @@ import QtTest 1.0
 import QuickFlux 1.1
 
 TestCase {
-    name : "MiddlewaresTests"
+    name : "MiddlewareListTests"
 
     ActionCreator {
         id: actions
@@ -11,7 +11,7 @@ TestCase {
         signal test1();
     }
 
-    Middlewares {
+    MiddlewareList {
         id: middlewares
 
         Middleware  {

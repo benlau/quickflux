@@ -43,11 +43,11 @@ DISTFILES += \
     qmltests/tst_qimage.qml \
     qmltests/tst_actioncreator.qml \
     qmltests/tst_object.qml \
-    qmltests/tst_middlewares.qml \
-    qmltests/tst_middlewares_applyTarget.qml \
     qmltests/tst_store.qml \
     qmltests/tst_store_children.qml \
     qmltests/tst_hydrate.qml \
     qmltests/tst_store_bridge.qml \
     qpm.json \
-    qmltests/tst_middleware_filterFunctionEnabled.qml
+    qmltests/tst_middleware_filterFunctionEnabled.qml \
+    qmltests/tst_middlewarelist.qml \
+    qmltests/tst_middlewarelist_applyTarget.qml

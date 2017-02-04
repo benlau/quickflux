@@ -1,16 +1,14 @@
-#ifndef QFMIDDLEWARES_H
-#define QFMIDDLEWARES_H
-
+#pragma once
 #include <QQuickItem>
 #include <QPointer>
 #include <qfactioncreator.h>
 
-class QFMiddlewares : public QQuickItem
+class QFMiddlewareList : public QQuickItem
 {
     Q_OBJECT
     Q_PROPERTY(QObject* applyTarget READ applyTarget WRITE setApplyTarget NOTIFY applyTargetChanged)
 public:
-    QFMiddlewares();
+    QFMiddlewareList();
 
     QObject *applyTarget() const;
     void setApplyTarget(QObject *applyTarget);
@@ -42,5 +40,3 @@ private:
     QPointer<QObject> m_applyTarget;
 
 };
-
-#endif // QFMIDDLEWARES_H

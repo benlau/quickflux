@@ -11,7 +11,7 @@ TestCase {
         signal test1();
     }
 
-    Middlewares {
+    MiddlewareList {
         id: middlewares
 
         Middleware  {

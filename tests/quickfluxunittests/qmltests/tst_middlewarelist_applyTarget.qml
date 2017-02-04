@@ -18,7 +18,7 @@ TestCase {
         }
     }
 
-    Middlewares {
+    MiddlewareList {
         id: middlewares
         applyTarget: actions1
 

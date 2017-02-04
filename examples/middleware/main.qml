@@ -12,7 +12,7 @@ Window {
     width: 640
     height: 480
 
-    Middlewares {
+    MiddlewareList {
         applyTarget: AppActions
 
         ImagePickerMiddleware {

@@ -12,7 +12,7 @@
 #include "qfkeytable.h"
 #include "qfactioncreator.h"
 #include "qfobject.h"
-#include "qfmiddlewares.h"
+#include "qfmiddlewarelist.h"
 #include "qfstore.h"
 #include "qfhydrate.h"
 
@@ -52,7 +52,7 @@ void registerQuickFluxQmlTypes()
     qmlRegisterSingletonType<QFHydrate>("QuickFlux", 1, 1, "Hydrate", hydrateProvider);
     qmlRegisterType<QFStore>("QuickFlux", 1, 1, "Store");
     qmlRegisterType<QFObject>("QuickFlux", 1, 1, "Object");
-    qmlRegisterType<QFMiddlewares>("QuickFlux", 1, 1, "Middlewares");
+    qmlRegisterType<QFMiddlewareList>("QuickFlux", 1, 1, "MiddlewareList");
     qmlRegisterType<QFMiddleware>("QuickFlux", 1, 1, "Middleware");
 
 }

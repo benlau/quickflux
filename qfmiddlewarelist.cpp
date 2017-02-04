@@ -1,21 +1,21 @@
 #include <QQmlExpression>
 #include <QQmlEngine>
 #include <QQmlContext>
-#include "qfmiddlewares.h"
+#include "qfmiddlewarelist.h"
 #include "priv/quickfluxfunctions.h"
 #include "priv/qfmiddlewareshook.h"
 
-QFMiddlewares::QFMiddlewares()
+QFMiddlewareList::QFMiddlewareList()
 {
     m_engine = 0;
 }
 
-void QFMiddlewares::apply(QObject *source)
+void QFMiddlewareList::apply(QObject *source)
 {
     setApplyTarget(source);
 }
 
-void QFMiddlewares::next(int senderIndex, QString type, QJSValue message)
+void QFMiddlewareList::next(int senderIndex, QString type, QJSValue message)
 {
     QJSValueList args;
 
@@ -28,12 +28,12 @@ void QFMiddlewares::next(int senderIndex, QString type, QJSValue message)
     }
 }
 
-void QFMiddlewares::classBegin()
+void QFMiddlewareList::classBegin()
 {
 
 }
 
-void QFMiddlewares::componentComplete()
+void QFMiddlewareList::componentComplete()
 {
     m_engine = qmlEngine(this);
 
@@ -42,7 +42,7 @@ void QFMiddlewares::componentComplete()
     }
 }
 
-void QFMiddlewares::setup()
+void QFMiddlewareList::setup()
 {
     QFActionCreator *creator = 0;
     QFDispatcher* dispatcher = 0;
@@ -99,12 +99,12 @@ void QFMiddlewares::setup()
     }
 }
 
-QObject *QFMiddlewares::applyTarget() const
+QObject *QFMiddlewareList::applyTarget() const
 {
     return m_applyTarget;
 }
 
-void QFMiddlewares::setApplyTarget(QObject *applyTarget)
+void QFMiddlewareList::setApplyTarget(QObject *applyTarget)
 {
     m_applyTarget = applyTarget;
     if (!m_engine.isNull()) {
