@@ -3,7 +3,7 @@ import QtTest 1.0
 import QuickFlux 1.0
 
 TestCase {
-    name : "AppScriptTests"
+    name : "AppScriptGroupTests"
 
     AppScript {
         id: script1

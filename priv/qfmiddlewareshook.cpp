@@ -10,7 +10,7 @@ QFMiddlewaresHook::QFMiddlewaresHook(QObject *parent) : QFHook(parent)
 void QFMiddlewaresHook::dispatch(QString type, QJSValue message)
 {
     if (m_middlewares.isNull()) {
-        emit send(type , message);
+        emit dispatched(type , message);
     } else {
         next(-1, type , message);
     }
@@ -24,18 +24,17 @@ void QFMiddlewaresHook::setup(QQmlEngine *engine, QObject *middlewares)
     QJSValue hobj = engine->newQObject(this);
 
     QString source = "function (middlewares, hook) {"
-                     "  function create(index) {"
+                     "  function create(senderIndex) {"
                      "    return function (type, message) {"
-                     "      hook.next(index, type , message);"
+                     "      hook.next(senderIndex, type , message);"
                      "    }"
                      "  }"
                      "  var data = middlewares.data;"
                      "  for (var i = 0 ; i < data.length; i++) {"
                      "    var m = data[i];"
-                     "    m.next = create(i);"
+                     "    m._nextCallback = create(i);"
                      "  }"
                      "}";
-
 
     QJSValue function = engine->evaluate(source);
 
@@ -56,10 +55,10 @@ void QFMiddlewaresHook::setup(QQmlEngine *engine, QObject *middlewares)
              "       return;"
              "     }"
              "     var m = middlewares.data[receiverIndex];"
-             "     if (m.hasOwnProperty(\"dispatch\") && typeof m.dispatch === \"function\") {"
-             "       m.dispatch(type, message);"
-             "     } else if (m.hasOwnProperty(type) && typeof m[type] === \"function\") {"
+             "     if (m.filterFunctionEnabled && m.hasOwnProperty(type) && typeof m[type] === \"function\") { "
              "       m[type](message);"
+             "     } else if (m.hasOwnProperty(\"dispatch\") && typeof m.dispatch === \"function\") {"
+             "       m.dispatch(type, message);"
              "     } else {"
              "       invoke(receiverIndex + 1,type, message);"
              "     }"
@@ -89,5 +88,5 @@ void QFMiddlewaresHook::next(int senderIndex, QString type, QJSValue message)
 
 void QFMiddlewaresHook::resolve(QString type, QJSValue message)
 {
-    emit send(type, message);
+    emit dispatched(type, message);
 }

@@ -4,6 +4,7 @@ import QuickFlux 1.1
 import "../actions"
 
 Store {
+    bindSource: AppDispatcher
     property ListModel photoModel : ListModel {}
 
     function add(url) {

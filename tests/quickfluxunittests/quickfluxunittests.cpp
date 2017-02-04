@@ -20,6 +20,11 @@
 
 QuickFluxUnitTests::QuickFluxUnitTests()
 {
+    // Autotest detect available test cases of a QObject by looking for "QTest::qExec" in source code
+    auto ref = [=]() {
+        QTest::qExec(this, 0, 0);
+    };
+    Q_UNUSED(ref);
 }
 
 void QuickFluxUnitTests::initTestCase()
@@ -306,7 +311,7 @@ void QuickFluxUnitTests::dispatcherHook()
     public:
         void dispatch(QString type, QJSValue message) {
             for (int i = 0 ; i < 3;i++) {
-                QMetaObject::invokeMethod(this,"send",Q_ARG(QString, type), Q_ARG(QJSValue, message));
+                QMetaObject::invokeMethod(this,"dispatched",Q_ARG(QString, type), Q_ARG(QJSValue, message));
             }
         }
     };

@@ -3,7 +3,7 @@ import QtTest 1.0
 import QuickFlux 1.1
 
 TestCase {
-    name : "MiddlewaresTests"
+    name : "Middleware_FilterFunctionEnabled"
 
     ActionCreator {
         id: actions
@@ -19,9 +19,14 @@ TestCase {
 
             property var actions : new Array
 
+            filterFunctionEnabled: true
+
+            function test1(message) {
+                middleware1.actions.push("test1");
+                next("test1", message);
+            }
+
             function dispatch(type , message) {
-                middleware1.actions.push(type);
-                next(type , message);
             }
         }
 

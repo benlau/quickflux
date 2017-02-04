@@ -1,7 +1,7 @@
 /// QML Type Registration Helper
 #include <QtQml>
 #include <QFAppDispatcher>
-#include "QuickFlux"
+#include "qfmiddleware.h"
 #include "qfdispatcher.h"
 #include "qfapplistener.h"
 #include "qfappscript.h"
@@ -53,6 +53,7 @@ void registerQuickFluxQmlTypes()
     qmlRegisterType<QFStore>("QuickFlux", 1, 1, "Store");
     qmlRegisterType<QFObject>("QuickFlux", 1, 1, "Object");
     qmlRegisterType<QFMiddlewares>("QuickFlux", 1, 1, "Middlewares");
+    qmlRegisterType<QFMiddleware>("QuickFlux", 1, 1, "Middleware");
 
 }
 

@@ -11,6 +11,6 @@ public:
     virtual void dispatch(QString type, QJSValue message) = 0;
 
 signals:
-    void send(QString type, QJSValue message);
+    void dispatched(QString type, QJSValue message);
 
 };

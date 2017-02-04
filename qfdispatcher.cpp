@@ -313,7 +313,7 @@ void QFDispatcher::setHook(QFHook *hook)
     m_hook = hook;
 
     if (!m_hook.isNull()) {
-        connect(m_hook.data(), SIGNAL(send(QString,QJSValue)),
+        connect(m_hook.data(), SIGNAL(dispatched(QString,QJSValue)),
                 this,SLOT(send(QString,QJSValue)));
     }
 

@@ -9,7 +9,7 @@ CONFIG -= app_bundle
 
 TEMPLATE = app
 
-DEFINES += SRCDIR=\\\"$$PWD/\\\"
+DEFINES += SRCDIR=\\\"$$PWD/\\\" QUICK_TEST_SOURCE_DIR=\\\"$$PWD/qmltests\\\"
 
 SOURCES += main.cpp \
     quickfluxunittests.cpp \
@@ -49,4 +49,5 @@ DISTFILES += \
     qmltests/tst_store_children.qml \
     qmltests/tst_hydrate.qml \
     qmltests/tst_store_bridge.qml \
-    qpm.json
+    qpm.json \
+    qmltests/tst_middleware_filterFunctionEnabled.qml

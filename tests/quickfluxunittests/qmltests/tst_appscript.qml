@@ -5,7 +5,6 @@ import QuickFlux 1.0
 TestCase {
     name : "AppScriptTests"
 
-
     AppScript {
         id: script1
         property var runMessage;
