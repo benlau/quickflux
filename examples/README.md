@@ -1,13 +1,11 @@
 Example Programs
 ================
 
-todo/ 		-  General usage of AppDispatcher and AppListener
+todo/ 		-  General usage of ActionCreator/AppDispatcher and Store (Since 1.1)
 
 
 Advanced Tutorials
 ------------------
 
-todo_by_storeworker -  Introduction of StoreWorker
-
-photoalbum/     - Tutorial 2 : Usage of AppScript 
+middleware/	-  Example of middleware (Since 1.1)
 

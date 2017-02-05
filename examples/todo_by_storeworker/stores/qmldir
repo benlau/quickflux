@@ -1,2 +1,0 @@
-singleton TodoStore 0.1 TodoStore.qml
-singleton UserPrefsStore 0.1 UserPrefsStore.qml
