@@ -9,7 +9,7 @@ namespace QuickFlux {
 
 }
 
-#if (QT_VERSION == QT_VERSION_CHECK(5,7,1)) || (QT_VERSION == QT_VERSION_CHECK(5,8,0))
+#if (QT_VERSION == QT_VERSION_CHECK(5,7,1)) || (QT_VERSION == QT_VERSION_CHECK(5,8,0) || defined(SAILFISH_OS))
 
 /* A dirty hack to fix QTBUG-58133 and #13 issue.
 
