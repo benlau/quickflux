@@ -28,7 +28,7 @@ void QFStore::dispatch(QString type, QJSValue message)
         store->dispatch(type, message);
     }
 
-    foreach(QObject* child , m_stores) {
+    foreach(QObject* child , m_redispatchTargets) {
         QFStore* store = qobject_cast<QFStore*>(child);
 
         if (!store) {
@@ -110,9 +110,9 @@ void QFStore::setup()
 
 }
 
-QQmlListProperty<QObject> QFStore::stores()
+QQmlListProperty<QObject> QFStore::redispatchTargets()
 {
-    return QQmlListProperty<QObject>(qobject_cast<QObject*>(this), m_stores);
+    return QQmlListProperty<QObject>(qobject_cast<QObject*>(this), m_redispatchTargets);
 }
 
 QObject *QFStore::bindSource() const

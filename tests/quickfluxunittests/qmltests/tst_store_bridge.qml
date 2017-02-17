@@ -52,7 +52,7 @@ TestCase {
         id: rootStore
         property int test1: 0
 
-        stores: [
+        redispatchTargets: [
             store1,
             store2
         ]
