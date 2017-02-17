@@ -1,5 +1,6 @@
 #include <QtCore>
 #include <QMetaObject>
+#include "priv/quickfluxfunctions.h"
 #include "qffilter.h"
 
 /*!
@@ -103,6 +104,7 @@ void QFFilter::classBegin()
 void QFFilter::componentComplete()
 {
     QObject* object = parent();
+    m_engine = qmlEngine(this);
 
     if (!object) {
         qDebug() << "Filter - Disabled due to missing parent.";
@@ -127,6 +129,7 @@ void QFFilter::componentComplete()
 void QFFilter::filter(QString type, QJSValue message)
 {
     if (m_types.indexOf(type) >= 0) {
+        QF_PRECHECK_DISPATCH(m_engine.data(), type, message);
         emit dispatched(type, message);
     }
 }
@@ -134,7 +137,10 @@ void QFFilter::filter(QString type, QJSValue message)
 void QFFilter::filter(QString type, QVariant message)
 {
     if (m_types.indexOf(type) >= 0) {
-        emit dispatched(type, message.value<QJSValue>());
+        QJSValue value = message.value<QJSValue>();
+        QF_PRECHECK_DISPATCH(m_engine.data(), type, value);
+
+        emit dispatched(type, value);
     }
 }
 

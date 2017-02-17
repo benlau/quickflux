@@ -6,6 +6,8 @@
 #include <QJSValue>
 #include <QVariant>
 #include <QQmlListProperty>
+#include <QQmlEngine>
+#include <QPointer>
 
 // Filter represents a filter rule in AppListener
 
@@ -49,6 +51,7 @@ private slots:
 private:
     QStringList m_types;
     QList<QObject*> m_children;
+    QPointer<QQmlEngine> m_engine;
 };
 
 #endif // QFFILTER_H
