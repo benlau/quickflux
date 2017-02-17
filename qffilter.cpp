@@ -1,5 +1,6 @@
 #include <QtCore>
 #include <QMetaObject>
+#include <QtQml>
 #include "priv/quickfluxfunctions.h"
 #include "qffilter.h"
 
