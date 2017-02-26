@@ -38,7 +38,7 @@ static auto dehydratorFunction = [](const QStringList& ignoreList) {
 
 static auto dehydrateQObject = dehydratorFunction(QStringList() << "parent" << "objectName");
 static auto dehydrateQFObject = dehydratorFunction(QStringList() << "parent" << "objectName" << "children");
-static auto dehydrateQFStore = dehydratorFunction(QStringList() << "parent" << "objectName" << "children" << "bindStore" << "redispatchTargets" << "filterFunctionEnabled");
+static auto dehydrateQFStore = dehydratorFunction(QStringList() << "parent" << "objectName" << "children" << "bindSource" << "redispatchTargets" << "filterFunctionEnabled");
 
 /// Default dehydrator function
 static QVariantMap dehydrator(QObject* source) {

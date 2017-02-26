@@ -43,6 +43,10 @@ Item {
 
         Store {
             id: target2
+
+            bindSource: Dispatcher {
+            }
+
             property int value1 : 0;
             property real value2 : 0;
             property string value3: "";
