@@ -7,28 +7,60 @@
 #include "qfdispatcher.h"
 
 /*!
-   \qmltype AppDispatcher
+   \qmltype Dispatcher
    \inqmlmodule QuickFlux
    \brief Message Dispatcher
 
-    AppDispatcher is a singleton object in QML scope for delivering action message.
+    Dispatcher is a component for delivering action message.
 
- */
+    Usually you don't need to declare a Dispatcher component by yourself beside writing test case.
+    It is suggested to use AppDispatcher directly.
+
+*/
 
 /*!
-  \qmlsignal AppDispatcher::dispatched(string type, object message)
+  \qmlsignal Dispatcher::dispatched(string type, object message)
 
-  This signal is emitted when a message is ready to dispatch by AppDispatcher.
+  This signal is emitted when a message is ready to dispatch by Dispatcher.
 
   There has several methods to listen this signal:
 
-Method 1 - Using Connections component
+
+Method 1 - Using Store component
+
+It is suggested method. (Since QuickFlux 1.1)
 
 \code
-import QuickFlux 1.0
+import QuickFlux 1.1
+
+Dispatcher {
+  id: dispatcher
+}
+
+Store {
+  bindSource: dispatcher
+
+  Filter {
+    type: ActionTypes.openItem
+    onDispatcher: {
+      // ..
+    }
+  }
+}
+\endcode
+
+
+Method 2 - Using Connections component
+
+\code
+import QuickFlux 1.1
+
+Dispatcher {
+  id: dispatcher
+}
 
 Connections {
-    target: AppDispatcher
+    target: dispatcher
     onDispatched: {
         switch (type) {
             case "OpenItem";
@@ -42,20 +74,14 @@ Connections {
 }
 \endcode
 
-Method 2 - Using helper component, AppListener
-\code
-AppListener {
-    filter: "ItemOpen";
-    onDispatched: {
-      /// ...
-    }
-}
-\endcode
-
 Method 3 - Using addListener
 \code
+Dispatcher {
+  id: dispatcher
+}
+
 Component.onCompleted: {
-   AppDispatcher.addListener(function() {
+   dispatcher.addListener(function() {
      switch (type) {
         case "OpenItem";
           // ...
@@ -102,7 +128,7 @@ QFDispatcher::~QFDispatcher()
 }
 
 /*!
-  \qmlmethod AppDispatcher::dispatch(string type, object message)
+  \qmlmethod Dispatcher::dispatch(string type, object message)
 
   Dispatch a message with type via the AppDispatcher.
   The message will be placed on a queue and delivery via the "dispatched" signal.
@@ -170,7 +196,7 @@ void QFDispatcher::dispatch(QString type, QJSValue message)
 }
 
 /*!
-  \qmlmethod AppDispatcher::waitFor(int listenerId)
+  \qmlmethod Dispatcher::waitFor(int listenerId)
 
   Waits for a callback specifed via the listenerId to be executed before continue execution of current callback.
   You should call this method only by a callback registered via addListener.
@@ -191,7 +217,7 @@ void QFDispatcher::waitFor(QList<int> ids)
 
 /*!
 
-  \qmlmethod int AppDispatcher::addListener(func callback)
+  \qmlmethod int Dispatcher::addListener(func callback)
 
   Registers a callback to be invoked with every dispatched message. Returns a listener ID that can be used with waitFor().
 

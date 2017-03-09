@@ -38,3 +38,4 @@ html
 build
 vendor
 *.qmlc
+*.swp

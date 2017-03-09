@@ -9,12 +9,13 @@ QML Singleton Object
 
 QML Components
 \list
-    \li \l AppListener
+    \li \l Dispatcher
     \li \l AppScript
     \li \l AppScriptGroup
     \li \l Filter
     \li \l KeyTable
     \li \l ActionCreator
+    \li \l AppListener
 \endlist
 
 C++ Classes

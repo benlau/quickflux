@@ -2,6 +2,15 @@
 #include <QQmlComponent>
 #include "qfappdispatcher.h"
 
+/*!
+   \qmltype AppDispatcher
+   \inqmlmodule QuickFlux
+   \brief Message Dispatcher
+
+    AppDispatcher is a singleton object for delivering action message.
+ */
+
+
 QFAppDispatcher::QFAppDispatcher(QObject *parent) : QFDispatcher(parent)
 {
 
