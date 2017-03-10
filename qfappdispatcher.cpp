@@ -6,6 +6,7 @@
    \qmltype AppDispatcher
    \inqmlmodule QuickFlux
    \brief Message Dispatcher
+   \inherits Dispatcher
 
     AppDispatcher is a singleton object for delivering action message.
  */

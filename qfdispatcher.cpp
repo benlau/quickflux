@@ -8,7 +8,7 @@
 
 /*!
    \qmltype Dispatcher
-   \inqmlmodule QuickFlux
+   \inqmlmodule QuickFlux 1.1
    \brief Message Dispatcher
 
     Dispatcher is a component for delivering action message.
@@ -244,7 +244,7 @@ int QFDispatcher::addListener(QFListener *listener)
 }
 
 /*!
-  \qmlmethod AppDispatcher::removeListener(int listenerId)
+  \qmlmethod Dispatcher::removeListener(int listenerId)
 
   Remove a callback by the listenerId returned by addListener
  */

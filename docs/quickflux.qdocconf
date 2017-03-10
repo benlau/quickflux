@@ -1,6 +1,6 @@
 project = QuickFlux
 url = https://github.com/benlau/quickflux
-description = Message Dispatcher/Queue for Qt/QML
+description = A Flux implementation for QML
 sourcedirs = ./
 sourcedirs += ../
 headerdirs += ../
