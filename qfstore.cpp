@@ -11,6 +11,37 @@
    \brief Store Component
 
     Store is a helper component to implement the data “Store” component in a Quick Flux application. It could listen from ActionCreator / Dispatcher    component and redispatch the received action to another store components (e.g children store)
+
+    The order of action delivery:
+
+    \code
+
+    Store {
+      id: rootStore
+
+      bindSource: AppDispatcher
+
+      property alias page1 : page1
+
+      Page1 {
+        id: page1
+      }
+
+      Page1 {
+        id: page2
+      }
+
+      Filter {
+        id: filter1
+      }
+
+    }
+    \endcode
+
+In the example above, the rootStore is bind to AppDispatcher, whatever the dispatcher dispatch an action, it will first re-dispatch the action to its children sequentially. Then emit the dispatched signal on itself. Therefore, the order of receivers is: page1, page2 then filter1.
+
+If the redispatchTargets property is set, Store component will also dispatch the received action to the listed objects.
+
 */
 
 /*!
@@ -47,7 +78,7 @@
 
 */
 
-/*! \qmlproperty array Store::filterFunctionEnabled
+/*! \qmlproperty bool Store::filterFunctionEnabled
  */
 
 QFStore::QFStore(QObject *parent) : QObject(parent) , m_filterFunctionEnabled(false)
@@ -156,6 +187,24 @@ void QFStore::setup()
 }
 
 /*! \qmlproperty array Store::redispatchTargets
+
+  By default, the Store component redispatch the received action to its children sequentially. If this property is set,
+  the action will be re-dispatch to those objects too.
+
+
+  \code
+
+    Store {
+        id: bridgeStore
+
+        redispatchTargets: [
+            SingletonStore1,
+            SingletonStore2
+        ]
+    }
+  \endcode
+
+
  */
 
 QQmlListProperty<QObject> QFStore::redispatchTargets()
@@ -165,6 +214,10 @@ QQmlListProperty<QObject> QFStore::redispatchTargets()
 
 
 /*! \qmlproperty object Store::bindSource
+ *
+ * This property hold the source of action. It can be an ActionCreator / Dispatcher component
+ *
+ * The default is null.
  */
 
 
