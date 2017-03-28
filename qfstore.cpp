@@ -5,6 +5,51 @@
 #include "qfactioncreator.h"
 #include "qfstore.h"
 
+/*!
+   \qmltype Store
+   \inqmlmodule QuickFlux 1.1
+   \brief Store Component
+
+    Store is a helper component to implement the data “Store” component in a Quick Flux application. It could listen from ActionCreator / Dispatcher    component and redispatch the received action to another store components (e.g children store)
+*/
+
+/*!
+  \qmlsignal Dispatcher::dispatched(string type, object message)
+
+  This signal is emitted when a message is received by this store.
+
+  There has two suggested methods to listen this signal:
+
+  Method 1 - Use Filter component
+
+  \code
+
+  Store {
+      Filter {
+          type: ActionTypes.addItem
+          onDispatched: {
+              /* process here *
+          }
+      }
+  }
+  \endcode
+
+  Method 2 - Use filter function
+
+  \code
+  Store {
+      filterFunctionEnable: true
+      function addItem(message) {
+
+      }
+  }
+  \endcode
+
+*/
+
+/*! \qmlproperty array Store::filterFunctionEnabled
+ */
+
 QFStore::QFStore(QObject *parent) : QObject(parent) , m_filterFunctionEnabled(false)
 {
 
@@ -110,10 +155,18 @@ void QFStore::setup()
 
 }
 
+/*! \qmlproperty array Store::redispatchTargets
+ */
+
 QQmlListProperty<QObject> QFStore::redispatchTargets()
 {
     return QQmlListProperty<QObject>(qobject_cast<QObject*>(this), m_redispatchTargets);
 }
+
+
+/*! \qmlproperty object Store::bindSource
+ */
+
 
 QObject *QFStore::bindSource() const
 {
