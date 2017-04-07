@@ -33,7 +33,7 @@
         id: page2
       }
 
-      Filter {
+      r {
         id: filter1
       }
 

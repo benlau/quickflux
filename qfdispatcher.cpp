@@ -8,7 +8,7 @@
 
 /*!
    \qmltype Dispatcher
-   \inqmlmodule QuickFlux 1.1
+   \inqmlmodule QuickFlux
    \brief Message Dispatcher
 
     Dispatcher is a component for delivering action message.

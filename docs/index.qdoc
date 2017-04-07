@@ -15,6 +15,7 @@ QML Components
     \li \l KeyTable
     \li \l ActionCreator
     \li \l Middleware
+    \li \l MiddlewareList
     \li \l AppScript
     \li \l AppScriptGroup
     \li \l AppListener

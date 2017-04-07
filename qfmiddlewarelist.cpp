@@ -5,6 +5,48 @@
 #include "priv/quickfluxfunctions.h"
 #include "priv/qfmiddlewareshook.h"
 
+/*!
+   \qmltype MiddlewareList
+   \inqmlmodule QuickFlux 1.1
+
+MiddlewareList groups a list of Middleware and install to target Dispatcher / ActionCreator
+
+Example Code
+
+\code
+
+import QtQuick 2.0
+import QuickFlux 1.1
+import "./actions"
+import "./middlewares"
+
+// main.qml
+
+Item {
+  MiddlewareList {
+    applyTarget: AppDispatcher
+
+    Middleware {
+      id: debouncerMiddleware
+   }
+
+    Middleware {
+      id: logger
+    }
+  }
+}
+
+\endcode
+
+    */
+
+/*! \qmlproperty var MiddlewareList::applyTarget
+ *
+ * This property specific the target object that of middlewares should be applied.
+ * It can be either of an ActionCreator or Dispatcher object.
+ *
+ */
+
 QFMiddlewareList::QFMiddlewareList()
 {
     m_engine = 0;
