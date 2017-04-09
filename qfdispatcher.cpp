@@ -19,7 +19,7 @@
 */
 
 /*!
-  \qmlsignal Dispatcher::dispatched(string type, object message)
+  \qmlsignal AppDispatcher::dispatched(string type, object message)
 
   This signal is emitted when a message is ready to dispatch by Dispatcher.
 

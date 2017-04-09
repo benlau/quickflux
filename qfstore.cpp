@@ -14,7 +14,7 @@
 
     It is a replacement of AppListener component
 
-    The order of action delivery:
+    \b{The order of action delivery:}
 
     \code
 
@@ -25,15 +25,15 @@
 
       property alias page1 : page1
 
-      Page1 {
+      Store {
         id: page1
       }
 
-      Page1 {
+      Store {
         id: page2
       }
 
-      r {
+      Filter {
         id: filter1
       }
 
@@ -71,7 +71,8 @@ If the redispatchTargets property is set, Store component will also dispatch the
 
   \code
   Store {
-      filterFunctionEnable: true
+      filterFunctionEnabled: true
+
       function addItem(message) {
 
       }
@@ -81,7 +82,23 @@ If the redispatchTargets property is set, Store component will also dispatch the
 */
 
 /*! \qmlproperty bool Store::filterFunctionEnabled
+If this property is true, whatever the store component received a new action. Beside to emit a dispatched signal, it will search for a function with a name as the action. If it exists, it will call also call the function.
+
+\code
+
+Store {
+  filterFunctionEnabled: true
+
+  function addItem(message) {
+    /* ... */
+  }
+}
+
+\endcode
+
+The default value is false
  */
+
 
 QFStore::QFStore(QObject *parent) : QObject(parent) , m_filterFunctionEnabled(false)
 {
