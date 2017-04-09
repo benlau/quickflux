@@ -53,10 +53,50 @@ static QVariantMap dehydrator(QObject* source) {
     return ret;
 }
 
+/*!
+   \qmltype Hydrate
+   \inqmlmodule QuickFlux
+
+Rehydration and dehydration are just another words for deserialize and serialize. It could be used to convert Store into JSON object, and vice versa.
+
+Remarks: Hydrate supports any QObject based type as the target of deserialize and serialize.
+
+\code
+Hydrate.rehydrate(store, {
+  value1: 1,
+  value2: 2.0,
+  value3: "",
+  value4: {
+    subValue1: 1
+  }
+});
+
+var data = Hydrate.dehydrate(MainStore);
+console.log(JSON.stringify(data));
+\endcode
+*/
+
 QFHydrate::QFHydrate(QObject *parent) : QObject(parent)
 {
 
 }
+
+/*!
+  \qmlmethod Hydrate::rehydrate(target, source)
+
+Deserialize data from source and write to target object.
+
+\code
+Hydrate.rehydrate(store, {
+  value1: 1,
+  value2: 2.0,
+  value3: "",
+  value4: {
+    subValue1: 1
+  }
+\endcode
+
+ */
 
 void QFHydrate::rehydrate(QObject *dest, const QVariantMap &source)
 {
@@ -90,6 +130,18 @@ void QFHydrate::rehydrate(QObject *dest, const QVariantMap &source)
         iter++;
     }
 }
+
+/*!
+  \qmlmethod Hydrate::dehydrate(object)
+
+Serialize data from a object
+
+\code
+var data = Hydrate.dehydrate(MainStore);
+console.log(JSON.stringify(data));
+\endcode
+
+ */
 
 QVariantMap QFHydrate::dehydrate(QObject *source)
 {

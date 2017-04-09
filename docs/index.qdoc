@@ -2,11 +2,6 @@
     \page index.html
     \title QuickFlux
 
-QML Singleton Object
-\list
-    \li \l AppDispatcher
-\endlist
-
 QML Components
 \list
     \li \l Dispatcher
@@ -16,9 +11,15 @@ QML Components
     \li \l ActionCreator
     \li \l Middleware
     \li \l MiddlewareList
+    \li \l Hydrate
     \li \l AppScript
     \li \l AppScriptGroup
     \li \l AppListener
+\endlist
+
+QML Singleton Object
+\list
+    \li \l AppDispatcher
 \endlist
 
 C++ Classes

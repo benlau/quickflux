@@ -7,7 +7,7 @@
 
 /*!
    \qmltype MiddlewareList
-   \inqmlmodule QuickFlux 1.1
+   \inqmlmodule QuickFlux
 
 MiddlewareList groups a list of Middleware and install to target Dispatcher / ActionCreator
 
