@@ -90,10 +90,8 @@ Store {
   filterFunctionEnabled: true
 
   function addItem(message) {
-    /* ... */
   }
 }
-
 \endcode
 
 The default value is false
