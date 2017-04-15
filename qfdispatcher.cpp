@@ -11,11 +11,16 @@
    \inqmlmodule QuickFlux
    \brief Message Dispatcher
 
+   \code
+   import QuickFlux 1.1
+   \endcode
+
     Dispatcher is a component for delivering action message.
 
     Usually you don't need to declare a Dispatcher component by yourself beside writing test case.
     It is suggested to use AppDispatcher directly.
 
+    It is added since QuickFlux v1.1
 */
 
 /*!
@@ -26,7 +31,7 @@
   There has several methods to listen this signal:
 
 
-Method 1 - Using Store component
+\b{Method 1 - Using Store component}
 
 It is the suggested method. (Since QuickFlux 1.1)
 
@@ -50,7 +55,7 @@ Store {
 \endcode
 
 
-Method 2 - Using Connections component
+\b{Method 2 - Using Connections component}
 
 \code
 import QuickFlux 1.1

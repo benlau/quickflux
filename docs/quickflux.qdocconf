@@ -21,3 +21,6 @@ HTML.stylesheets = $$QT_DOCS_STYLE
 HTML.headerstyles = \
     "  <link rel=\"stylesheet\" type=\"text/css\" href=\"style/offline.css\" />\n"
 
+images +=  concept/middleware-data-flow.png
+
+

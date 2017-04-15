@@ -10,9 +10,29 @@
    \inqmlmodule QuickFlux 1.1
    \brief Store Component
 
-    Store is a helper component to implement the data “Store” component in a Quick Flux application. It could listen from ActionCreator / Dispatcher    component and redispatch the received action to another store components (e.g children store).
+    Store is a helper item for implement the data “Store” component in a Quick Flux application. It could listen from ActionCreator / Dispatcher    component and redispatch the received action to another store components (e.g children store).
 
     It is a replacement of AppListener component
+
+    Example:
+
+    \code
+
+    import QuickFlux 1.1
+
+    Store {
+      bindSource: AppDispatcher
+
+      Filter {
+        type: ActionTypes.addItem
+        onDispatched: {
+          /// Process
+        }
+      }
+
+    }
+
+    \endcode
 
     \b{The order of action delivery:}
 
@@ -61,7 +81,7 @@ If the redispatchTargets property is set, Store component will also dispatch the
       Filter {
           type: ActionTypes.addItem
           onDispatched: {
-              /* process here *
+              // process here
           }
       }
   }
@@ -206,8 +226,7 @@ void QFStore::setup()
 /*! \qmlproperty array Store::redispatchTargets
 
   By default, the Store component redispatch the received action to its children sequentially. If this property is set,
-  the action will be re-dispatch to those objects too.
-
+  the action will be re-dispatch to the target objects too.
 
   \code
 
