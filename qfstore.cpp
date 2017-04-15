@@ -47,7 +47,7 @@ If the redispatchTargets property is set, Store component will also dispatch the
 */
 
 /*!
-  \qmlsignal Dispatcher::dispatched(string type, object message)
+  \qmlsignal Store::dispatched(string type, object message)
 
   This signal is emitted when a message is received by this store.
 
