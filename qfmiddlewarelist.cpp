@@ -9,6 +9,10 @@
    \qmltype MiddlewareList
    \inqmlmodule QuickFlux
 
+\code
+import QuickFlux 1.1
+\endcode
+
 MiddlewareList groups a list of Middleware and install to target Dispatcher / ActionCreator
 
 Example Code
@@ -37,6 +41,8 @@ Item {
 }
 
 \endcode
+
+It is added since QuickFlux 1.1
 
     */
 

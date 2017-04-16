@@ -39,7 +39,7 @@ User may modify/insert/delay or remove the action.
 \code
 // Confirmation Dialog
 
-\endcodeimport QuickFlux 1.1
+import QuickFlux 1.1
 import QtQuick.Dialogs 1.2
 
 Middleware {
