@@ -1,1 +1,1 @@
-singleton PhotoStore 1.0 PhotoStore.qml
+singleton MainStore 1.0 MainStore.qml

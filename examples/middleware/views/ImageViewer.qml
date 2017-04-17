@@ -18,7 +18,7 @@ Rectangle {
             spacing: 0
 
             Repeater {
-                  model: PhotoStore.photoModel
+                  model: MainStore.photoModel
                   delegate: Image {
                       width: viewer.width / 3
                       height: width / 4 * 3
