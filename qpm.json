@@ -1,6 +1,6 @@
 {
   "name": "com.github.benlau.quickflux",
-  "description": "Message Dispatcher/Queue for Qt/QML",
+  "description": "A Flux implementation for QML"
   "author": {
     "name": "Ben Lau",
     "email": "xbenlau@gmail.com"
@@ -10,7 +10,7 @@
     "url": "https://github.com/benlau/quickflux.git"
   },
   "version": {
-    "label": "1.0.6",
+    "label": "1.1",
     "revision": "1",
     "fingerprint": ""
   },
