@@ -1,6 +1,6 @@
 {
   "name": "com.github.benlau.quickflux",
-  "description": "A Flux implementation for QML"
+  "description": "A Flux implementation for QML",
   "author": {
     "name": "Ben Lau",
     "email": "xbenlau@gmail.com"
