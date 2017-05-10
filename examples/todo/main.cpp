@@ -3,6 +3,8 @@
 
 int main(int argc, char *argv[])
 {
+    qputenv("QML_DISABLE_DISK_CACHE", "true");
+
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
