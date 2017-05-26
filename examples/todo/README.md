@@ -3,17 +3,37 @@ Todo List Example
 
 Purpose: Demonstrate how to write a QML application in a Flux way.
 
-> Release 1.1 is coming
-> New features include non-singleton Dispatcher, Middleware, hydration,  a new mechanism to replace the old overcomplicated `waitFor` etc.
-> Preview of new components is available in qpm release but API is not finalized yet.
-
 File Structure
 --------------
 
-    /actions/ActionTypes.qml
-    /actions/AppActions.qml
-    /stores/
-    /views/
+```
+.
+├── actions
+│   ├── ActionTypes.qml
+│   ├── AppActions.qml
+│   └── qmldir
+├── adapters
+├── main.qml
+├── mainWindow.qml
+├── middlewares
+│   └── DialogMiddleware.qml
+├── qml.qrc
+├── stores
+│   ├── MainStore.qml
+│   ├── RootStore.qml
+│   ├── TodoStore.qml
+│   ├── UserPrefsStore.qml
+│   └── qmldir
+├── todo.pro
+└── views
+    ├── Footer.qml
+    ├── Header.qml
+    ├── TodoItem.qml
+    ├── TodoList.qml
+    └── TodoVisualModel.qml
+
+```
+
 
 **ActionTypes.qml**
 
@@ -138,8 +158,3 @@ onCheckedChanged: {
     AppActions.setTaskDone(uid,checked);
 }
 ```
-
-
-
-
-

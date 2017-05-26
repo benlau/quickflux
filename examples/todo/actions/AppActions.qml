@@ -12,8 +12,6 @@ ActionCreator {
     signal setTaskDone(var uid, bool done)
 
     // Show/hide completed task
-    // @Remarks: Unlike other actions, TodoStore do not listen on this
-    // message.
     signal setShowCompletedTasks(bool value)
 
 }

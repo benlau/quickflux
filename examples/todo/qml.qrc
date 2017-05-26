@@ -14,5 +14,7 @@
         <file>stores/UserPrefsStore.qml</file>
         <file>stores/RootStore.qml</file>
         <file>stores/MainStore.qml</file>
+        <file>middlewares/DialogMiddleware.qml</file>
+        <file>MainWindow.qml</file>
     </qresource>
 </RCC>
