@@ -1,25 +1,18 @@
-# Message Dispatcher/Queue for Qt/QML
+# A Flux implementation for QML
 
 [![Build Status](https://travis-ci.org/benlau/quickflux.svg?branch=master)](https://travis-ci.org/benlau/quickflux)
 
-QuickFlux is a Message Dispatcher / Message Queue solution for Qt/QML.
-It is also an implementation of Flux Application Architecture (from Facebook).
-By using this library, users may write their QML application in a Flux way.
-Their code could be more readable and reusable.
+QuickFlux is an implementation of Flux Application Architecture Framework from Facebook.
+It turns your QML application into a more modern and structured way.
 
 Features
+========
 
- 1. AppDispatcher
+ 1. Dispatcher
   1. A singleton Message Dispatcher / Message Queue per QML Engine.
   2. Avoid out-of-order message processing - It guarantees the order of messages are arrived in sequence to listeners (First come first served)
-  3. Support to setup dependence between listeners / stores
- 2. Write QML application in a Flux way.
- 3. Helper function for C++ code to listen on QML event / obtain QML singleton instance
- 4. Helper components for handling asynchronous sequential workflow.
-
-> Release 1.1 is coming 
-> New features include non-singleton Dispatcher, Middleware, hydration,  a new mechanism to replace the old overcomplicated `waitFor` etc.
-> Preview of new components is available in qpm release but API is not finalized yet.
+ 2. Middleware - May inject and modify action before dispatching to the Store components
+ 3. Hydration - Serialize or Deserialize Store component into / from a JSON
 
 Concept and Motivation
 ======================
@@ -155,9 +148,20 @@ It won't process the emitted signal and wait until the other listener received t
 Therefore, you could control the order of message delivery among stores.
 
 Related Projects
-----------------
+=================
+
+**Libaries**
+
  1. [benlau/quickpromise](https://github.com/benlau/quickpromise) - Promise library for QML
- 2. [benlau/quickcross](https://github.com/benlau/quickcross) - QML Cross Platform Utility Library
- 3. [benlau/qsyncable](https://github.com/benlau/qsyncable) - Synchronize data between models
- 4. [benlau/testable](https://github.com/benlau/testable) - QML Unit Test Utilities
- 5. [benlau/qtci](https://github.com/benlau/qtci) -  A set of scripts to install Qt in Linux command line environment (e.g travis)
+ 1. [benlau/quickcross](https://github.com/benlau/quickcross) - QML Cross Platform Utility Library
+ 1. [benlau/qsyncable](https://github.com/benlau/qsyncable) - Synchronize data between models
+ 1. [benlau/testable](https://github.com/benlau/testable) - QML Unit Test Utilities
+ 1. [benlau/biginteger](https://github.com/benlau/biginteger) - QML BigInteger library
+ 1. [benlau/qtci](https://github.com/benlau/qtci) -  A set of scripts to install Qt in Linux command line environment (e.g travis)
+ 1. [benlau/quickfuture](https://github.com/benlau/quickfuture) - Using QFuture in QML
+ 1. [benlau/fontawesome.pri](https://github.com/benlau/fontawesome.pri) - Using FontAwesome in QML
+ 1. [benlau/quickandroid](https://github.com/benlau/quickandroid) - QML Material Design Component and Support Library for Android
+
+**Tools**
+
+ 1. [SparkQML](https://github.com/benlau/sparkqml) - QML Document Viewer for State and Transition Preview
