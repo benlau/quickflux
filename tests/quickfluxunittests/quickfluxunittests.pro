@@ -27,6 +27,8 @@ HEADERS += \
 RESOURCES += \
     qml.qrc
 
+QMAKE_CXXFLAGS += -Werror
+
 DISTFILES += \
     qmltests/tst_appdispatcher_dispatch_reentrant.qml \
     qmltests/tst_appdispatcher_waitfor.qml \
