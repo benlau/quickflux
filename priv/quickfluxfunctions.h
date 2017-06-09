@@ -10,7 +10,6 @@ namespace QuickFlux {
 }
 
 #if (QT_VERSION == QT_VERSION_CHECK(5,7,1)) || (QT_VERSION == QT_VERSION_CHECK(5,8,0) || defined(SAILFISH_OS))
-
 /* A dirty hack to fix QTBUG-58133 and #13 issue.
 
    Reference:
@@ -22,9 +21,8 @@ namespace QuickFlux {
         message = engine->toScriptValue<QVariant>(QVariant()); \
     }\
 }
-
 #else
-#define QF_PRECHECK_DISPATCH(engine, type, message)
+#define QF_PRECHECK_DISPATCH(engine, type, message) Q_UNUSED(engine)
 #endif
 
 
