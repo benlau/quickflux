@@ -3,7 +3,7 @@ TEMPLATE = app
 QT += qml quick
 CONFIG += c++11
 
-QT += quick qml multimedia
+QT += quick qml 
 
 include(app.pri)
 
