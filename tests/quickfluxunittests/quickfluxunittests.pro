@@ -27,7 +27,10 @@ HEADERS += \
 RESOURCES += \
     qml.qrc
 
-QMAKE_CXXFLAGS += -Werror
+!win32 {
+    message("Enable -Werror");
+    QMAKE_CXXFLAGS += -Werror
+}
 
 DISTFILES += \
     qmltests/tst_appdispatcher_dispatch_reentrant.qml \
