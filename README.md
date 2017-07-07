@@ -1,6 +1,7 @@
 # A Flux implementation for QML
 
 [![Build Status](https://travis-ci.org/benlau/quickflux.svg?branch=master)](https://travis-ci.org/benlau/quickflux)
+[![Build status](https://ci.appveyor.com/api/projects/status/hnwf8vg4o778hifq?svg=true)](https://ci.appveyor.com/project/benlau/quickflux)
 
 QuickFlux is an implementation of Flux Application Architecture Framework from Facebook.
 It turns your QML application into a more modern and structured way.
