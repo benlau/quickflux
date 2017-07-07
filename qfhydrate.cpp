@@ -3,10 +3,11 @@
 #include "qfhydrate.h"
 #include "qfobject.h"
 #include "qfstore.h"
+#include <functional>
 
 static QVariantMap dehydrator(QObject* source);
 
-static auto dehydratorFunction = [](const QStringList& ignoreList) {
+static auto dehydratorFunction = [](const QStringList& ignoreList) -> std::function<QVariantMap (QObject *)> {
 
     return [=](QObject* source) {
         QVariantMap dest;
