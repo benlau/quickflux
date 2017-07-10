@@ -34,7 +34,7 @@ ActionCreator {
     }
 
     function navigateBack() {
-        AppDispatcher.dispatch(ActionTypes.navigateBack, {});
+        AppDispatcher.dispatch(ActionTypes.navigateBack);
     }
 }
 
