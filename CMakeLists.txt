@@ -19,7 +19,7 @@ include_directories(${Qt5Qml_INCLUDE_DIRS})
 add_definitions(${Qt5Qml_DEFINITIONS})
 add_definitions(${Qt5Quick_DEFINITIONS})
 
-#Include headers from priv folder as AUTODOC do not works on it
+#Include headers from priv folder as CMAKE_AUTOMOC do not works on it
 qt5_wrap_cpp(moc 
     priv/qflistener.h
     priv/qfappscriptrunnable.h
