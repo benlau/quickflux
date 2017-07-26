@@ -1,3 +1,8 @@
+#
+# To build it with cmake, you should register qml types explicitly by calling registerQuickFluxQmlTypes() in your main.cpp
+# See examples/middleware for example
+#
+
 cmake_minimum_required(VERSION 3.0.0)
 project(quickflux)
 
@@ -14,18 +19,11 @@ include_directories(${Qt5Qml_INCLUDE_DIRS})
 add_definitions(${Qt5Qml_DEFINITIONS})
 add_definitions(${Qt5Quick_DEFINITIONS})
 
+#Include headers from priv folder as AUTODOC do not works on it
 qt5_wrap_cpp(moc 
     priv/qflistener.h
     priv/qfappscriptrunnable.h
     priv/qfappscriptdispatcherwrapper.h
-    qfactioncreator.h
-    qfappdispatcher.h
-    qfapplistener.h
-    qfapplistenergroup.h
-    qfappscript.h
-    qfappscriptgroup.h
-    qffilter.h
-    qfkeytable.h
 )
 
 set(SOURCES
@@ -42,6 +40,15 @@ set(SOURCES
     qfkeytable.cpp
     priv/qfsignalproxy.cpp
     qfactioncreator.cpp
+    qfmiddleware.cpp
+    qfmiddlewarelist.cpp
+    qfobject.cpp
+    qfstore.cpp
+    qfdispatcher.cpp
+    priv/qfmiddlewareshook.cpp
+    priv/qfhook.cpp
+    priv/quickfluxfunctions.cpp
+    qfhydrate.cpp
 )
 
 set(HEADERS
@@ -57,6 +64,9 @@ set(HEADERS
     qfkeytable.h
     priv/qfsignalproxy.h
     qfactioncreator.h
+    qfmiddleware.h
+    qfmiddlewarelist.h
+    qfdispatcher.h
     QFAppDispatcher
     QFKeyTable
     QuickFlux
