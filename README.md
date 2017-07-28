@@ -148,6 +148,13 @@ AppListener supports “waitFor” property to setup dependencies on another App
 It won't process the emitted signal and wait until the other listener received the message.
 Therefore, you could control the order of message delivery among stores.
 
+Application Gallery
+===================
+
+A collection of application using Quick Flux
+
+ 1. [Lanto - An Intuitive batch Photo Resizer](http://e-fever.net/lanto/)
+
 Related Projects
 =================
 
