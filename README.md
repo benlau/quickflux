@@ -39,11 +39,13 @@ What is Flux?
 
 How to use it in a QML Application?
 
- 1. [QML Application Architecture Guide with Flux — Medium](https://medium.com/@benlaud/qml-application-architecture-guide-with-flux-b4e970374635#.e4g0tzo78)
+ 1. [Revised QML Application Architecture Guide with Flux](https://medium.com/e-fever/revised-qml-application-architecture-guide-with-flux-a1de143fe13e)
  2. [Action-Dispatcher Design Pattern for QML — Medium](https://medium.com/@benlaud/action-dispatcher-design-pattern-for-qml-c350b1d2a7e7#.2dpjhcpt1)
  3. [What is new in Quick Flux 1.1?](https://medium.com/@benlaud/what-is-new-in-quick-flux-1-1-ad090a31fa10)
 
 An example program is available at: [quickflux/examples/todo](https://github.com/benlau/quickflux/tree/master/examples/todo)
+
+![Quick Flux Application Architecture 1.png (1261×446)](https://raw.githubusercontent.com/benlau/junkcode/master/docs/Quick%20Flux%20Application%20Architecture%201.png)
 
 Installation Instruction (with qpm)
 ===================================
