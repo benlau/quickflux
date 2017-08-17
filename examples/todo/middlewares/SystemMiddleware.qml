@@ -15,6 +15,7 @@ Middleware {
             mainWindow.visible = true;
             return;
         }
+        next(type, message);
     }
 
     Connections {
