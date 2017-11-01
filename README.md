@@ -94,6 +94,14 @@ There are few example programs available at examples folder:
 
 [Examples](https://github.com/benlau/quickflux/tree/master/examples)
 
+Qt Creator Project Wizard
+=========================
+
+If you think that it is very troublesome to have lots of copy & paste of source code in creating a new Flux project, you may install the following project wizard in your Qt Creator. That is displayed in the New Dialog that opens when you choose File > New File or Project.
+
+ 1. [Flux Application (Full)](https://github.com/e-fever/e-fever-codebase/tree/master/Flux-Application-Full)
+ 2. [Flux Application (Minimal)](https://github.com/e-fever/e-fever-codebase/tree/master/Flux-Application-Minimal)
+
 Class Reference
 ---------------
 
