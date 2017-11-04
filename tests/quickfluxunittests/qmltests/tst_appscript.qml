@@ -218,8 +218,7 @@ TestCase {
         compare(timer6.count,0);
         compare(dispatchedCount,0);
 
-        wait(200);
-        compare(script6.timerTriggered,1);
+        tryCompare(script6,"timerTriggered",1);
         compare(timer6.count,1);
         compare(dispatchedCount,1);
         gc();
