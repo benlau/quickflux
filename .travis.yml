@@ -4,14 +4,15 @@ env:
 compiler:
   - gcc
 before_install:
-    - sudo add-apt-repository --yes ppa:beineri/opt-qt551
-    - sudo add-apt-repository --yes "deb http://download.opensuse.org/repositories/home:/benlau/xUbuntu_15.10 ./"
-    - sudo apt-get update -qq
-    - apt-cache search qt5
-    - sudo apt-get install --force-yes -qq qt55quickcontrols  qt55declarative qt55script qt55graphicaleffects qpm
+    - export GOPATH=`pwd`/gosrc
+    - export PATH=`pwd`/gosrc/bin:$PATH
+    - go get qpm.io/qpm    
     - sh -e /etc/init.d/xvfb start
+    - git clone https://github.com/benlau/qtci.git
+    - source qtci/path.env
+    - qt-5.7
 script:
-    - source /opt/qt55/bin/qt55-env.sh
+    - source qt-5.7.env
     - cd tests/quickfluxunittests
     - qpm install
     - qmake
