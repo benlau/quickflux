@@ -13,10 +13,6 @@ before_install:
     - qt-5.7
 script:
     - source qt-5.7.env
-    - cd tests/quickfluxunittests
-    - qpm install
-    - qmake
-    - make
-    - ls
-    - ./quickfluxunittests
+    - mkdir build
+    - run-unittests ../tests/quickfluxunittests/quickfluxunittests.pro
   
