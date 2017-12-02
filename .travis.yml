@@ -14,5 +14,6 @@ before_install:
 script:
     - source qt-5.7.env
     - mkdir build
+    - cd build
     - run-unittests ../tests/quickfluxunittests/quickfluxunittests.pro
   
