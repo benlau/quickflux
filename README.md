@@ -105,7 +105,7 @@ If you think that it is very troublesome to have lots of copy & paste of source 
 Class Reference
 ---------------
 
-[QuickFlux 1.0 Class Reference](http://benlau.github.io/quickflux/)
+[QuickFlux 1.1 Class Reference](http://benlau.github.io/quickflux/)
 
 Wish List / Under Development
 ---------

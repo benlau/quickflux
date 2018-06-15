@@ -251,9 +251,9 @@ QQmlListProperty<QObject> QFStore::redispatchTargets()
 
 /*! \qmlproperty object Store::bindSource
  *
- * This property hold the source of action. It can be an ActionCreator / Dispatcher component
+ * This property holds the source of action. It can be an ActionCreator / Dispatcher component
  *
- * The default value is null.
+ * The default value is null, and it listens to AppDispatcher
  */
 
 

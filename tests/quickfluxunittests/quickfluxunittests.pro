@@ -55,4 +55,5 @@ DISTFILES += \
     qpm.json \
     qmltests/tst_middleware_filterFunctionEnabled.qml \
     qmltests/tst_middlewarelist.qml \
-    qmltests/tst_middlewarelist_applyTarget.qml
+    qmltests/tst_middlewarelist_applyTarget.qml \
+    ../../appveyor.yml

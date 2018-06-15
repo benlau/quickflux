@@ -9,7 +9,7 @@
   \qmltype ActionCreator
   \brief Create message from signal then dispatch via AppDispatcher
 
-ActionCreator is a component that listens on its own signals, convert to message then dispatch via AppDispatcher. The message type will be same as the signal name. There has no limitation on number of arguments and their data type.
+ActionCreator is a component that listens on its own signals, convert to message then dispatch via AppDispatcher. The message type will be same as the signal name. There has no limitation on the number of arguments and their data type.
 
 For example, you may declare an ActionCreator based component as:
 
@@ -119,6 +119,23 @@ void QFActionCreator::componentComplete()
         }
     }
 }
+
+/*! \qmlproperty object ActionCreator::dispatcher
+
+This property holds the target Dispatcher instance. It will dispatch all the actions to that object.
+
+\code
+
+    ActionCreator {
+        dispatcher: Dispatcher {
+        }
+    }
+
+\endcode
+
+The default value is AppDispatcher
+ */
+
 
 QFDispatcher *QFActionCreator::dispatcher() const
 {
