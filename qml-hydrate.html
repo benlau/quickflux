@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qfhydrate.cpp -->
+  <title>Hydrate QML Type | QuickFlux 1.1</title>
+  <link rel="stylesheet" type="text/css" href="style/offline.css" />
+</head>
+<body>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#methods">Methods</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Hydrate QML Type</h1>
+<span class="subtitle"></span>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Import Statement:</td><td class="memItemRight bottomAlign"> import  .</td></tr></table></div><ul>
+<li><a href="qml-hydrate-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="methods"></a>
+<h2 id="methods">Methods</h2>
+<ul>
+<li class="fn"><b><b><a href="qml-hydrate.html#dehydrate-method">dehydrate</a></b></b>(<i>object</i>)</li>
+<li class="fn"><b><b><a href="qml-hydrate.html#rehydrate-method">rehydrate</a></b></b>(<i>target</i>, <i>source</i>)</li>
+</ul>
+<!-- $$$Hydrate-description -->
+<a name="details"></a>
+<h2 id="details">Detailed Description</h2>
+<pre class="cpp">import QuickFlux <span class="number">1.1</span></pre>
+<p>Hydrate provides an interface to rehydrate / hydrate a Store component. Rehydration and dehydration are just another words for deserialize and serialize. It could be used to convert Store into JSON object, and vice versa.</p>
+<p>Remarks: Hydrate supports any QObject based type as the target of deserialize and serialize.</p>
+<pre class="cpp">Hydrate<span class="operator">.</span>rehydrate(store<span class="operator">,</span> {
+  value1: <span class="number">1</span><span class="operator">,</span>
+  value2: <span class="number">2.0</span><span class="operator">,</span>
+  value3: <span class="string">&quot;&quot;</span><span class="operator">,</span>
+  value4: {
+    subValue1: <span class="number">1</span>
+  }
+});
+
+var data <span class="operator">=</span> Hydrate<span class="operator">.</span>dehydrate(MainStore);
+console<span class="operator">.</span>log(JSON<span class="operator">.</span>stringify(data));</pre>
+<p>It is added since Quick Flux 1.1</p>
+<!-- @@@Hydrate -->
+<h2>Method Documentation</h2>
+<!-- $$$dehydrate -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="dehydrate-method">
+<td class="tblQmlFuncNode"><p>
+<a name="dehydrate-method"></a><span class="name">dehydrate</span>(<i>object</i>)</p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>Serialize data from a object</p>
+<pre class="cpp">var data <span class="operator">=</span> Hydrate<span class="operator">.</span>dehydrate(MainStore);
+console<span class="operator">.</span>log(JSON<span class="operator">.</span>stringify(data));</pre>
+</div></div><!-- @@@dehydrate -->
+<br/>
+<!-- $$$rehydrate -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="rehydrate-method">
+<td class="tblQmlFuncNode"><p>
+<a name="rehydrate-method"></a><span class="name">rehydrate</span>(<i>target</i>, <i>source</i>)</p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>Deserialize data from source and write to target object.</p>
+<pre class="cpp">Hydrate<span class="operator">.</span>rehydrate(store<span class="operator">,</span> {
+  value1: <span class="number">1</span><span class="operator">,</span>
+  value2: <span class="number">2.0</span><span class="operator">,</span>
+  value3: <span class="string">&quot;&quot;</span><span class="operator">,</span>
+  value4: {
+    subValue1: <span class="number">1</span>
+  }</pre>
+</div></div><!-- @@@rehydrate -->
+<br/>
+</body>
+</html>

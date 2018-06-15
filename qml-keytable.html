@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qfkeytable.cpp -->
+  <title>KeyTable QML Type | QuickFlux 1.1</title>
+  <link rel="stylesheet" type="text/css" href="style/offline.css" />
+</head>
+<body>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">KeyTable QML Type</h1>
+<span class="subtitle"></span>
+<!-- $$$KeyTable-brief -->
+<p>Defines a key table <a href="#details">More...</a></p>
+<!-- @@@KeyTable -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Import Statement:</td><td class="memItemRight bottomAlign"> import  </td></tr></table></div><ul>
+<li><a href="qml-keytable-members.html">List of all members, including inherited members</a></li>
+</ul>
+<!-- $$$KeyTable-description -->
+<a name="details"></a>
+<h2 id="details">Detailed Description</h2>
+<p><a href="qml-keytable.html">KeyTable</a> is an object with properties equal to its key name. Once it's construction is completed, it will search all of its string property. If it is a string type and not assigned to any value, it will set its value by its name. It can be used to create ActionTypes.qml in <a href="index.html">QuickFlux</a> Application.</p>
+<p>Example</p>
+<pre class="cpp">KeyTable {
+
+    <span class="comment">// It will be set to &quot;customField1&quot; in Component.onCompleted callback.</span>
+    property string customField1;
+
+    <span class="comment">// Since it is already assigned a value, KeyTable will not modify this property.</span>
+    property string customField2 : <span class="string">&quot;value&quot;</span>;
+
+}</pre>
+<!-- @@@KeyTable -->
+</body>
+</html>

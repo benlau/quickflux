@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qfappscriptgroup.cpp -->
+  <title>AppScriptGroup QML Type | QuickFlux 1.1</title>
+  <link rel="stylesheet" type="text/css" href="style/offline.css" />
+</head>
+<body>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#properties">Properties</a></li>
+<li class="level1"><a href="#methods">Methods</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">AppScriptGroup QML Type</h1>
+<span class="subtitle"></span>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Import Statement:</td><td class="memItemRight bottomAlign"> import  .</td></tr></table></div><ul>
+<li><a href="qml-appscriptgroup-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="properties"></a>
+<h2 id="properties">Properties</h2>
+<ul>
+<li class="fn"><b><b><a href="qml-appscriptgroup.html#scripts-prop">scripts</a></b></b> : array</li>
+</ul>
+<a name="methods"></a>
+<h2 id="methods">Methods</h2>
+<ul>
+<li class="fn"><b><b><a href="qml-appscriptgroup.html#exitAll-method">exitAll</a></b></b>()</li>
+</ul>
+<!-- $$$AppScriptGroup-description -->
+<a name="details"></a>
+<h2 id="details">Detailed Description</h2>
+<p><a href="qml-appscriptgroup.html">AppScriptGroup</a> hold a group of <a href="qml-appscript.html">AppScript</a> objects which are mutually exclusive in execution. Whatever a <a href="qml-appscript.html">AppScript</a> is going to start, it will terminate all other <a href="qml-appscript.html">AppScript</a> objects. So that only one <a href="qml-appscript.html">AppScript</a> is running at a time.</p>
+<pre class="cpp">Item {
+
+    AppScript {
+        id: script1
+        script: {
+            <span class="comment">// write script here</span>
+        }
+    }
+
+    AppScript {
+        id: script2
+        script: {
+            <span class="comment">// write script here</span>
+        }
+    }
+
+    AppScriptGroup {
+        scripts: <span class="operator">[</span>script1<span class="operator">,</span> script2<span class="operator">]</span>
+    }
+
+    Component<span class="operator">.</span>onCompleted: {
+
+        script1<span class="operator">.</span>run();
+
+        script2<span class="operator">.</span>run();
+
+        <span class="comment">// At this point, AppScriptGroup will force script1 to terminate since script2 has been started.</span>
+
+    }
+
+}</pre>
+<!-- @@@AppScriptGroup -->
+<h2>Property Documentation</h2>
+<!-- $$$scripts -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="scripts-prop">
+<td class="tblQmlPropNode"><p>
+<a name="scripts-prop"></a><span class="name">scripts</span> : <span class="type">array</span></p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>This property hold an array of <a href="qml-appscript.html">AppScript</a> object. They are mutually exclusive in execution.</p>
+<pre class="cpp">AppScript {
+    id: script1
+}
+
+AppScript {
+    id: script2
+}
+
+AppScriptGroup {
+    scripts: <span class="operator">[</span>script1<span class="operator">,</span> script2<span class="operator">]</span>
+}</pre>
+</div></div><!-- @@@scripts -->
+<br/>
+<h2>Method Documentation</h2>
+<!-- $$$exitAll -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="exitAll-method">
+<td class="tblQmlFuncNode"><p>
+<a name="exitAll-method"></a><span class="name">exitAll</span>()</p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>Terminate all <a href="qml-appscript.html">AppScript</a> objects</p>
+</div></div><!-- @@@exitAll -->
+<br/>
+</body>
+</html>

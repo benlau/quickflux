@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qfdispatcher.cpp -->
+  <title>Dispatcher QML Type | QuickFlux 1.1</title>
+  <link rel="stylesheet" type="text/css" href="style/offline.css" />
+</head>
+<body>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#methods">Methods</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Dispatcher QML Type</h1>
+<span class="subtitle"></span>
+<!-- $$$Dispatcher-brief -->
+<p>Message Dispatcher <a href="#details">More...</a></p>
+<!-- @@@Dispatcher -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Import Statement:</td><td class="memItemRight bottomAlign"> import  .</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherited By:</td><td class="memItemRight bottomAlign"> <p><a href="qml-appdispatcher.html">AppDispatcher</a></p>
+</td></tr></table></div><ul>
+<li><a href="qml-dispatcher-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="signals"></a>
+<h2 id="signals">Signals</h2>
+<ul>
+<li class="fn"><b><b><a href="qml-dispatcher.html#dispatched-signal">dispatched</a></b></b>(string <i>type</i>, object <i>message</i>)</li>
+</ul>
+<a name="methods"></a>
+<h2 id="methods">Methods</h2>
+<ul>
+<li class="fn">int <b><b><a href="qml-dispatcher.html#addListener-method">addListener</a></b></b>(func <i>callback</i>)</li>
+<li class="fn"><b><b><a href="qml-dispatcher.html#dispatch-method">dispatch</a></b></b>(string <i>type</i>, object <i>message</i>)</li>
+<li class="fn"><b><b><a href="qml-dispatcher.html#removeListener-method">removeListener</a></b></b>(int <i>listenerId</i>)</li>
+<li class="fn"><b><b><a href="qml-dispatcher.html#waitFor-method">waitFor</a></b></b>(int <i>listenerId</i>)</li>
+</ul>
+<!-- $$$Dispatcher-description -->
+<a name="details"></a>
+<h2 id="details">Detailed Description</h2>
+<pre class="cpp">import QuickFlux <span class="number">1.1</span></pre>
+<p>Dispatcher is a component for delivering action message.</p>
+<p>Usually you don't need to declare a Dispatcher component by yourself beside writing test case. It is suggested to use <a href="qml-appdispatcher.html">AppDispatcher</a> directly.</p>
+<p>It is added since <a href="index.html">QuickFlux</a> v1.1</p>
+<!-- @@@Dispatcher -->
+<h2>Signal Documentation</h2>
+<!-- $$$dispatched -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="dispatched-signal">
+<td class="tblQmlFuncNode"><p>
+<a name="dispatched-signal"></a><span class="name">dispatched</span>(<span class="type">string</span> <i>type</i>, <span class="type">object</span> <i>message</i>)</p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>This signal is emitted when an action message is ready to dispatch by Dispatcher.</p>
+<p>There has several methods to listen this signal:</p>
+<p><b>Method 1 - Using Store component</b></p>
+<p>It is the suggested method. (Since <a href="index.html">QuickFlux</a> 1.1)</p>
+<pre class="cpp">import QuickFlux <span class="number">1.1</span>
+
+Dispatcher {
+  id: dispatcher
+}
+
+Store {
+  bindSource: dispatcher
+
+  Filter {
+    type: ActionTypes<span class="operator">.</span>openItem
+    onDispatcher: {
+      <span class="comment">// ..</span>
+    }
+  }
+}</pre>
+<p><b>Method 2 - Using Connections component</b></p>
+<pre class="cpp">import QuickFlux <span class="number">1.1</span>
+
+Dispatcher {
+  id: dispatcher
+}
+
+Connections {
+    target: dispatcher
+    onDispatched: {
+        <span class="keyword">switch</span> (type) {
+            <span class="keyword">case</span> <span class="string">&quot;OpenItem&quot;</span>;
+                <span class="comment">// ...</span>
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> <span class="string">&quot;DeleteItem&quot;</span>;
+                <span class="comment">// ...</span>
+                <span class="keyword">break</span>;
+        }
+    }
+}</pre>
+</div></div><!-- @@@dispatched -->
+<br/>
+<h2>Method Documentation</h2>
+<!-- $$$addListener -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="addListener-method">
+<td class="tblQmlFuncNode"><p>
+<a name="addListener-method"></a><span class="type">int</span> <span class="name">addListener</span>(<span class="type">func</span> <i>callback</i>)</p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p><b>This method is deprecated</b></p>
+<p>Registers a callback to be invoked with every dispatched message. Returns a listener ID that can be used with <a href="qml-dispatcher.html#waitFor-method">waitFor()</a>.</p>
+</div></div><!-- @@@addListener -->
+<br/>
+<!-- $$$dispatch -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="dispatch-method">
+<td class="tblQmlFuncNode"><p>
+<a name="dispatch-method"></a><span class="name">dispatch</span>(<span class="type">string</span> <i>type</i>, <span class="type">object</span> <i>message</i>)</p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>Dispatch an action by the Dispatcher. An action consists two parts: The type and message.</p>
+<p>The action may not be dispatched immediately. It will first pass to registered Middleware. They may modify / remove the action.</p>
+<p>If there has more then one pending action, it will be placed on a queue to guarantees the order of messages are arrived in sequence to store (First come first served)</p>
+<pre class="cpp">Store {
+
+  Filter {
+    type: ActionTypes<span class="operator">.</span>askToRemoveItem
+    onDispatched: {
+        <span class="keyword">if</span> (options<span class="operator">.</span>skipRemoveConfirmation) {
+            AppDispatcher<span class="operator">.</span>dispatch(ActionTypes<span class="operator">.</span>removeItem<span class="operator">,</span> message);
+            <span class="comment">// Because AppDispatcher is still dispatching ActionTypes.askToRemoveItem,</span>
+            <span class="comment">// ActionTypes.removeItem will be placed in a queue and will dispatch when</span>
+            <span class="comment">// all the listeners received current message.</span>
+        }
+    }
+  }
+}</pre>
+</div></div><!-- @@@dispatch -->
+<br/>
+<!-- $$$removeListener -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="removeListener-method">
+<td class="tblQmlFuncNode"><p>
+<a name="removeListener-method"></a><span class="name">removeListener</span>(<span class="type">int</span> <i>listenerId</i>)</p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p><b>This method is deprecated</b></p>
+<p>Remove a callback by the listenerId returned by <a href="qml-dispatcher.html#addListener-method">addListener</a></p>
+</div></div><!-- @@@removeListener -->
+<br/>
+<!-- $$$waitFor -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="waitFor-method">
+<td class="tblQmlFuncNode"><p>
+<a name="waitFor-method"></a><span class="name">waitFor</span>(<span class="type">int</span> <i>listenerId</i>)</p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p><b>This method is deprecated</b></p>
+<p>Waits for a callback specifed via the listenerId to be executed before continue execution of current callback. You should call this method only by a callback registered via <a href="qml-dispatcher.html#addListener-method">addListener</a>.</p>
+</div></div><!-- @@@waitFor -->
+<br/>
+</body>
+</html>

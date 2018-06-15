@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qfstore.cpp -->
+  <title>Store QML Type | QuickFlux 1.1</title>
+  <link rel="stylesheet" type="text/css" href="style/offline.css" />
+</head>
+<body>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#properties">Properties</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Store QML Type</h1>
+<span class="subtitle"></span>
+<!-- $$$Store-brief -->
+<p>Store Component <a href="#details">More...</a></p>
+<!-- @@@Store -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Import Statement:</td><td class="memItemRight bottomAlign"> import  .</td></tr></table></div><ul>
+<li><a href="qml-store-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="properties"></a>
+<h2 id="properties">Properties</h2>
+<ul>
+<li class="fn"><b><b><a href="qml-store.html#bindSource-prop">bindSource</a></b></b> : object</li>
+<li class="fn"><b><b><a href="qml-store.html#filterFunctionEnabled-prop">filterFunctionEnabled</a></b></b> : bool</li>
+<li class="fn"><b><b><a href="qml-store.html#redispatchTargets-prop">redispatchTargets</a></b></b> : array</li>
+</ul>
+<a name="signals"></a>
+<h2 id="signals">Signals</h2>
+<ul>
+<li class="fn"><b><b><a href="qml-store.html#dispatched-signal">dispatched</a></b></b>(string <i>type</i>, object <i>message</i>)</li>
+</ul>
+<!-- $$$Store-description -->
+<a name="details"></a>
+<h2 id="details">Detailed Description</h2>
+<p>Store is a helper item for implement the data “Store” component in a Quick Flux application. It could listen from <a href="qml-actioncreator.html">ActionCreator</a> / Dispatcher component and redispatch the received action to another store components (e.g children store).</p>
+<p>It is a replacement of <a href="qml-applistener.html">AppListener</a> component</p>
+<p>Example:</p>
+<pre class="cpp">import QuickFlux <span class="number">1.1</span>
+
+Store {
+  bindSource: AppDispatcher
+
+  Filter {
+    type: ActionTypes<span class="operator">.</span>addItem
+    onDispatched: {
+      <span class="comment">/// Process</span>
+    }
+  }
+
+}</pre>
+<p><b>The order of action delivery:</b></p>
+<pre class="cpp">Store {
+  id: rootStore
+
+  bindSource: AppDispatcher
+
+  property alias page1 : page1
+
+  Store {
+    id: page1
+  }
+
+  Store {
+    id: page2
+  }
+
+  Filter {
+    id: filter1
+  }
+
+}</pre>
+<p>In the example above, the rootStore is bind to <a href="qml-appdispatcher.html">AppDispatcher</a>, whatever the dispatcher dispatch an action, it will first re-dispatch the action to its children sequentially. Then emit the dispatched signal on itself. Therefore, the order of receivers is: page1, page2 then filter1.</p>
+<p>If the <a href="qml-store.html#redispatchTargets-prop">redispatchTargets</a> property is set, Store component will also dispatch the received action to the listed objects.</p>
+<!-- @@@Store -->
+<h2>Property Documentation</h2>
+<!-- $$$bindSource -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="bindSource-prop">
+<td class="tblQmlPropNode"><p>
+<a name="bindSource-prop"></a><span class="name">bindSource</span> : <span class="type">object</span></p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>This property holds the source of action. It can be an <a href="qml-actioncreator.html">ActionCreator</a> / Dispatcher component</p>
+<p>The default value is null, and it listens to <a href="qml-appdispatcher.html">AppDispatcher</a></p>
+</div></div><!-- @@@bindSource -->
+<br/>
+<!-- $$$filterFunctionEnabled -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="filterFunctionEnabled-prop">
+<td class="tblQmlPropNode"><p>
+<a name="filterFunctionEnabled-prop"></a><span class="name">filterFunctionEnabled</span> : <span class="type">bool</span></p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>If this property is true, whatever the store component received a new action. Beside to emit a dispatched signal, it will search for a function with a name as the action. If it exists, it will call also call the function.</p>
+<pre class="cpp">Store {
+  filterFunctionEnabled: <span class="keyword">true</span>
+
+  function addItem(message) {
+  }
+}</pre>
+<p>The default value is false</p>
+</div></div><!-- @@@filterFunctionEnabled -->
+<br/>
+<!-- $$$redispatchTargets -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="redispatchTargets-prop">
+<td class="tblQmlPropNode"><p>
+<a name="redispatchTargets-prop"></a><span class="name">redispatchTargets</span> : <span class="type">array</span></p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>By default, the Store component redispatch the received action to its children sequentially. If this property is set, the action will be re-dispatch to the target objects too.</p>
+<pre class="cpp">Store {
+    id: bridgeStore
+
+    redispatchTargets: <span class="operator">[</span>
+        SingletonStore1<span class="operator">,</span>
+        SingletonStore2
+    <span class="operator">]</span>
+}</pre>
+</div></div><!-- @@@redispatchTargets -->
+<br/>
+<h2>Signal Documentation</h2>
+<!-- $$$dispatched -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="dispatched-signal">
+<td class="tblQmlFuncNode"><p>
+<a name="dispatched-signal"></a><span class="name">dispatched</span>(<span class="type">string</span> <i>type</i>, <span class="type">object</span> <i>message</i>)</p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>This signal is emitted when a message is received by this store.</p>
+<p>There has two suggested methods to listen this signal:</p>
+<p>Method 1 - Use Filter component</p>
+<pre class="cpp">Store {
+    Filter {
+        type: ActionTypes<span class="operator">.</span>addItem
+        onDispatched: {
+            <span class="comment">// process here</span>
+        }
+    }
+}</pre>
+<p>Method 2 - Use filter function</p>
+<pre class="cpp">Store {
+    filterFunctionEnabled: <span class="keyword">true</span>
+
+    function addItem(message) {
+
+    }
+}</pre>
+</div></div><!-- @@@dispatched -->
+<br/>
+</body>
+</html>

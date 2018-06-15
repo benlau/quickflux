@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qfmiddlewarelist.cpp -->
+  <title>MiddlewareList QML Type | QuickFlux 1.1</title>
+  <link rel="stylesheet" type="text/css" href="style/offline.css" />
+</head>
+<body>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#properties">Properties</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">MiddlewareList QML Type</h1>
+<span class="subtitle"></span>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Import Statement:</td><td class="memItemRight bottomAlign"> import  .</td></tr></table></div><ul>
+<li><a href="qml-middlewarelist-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="properties"></a>
+<h2 id="properties">Properties</h2>
+<ul>
+<li class="fn"><b><b><a href="qml-middlewarelist.html#applyTarget-prop">applyTarget</a></b></b> : var</li>
+</ul>
+<!-- $$$MiddlewareList-description -->
+<a name="details"></a>
+<h2 id="details">Detailed Description</h2>
+<pre class="cpp">import QuickFlux <span class="number">1.1</span></pre>
+<p><a href="qml-middlewarelist.html">MiddlewareList</a> groups a list of Middleware and install to target Dispatcher / <a href="qml-actioncreator.html">ActionCreator</a></p>
+<p>Example Code</p>
+<pre class="cpp">import <span class="type">QtQuick</span> <span class="number">2.0</span>
+import QuickFlux <span class="number">1.1</span>
+import <span class="string">&quot;./actions&quot;</span>
+import <span class="string">&quot;./middlewares&quot;</span>
+
+<span class="comment">// main.qml</span>
+
+Item {
+  MiddlewareList {
+    applyTarget: AppDispatcher
+
+    Middleware {
+      id: debouncerMiddleware
+   }
+
+    Middleware {
+      id: logger
+    }
+  }
+}</pre>
+<p>It is added since <a href="index.html">QuickFlux</a> 1.1</p>
+<!-- @@@MiddlewareList -->
+<h2>Property Documentation</h2>
+<!-- $$$applyTarget -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="applyTarget-prop">
+<td class="tblQmlPropNode"><p>
+<a name="applyTarget-prop"></a><span class="name">applyTarget</span> : <span class="type">var</span></p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>This property specific the target object that of middlewares should be applied. It can be either of an <a href="qml-actioncreator.html">ActionCreator</a> or Dispatcher object.</p>
+</div></div><!-- @@@applyTarget -->
+<br/>
+</body>
+</html>

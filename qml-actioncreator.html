@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qfactioncreator.cpp -->
+  <title>ActionCreator QML Type | QuickFlux 1.1</title>
+  <link rel="stylesheet" type="text/css" href="style/offline.css" />
+</head>
+<body>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#properties">Properties</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">ActionCreator QML Type</h1>
+<span class="subtitle"></span>
+<!-- $$$ActionCreator-brief -->
+<p>Create message from signal then dispatch via <a href="qml-appdispatcher.html">AppDispatcher</a> <a href="#details">More...</a></p>
+<!-- @@@ActionCreator -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Import Statement:</td><td class="memItemRight bottomAlign"> import  </td></tr></table></div><ul>
+<li><a href="qml-actioncreator-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="properties"></a>
+<h2 id="properties">Properties</h2>
+<ul>
+<li class="fn"><b><b><a href="qml-actioncreator.html#dispatcher-prop">dispatcher</a></b></b> : object</li>
+</ul>
+<!-- $$$ActionCreator-description -->
+<a name="details"></a>
+<h2 id="details">Detailed Description</h2>
+<p><a href="qml-actioncreator.html">ActionCreator</a> is a component that listens on its own signals, convert to message then dispatch via <a href="qml-appdispatcher.html">AppDispatcher</a>. The message type will be same as the signal name. There has no limitation on the number of arguments and their data type.</p>
+<p>For example, you may declare an <a href="qml-actioncreator.html">ActionCreator</a> based component as:</p>
+<pre class="cpp">import <span class="type">QtQuick</span> <span class="number">2.0</span>
+import QuickFlux <span class="number">1.0</span>
+pragma singleton
+
+ActionCreator {
+   signal open(string url);
+}</pre>
+<p>It is equivalent to:</p>
+<pre class="cpp">import <span class="type">QtQuick</span> <span class="number">2.0</span>
+import QuickFlux <span class="number">1.0</span>
+pragma singleton
+
+Item {
+   function open(url) {
+     AppDispatcher<span class="operator">.</span>dispatch(“open”<span class="operator">,</span> {url: url});
+   }
+}</pre>
+<!-- @@@ActionCreator -->
+<h2>Property Documentation</h2>
+<!-- $$$dispatcher -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="dispatcher-prop">
+<td class="tblQmlPropNode"><p>
+<a name="dispatcher-prop"></a><span class="name">dispatcher</span> : <span class="type">object</span></p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>This property holds the target Dispatcher instance. It will dispatch all the actions to that object.</p>
+<pre class="cpp">ActionCreator {
+    dispatcher: Dispatcher {
+    }
+}</pre>
+<p>The default value is <a href="qml-appdispatcher.html">AppDispatcher</a></p>
+</div></div><!-- @@@dispatcher -->
+<br/>
+</body>
+</html>

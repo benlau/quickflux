@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qfapplistener.cpp -->
+  <title>AppListener QML Type | QuickFlux 1.1</title>
+  <link rel="stylesheet" type="text/css" href="style/offline.css" />
+</head>
+<body>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#properties">Properties</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#methods">Methods</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">AppListener QML Type</h1>
+<span class="subtitle"></span>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Import Statement:</td><td class="memItemRight bottomAlign"> import  .</td></tr></table></div><ul>
+<li><a href="qml-applistener-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="properties"></a>
+<h2 id="properties">Properties</h2>
+<ul>
+<li class="fn"><b><b><a href="qml-applistener.html#alwaysOn-prop">alwaysOn</a></b></b> : bool</li>
+<li class="fn"><b><b><a href="qml-applistener.html#enabled-prop">enabled</a></b></b> : bool</li>
+<li class="fn"><b><b><a href="qml-applistener.html#filter-prop">filter</a></b></b> : string</li>
+<li class="fn"><b><b><a href="qml-applistener.html#filters-prop">filters</a></b></b> : array</li>
+<li class="fn"><b><b><a href="qml-applistener.html#listenerId-prop">listenerId</a></b></b> : int</li>
+<li class="fn"><b><b><a href="qml-applistener.html#waitFor-prop">waitFor</a></b></b> : array</li>
+</ul>
+<a name="signals"></a>
+<h2 id="signals">Signals</h2>
+<ul>
+<li class="fn"><b><b><a href="qml-applistener.html#dispatched-signal">dispatched</a></b></b>(string <i>type</i>, object <i>message</i>)</li>
+</ul>
+<a name="methods"></a>
+<h2 id="methods">Methods</h2>
+<ul>
+<li class="fn"><b><b><a href="qml-applistener.html#on-method">on</a></b></b>(string <i>type</i>, func <i>callback</i>)</li>
+<li class="fn"><b><b><a href="qml-applistener.html#removeAllListener-method">removeAllListener</a></b></b>(string <i>type</i>)</li>
+<li class="fn"><b><b><a href="qml-applistener.html#removeListener-method">removeListener</a></b></b>(string <i>type</i>, func <i>callback</i>)</li>
+</ul>
+<!-- $$$AppListener-description -->
+<a name="details"></a>
+<h2 id="details">Detailed Description</h2>
+<p><a href="qml-applistener.html">AppListener</a> is a helper class to listen dispatched signal from <a href="qml-appdispatcher.html">AppDispatcher</a>. It provides an alternative solution other then using Connections component. Moreover, it offers a way to control the order of signal delivery through <a href="qml-applistener.html#waitFor-prop">waitFor</a> property.</p>
+<p>Example:</p>
+<pre class="cpp"><span class="comment">// Only listen for specific message</span>
+AppListener {
+    filter: <span class="string">&quot;messageType1&quot;</span>;
+    onDispatched: {
+      <span class="comment">// Your code here</span>
+    }
+}
+
+<span class="comment">// Listen for multiple messages.</span>
+AppListener {
+    onDispatched: {
+        <span class="keyword">switch</span> (type) {
+            <span class="keyword">case</span> <span class="string">&quot;messageType1&quot;</span>:
+                <span class="comment">// ...</span>
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> <span class="string">&quot;messageType2&quot;</span>:
+                <span class="comment">// ...</span>
+                <span class="keyword">break</span>;
+        }
+    }
+}
+
+<span class="comment">// Alternative method to listen for multiple messages</span>
+
+AppListener {
+
+  Component<span class="operator">.</span>onComponented: {
+    on(<span class="string">&quot;messageType1&quot;</span><span class="operator">,</span>function() {
+       <span class="comment">/// Your code here.</span>
+    });
+    on(<span class="string">&quot;messageType2&quot;</span><span class="operator">,</span>function() {
+       <span class="comment">/// Your code here.</span>
+    });
+  }
+}</pre>
+<!-- @@@AppListener -->
+<h2>Property Documentation</h2>
+<!-- $$$alwaysOn -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="alwaysOn-prop">
+<td class="tblQmlPropNode"><p>
+<a name="alwaysOn-prop"></a><span class="name">alwaysOn</span> : <span class="type">bool</span></p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>This property holds a value to indicate if the listener should remain listening message when it is not enabled.</p>
+</div></div><!-- @@@alwaysOn -->
+<br/>
+<!-- $$$enabled -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="enabled-prop">
+<td class="tblQmlPropNode"><p>
+<a name="enabled-prop"></a><span class="name">enabled</span> : <span class="type">bool</span></p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>This property holds whether the listener receives message. If it is false, it won't emit &quot;dispatched&quot; signal and trigger callback registered via &quot;on&quot; function. By default this is true.</p>
+<p>The value can be controlled by parent component. Setting this property directly affects the enabled value of child items. When set to false, the enabled values of all child items also become false. When set to true, the enabled values of child items are returned to true, unless they have explicitly been set to false.</p>
+</div></div><!-- @@@enabled -->
+<br/>
+<!-- $$$filter -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="filter-prop">
+<td class="tblQmlPropNode"><p>
+<a name="filter-prop"></a><span class="name">filter</span> : <span class="type">string</span></p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>Set a filter to incoming messages. Only message with type matched with the filter will emit &quot;dispatched&quot; signal. If it is not set, it will dispatch every message.</p>
+</div></div><!-- @@@filter -->
+<br/>
+<!-- $$$filters -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="filters-prop">
+<td class="tblQmlPropNode"><p>
+<a name="filters-prop"></a><span class="name">filters</span> : <span class="type">array</span></p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>Set a list of filter to incoming messages. Only message with type matched by the filters will emit &quot;dispatched&quot; signal. If it is not set, it will dispatch every message.</p>
+</div></div><!-- @@@filters -->
+<br/>
+<!-- $$$listenerId -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="listenerId-prop">
+<td class="tblQmlPropNode"><p>
+<a name="listenerId-prop"></a><span class="name">listenerId</span> : <span class="type">int</span></p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>The listener ID of this component. It could be used with <a href="qml-applistener.html#waitFor-prop">AppListener::waitFor</a> / AppDispatcher::waitFor to control the order of message delivery.</p>
+</div></div><!-- @@@listenerId -->
+<br/>
+<!-- $$$waitFor -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="waitFor-prop">
+<td class="tblQmlPropNode"><p>
+<a name="waitFor-prop"></a><span class="name">waitFor</span> : <span class="type">array</span></p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>If it is set, it will block the emission of dispatched signal until all the specificed listeners has been invoked.</p>
+<p>Example code:</p>
+<pre class="cpp">AppListener {
+  id: listener1
+}
+
+AppListener {
+   id: listener2
+   waitFor: <span class="operator">[</span>listener1<span class="operator">.</span>listenerId<span class="operator">]</span>
+}</pre>
+</div></div><!-- @@@waitFor -->
+<br/>
+<h2>Signal Documentation</h2>
+<!-- $$$dispatched -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="dispatched-signal">
+<td class="tblQmlFuncNode"><p>
+<a name="dispatched-signal"></a><span class="name">dispatched</span>(<span class="type">string</span> <i>type</i>, <span class="type">object</span> <i>message</i>)</p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>It is a proxy of <a href="qml-appdispatcher.html">AppDispatcher</a>.dispatched signal. If the enabled property is set to false, this signal will not be emitted.</p>
+</div></div><!-- @@@dispatched -->
+<br/>
+<h2>Method Documentation</h2>
+<!-- $$$on -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="on-method">
+<td class="tblQmlFuncNode"><p>
+<a name="on-method"></a><span class="name">on</span>(<span class="type">string</span> <i>type</i>, <span class="type">func</span> <i>callback</i>)</p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>Add a listener to the end of the listeners array for the specified type of message. Multiple calls passing the same combination of event and listener will result in the listener being added multiple times.</p>
+</div></div><!-- @@@on -->
+<br/>
+<!-- $$$removeAllListener -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="removeAllListener-method">
+<td class="tblQmlFuncNode"><p>
+<a name="removeAllListener-method"></a><span class="name">removeAllListener</span>(<span class="type">string</span> <i>type</i>)</p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>Remove all the listeners for a message with type. If type is empty, it will remove all the listeners.</p>
+</div></div><!-- @@@removeAllListener -->
+<br/>
+<!-- $$$removeListener -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="removeListener-method">
+<td class="tblQmlFuncNode"><p>
+<a name="removeListener-method"></a><span class="name">removeListener</span>(<span class="type">string</span> <i>type</i>, <span class="type">func</span> <i>callback</i>)</p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>Remove a listener from the listener array for the specified message.</p>
+</div></div><!-- @@@removeListener -->
+<br/>
+</body>
+</html>

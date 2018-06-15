@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qfappscript.cpp -->
+  <title>AppScript QML Type | QuickFlux 1.1</title>
+  <link rel="stylesheet" type="text/css" href="style/offline.css" />
+</head>
+<body>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#properties">Properties</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#methods">Methods</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">AppScript QML Type</h1>
+<span class="subtitle"></span>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Import Statement:</td><td class="memItemRight bottomAlign"> import  .</td></tr></table></div><ul>
+<li><a href="qml-appscript-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="properties"></a>
+<h2 id="properties">Properties</h2>
+<ul>
+<li class="fn"><b><b><a href="qml-appscript.html#runWhen-prop">runWhen</a></b></b> : string</li>
+<li class="fn"><b><b><a href="qml-appscript.html#running-prop">running</a></b></b> : bool</li>
+<li class="fn"><b><b><a href="qml-appscript.html#script-prop">script</a></b></b> : script</li>
+</ul>
+<a name="signals"></a>
+<h2 id="signals">Signals</h2>
+<ul>
+<li class="fn"><b><b><a href="qml-appscript.html#finished-signal">finished</a></b></b>(int <i>returnCode</i>)</li>
+<li class="fn"><b><b><a href="qml-appscript.html#started-signal">started</a></b></b>()</li>
+</ul>
+<a name="methods"></a>
+<h2 id="methods">Methods</h2>
+<ul>
+<li class="fn"><b><b><a href="qml-appscript.html#exit-method">exit</a></b></b>(int <i>returnCode</i>)</li>
+<li class="fn"><b><b><a href="qml-appscript.html#on-method">on</a></b></b>(var <i>type</i>, func <i>callback</i>)</li>
+<li class="fn">chian <b><b><a href="qml-appscript.html#once-method">once</a></b></b>(var <i>type</i>, func <i>callback</i>)</li>
+<li class="fn"><b><b><a href="qml-appscript.html#run-method">run</a></b></b>()</li>
+</ul>
+<!-- $$$AppScript-description -->
+<a name="details"></a>
+<h2 id="details">Detailed Description</h2>
+<p><a href="qml-appscript.html">AppScript</a> is a helper component to handle asynchronous sequential workflow. The immediate benefit of using <a href="qml-appscript.html">AppScript</a> is the centralisation of code in a place. Instead of placing them within onXXXX code block in several components in several places.</p>
+<p><a href="qml-appscript.html">AppScript</a> also manage the life cycle of registered callbacks. You could remove them by a single function. Nothing will leave in memory.</p>
+<p><b>Remarks: <a href="qml-appscript.html">AppScript</a> is not a solution for making Store component</b></p>
+<p><a href="https://github.com/benlau/quickflux/blob/master/examples/photoalbum/scripts/ImagePickerScript.qml">Example Code</a></p>
+<pre class="cpp">AppScript {
+    <span class="comment">// Run this script if &quot;Pick Image&quot; button is clicked.</span>
+    runWhen: ActionTypes<span class="operator">.</span>askToPickPhoto
+
+    script: {
+        <span class="comment">// Step 1. Open file dialog</span>
+        dialog<span class="operator">.</span>open();
+
+        <span class="comment">// Register a set of callbacks as workflow</span>
+        <span class="comment">// Registered callbacks will be executed once only per script execution</span>
+        once(dialog<span class="operator">.</span>onAccepted<span class="operator">,</span> function() {
+
+            <span class="comment">// Step 2. Once user picked an image, launch preview window and ask for confirmation.</span>
+            AppActions<span class="operator">.</span>navigateTo(imagePreview<span class="operator">,</span>
+                                  {source: dialog<span class="operator">.</span>fileUrl});
+
+        })<span class="operator">.</span>then(ActionTypes<span class="operator">.</span>pickPhoto<span class="operator">,</span> function(message) {
+            <span class="comment">// The function of then() is same as once() but it won't</span>
+            <span class="comment">// trigger the callback until once() is triggered.</span>
+
+            <span class="comment">// Step 3. Add picked image to store and go back to previous page.</span>
+
+            PhotoStore<span class="operator">.</span>add(String(message<span class="operator">.</span>url));
+
+            AppActions<span class="operator">.</span>navigateBack();
+
+        }); <span class="comment">// &lt;-- You may chain then() function again.</span>
+
+        <span class="comment">// Condition to terminate the workflow:</span>
+        <span class="comment">// Force to terminate if dialog is rejected / or navigateBack is dispatched</span>
+        <span class="comment">// That will remove all the registered callbacks</span>
+
+        once(dialog<span class="operator">.</span>onRejected<span class="operator">,</span>exit<span class="operator">.</span>bind(<span class="keyword">this</span><span class="operator">,</span><span class="number">0</span>));
+
+        once(ActionTypes<span class="operator">.</span>navigateBack<span class="operator">,</span>exit<span class="operator">.</span>bind(<span class="keyword">this</span><span class="operator">,</span><span class="number">0</span>));
+    }
+}</pre>
+<p><b>Benefit of using <a href="qml-appscript.html">AppScript</a></b></p>
+<ul>
+<li>Centralize your workflow code in one place</li>
+<li>Highly integrated with <a href="qml-appdispatcher.html">AppDispatcher</a>. The order of callback execution is guaranteed in sequence order.</li>
+<li>Only one script can be executed at a time. Registered callbacks by previous script will be removed before starting.</li>
+<li><a href="qml-appscript.html#exit-method">exit()</a> will remove all the registered callbacks. No callback leave after termination.</li>
+</ul>
+<p><b>Why not just use Promise?</b></p>
+<ul>
+<li>1. You need another library. (e.g QuickPromise)</li>
+<li>2. You need to set reject condition per callback/promise</li>
+</ul>
+<p><b>Explanation</b>:</p>
+<p>Coding in a promise way requires you to handle every reject condition correctly. Otherwise, promise will leave in memory and their behaviour will be unexpected. <a href="qml-appscript.html#run-method">AppScript::run()</a> / <a href="qml-appscript.html#exit-method">AppScript::exit()</a> clear all the registered callback completely. You can write less code.</p>
+<!-- @@@AppScript -->
+<h2>Property Documentation</h2>
+<!-- $$$runWhen -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="runWhen-prop">
+<td class="tblQmlPropNode"><p>
+<a name="runWhen-prop"></a><span class="name">runWhen</span> : <span class="type">string</span></p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>This property hold a string of message type. Whatever a dispatched message matched, it will trigger to call <a href="qml-appscript.html#run-method">run()</a> immediately.</p>
+<p></p>
+</div></div><!-- @@@runWhen -->
+<br/>
+<!-- $$$running -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="running-prop">
+<td class="tblQmlPropNode"><p>
+<a name="running-prop"></a><span class="name">running</span> : <span class="type">bool</span></p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>This property hold a value to indicate is the script still running. If there has any registered callback leave, it will be considered as running.</p>
+</div></div><!-- @@@running -->
+<br/>
+<!-- $$$script -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="script-prop">
+<td class="tblQmlPropNode"><p>
+<a name="script-prop"></a><span class="name">script</span> : <span class="type"><a href="qml-appscript.html#script-prop">script</a></span></p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>This property holds the script to run.</p>
+</div></div><!-- @@@script -->
+<br/>
+<h2>Signal Documentation</h2>
+<!-- $$$finished -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="finished-signal">
+<td class="tblQmlFuncNode"><p>
+<a name="finished-signal"></a><span class="name">finished</span>(<span class="type">int</span> <i>returnCode</i>)</p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>This signal is emitted when the script is finished.</p>
+</div></div><!-- @@@finished -->
+<br/>
+<!-- $$$started -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="started-signal">
+<td class="tblQmlFuncNode"><p>
+<a name="started-signal"></a><span class="name">started</span>()</p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>This signal is emitted when the script is started.</p>
+</div></div><!-- @@@started -->
+<br/>
+<h2>Method Documentation</h2>
+<!-- $$$exit -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="exit-method">
+<td class="tblQmlFuncNode"><p>
+<a name="exit-method"></a><span class="name">exit</span>(<span class="type">int</span> <i>returnCode</i>)</p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>Terminate current executing script by removing all the registered callbacks.</p>
+</div></div><!-- @@@exit -->
+<br/>
+<!-- $$$on -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="on-method">
+<td class="tblQmlFuncNode"><p>
+<a name="on-method"></a><span class="name">on</span>(<span class="type">var</span> <i>type</i>, <span class="type">func</span> <i>callback</i>)</p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>Register a callback to be triggered when a matched message type is dispatched or a signal is emitted. User should call this function within the script code block.</p>
+<p>The callback will be removed on script termination.</p>
+</div></div><!-- @@@on -->
+<br/>
+<!-- $$$once -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="once-method">
+<td class="tblQmlFuncNode"><p>
+<a name="once-method"></a><span class="type">chian</span> <span class="name">once</span>(<span class="type">var</span> <i>type</i>, <span class="type">func</span> <i>callback</i>)</p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>Register a callback to be triggered when a matched message type is dispatched or a signal is emitted. It will be triggered once only. User should call this function within the script code block.</p>
+<p>The callback will be removed on script termination.</p>
+<p>Moreover, this function is chainable:</p>
+<p>Example</p>
+<pre class="cpp">AppScript {
+
+    script: {
+
+        once(ActionTypes<span class="operator">.</span>askToRemoveSelectedItem<span class="operator">,</span> funciton() {
+
+            removeConfirmationDialog<span class="operator">.</span>open();
+
+        })<span class="operator">.</span>then(removeConfirmationDialog<span class="operator">.</span>onAccepted<span class="operator">,</span> function() {
+
+            AppActions<span class="operator">.</span>removeSelectedItem();
+
+        }); <span class="comment">// &lt;-- You may chain then() function again.</span>
+    }
+}</pre>
+<p>The callback in then() will not be registrated immediately. It is deferred until the previouew callback triggered.</p>
+</div></div><!-- @@@once -->
+<br/>
+<!-- $$$run -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="run-method">
+<td class="tblQmlFuncNode"><p>
+<a name="run-method"></a><span class="name">run</span>()</p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>Call this function to execute script. If the previous script is still running. <a href="qml-appscript.html">AppScript</a> will terminate previous script by removing all the registered callbacks.</p>
+</div></div><!-- @@@run -->
+<br/>
+</body>
+</html>

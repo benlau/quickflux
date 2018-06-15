@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qfmiddleware.cpp -->
+  <title>Middleware QML Type | QuickFlux 1.1</title>
+  <link rel="stylesheet" type="text/css" href="style/offline.css" />
+</head>
+<body>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#properties">Properties</a></li>
+<li class="level1"><a href="#methods">Methods</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">Middleware QML Type</h1>
+<span class="subtitle"></span>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Import Statement:</td><td class="memItemRight bottomAlign"> import  .</td></tr></table></div><ul>
+<li><a href="qml-middleware-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="properties"></a>
+<h2 id="properties">Properties</h2>
+<ul>
+<li class="fn"><b><b><a href="qml-middleware.html#filterFunctionEnabled-prop">filterFunctionEnabled</a></b></b> : bool</li>
+</ul>
+<a name="methods"></a>
+<h2 id="methods">Methods</h2>
+<ul>
+<li class="fn"><b><b><a href="qml-middleware.html#next-method">next</a></b></b>(string <i>type</i>, object <i>message</i>)</li>
+</ul>
+<!-- $$$Middleware-description -->
+<a name="details"></a>
+<h2 id="details">Detailed Description</h2>
+<pre class="cpp">import QuickFlux <span class="number">1.1</span></pre>
+<p>The middleware in Quick Flux is similar to the one in Redux and those from server libraries like Express and Koa. It is some code you can put between the Dispatcher and Stores. It could modify/defer/remove received actions and insert new actions that will dispatch to Store components. Users may use it for logging, crash reporting, talking to asynchronous components like FileDialog / Camera etc. So that Store components remain “pure”, it holds application logic only and always return the same result for the same input. It is easier to write test cases.</p>
+<p>Event Flow</p>
+<p class="centerAlign"><img src="images/middleware-data-flow.png" alt="&quot;Concept&quot;" /></p><p><i>Example Code</i></p>
+<pre class="cpp"><span class="comment">// Action Logger</span>
+import QuickFlux <span class="number">1.1</span>
+
+Middleware {
+  function dispatch(type<span class="operator">,</span> message) {
+    console<span class="operator">.</span>log(type<span class="operator">,</span> JSON<span class="operator">.</span>string(message));
+    next(type<span class="operator">,</span> message); <span class="comment">// propagate the action to next Middleware or Store component type. If you don’t call it, the action will be dropped.</span>
+  }
+}</pre>
+<p>Whatever the middleware received a new action, it will invoke the &quot;dispatch&quot; function written by user. If the middleare accept the action, it should call the <a href="qml-middleware.html#next-method">next()</a> to propagate the action to anothter middleware. User may modify/insert/delay or remove the action.</p>
+<pre class="cpp"><span class="comment">// Confirmation Dialog</span>
+
+import QuickFlux <span class="number">1.1</span>
+import <span class="type">QtQuick</span><span class="operator">.</span>Dialogs <span class="number">1.2</span>
+
+Middleware {
+
+  FileDialog {
+    id: fileDialog
+    onAccepted: {
+      next(ActionTypes<span class="operator">.</span>removeItem);
+    }
+  }
+
+  function dispatch(type<span class="operator">,</span> message) {
+
+    <span class="keyword">if</span> (type <span class="operator">=</span><span class="operator">=</span><span class="operator">=</span> ActionTypes<span class="operator">.</span>removeItem) {
+      fileDialog<span class="operator">.</span>open();
+    } <span class="keyword">else</span> {
+      next(type<span class="operator">,</span> message);
+    }
+  }
+}</pre>
+<!-- @@@Middleware -->
+<h2>Property Documentation</h2>
+<!-- $$$filterFunctionEnabled -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="filterFunctionEnabled-prop">
+<td class="tblQmlPropNode"><p>
+<a name="filterFunctionEnabled-prop"></a><span class="name">filterFunctionEnabled</span> : <span class="type">bool</span></p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>If this property is true, whatever the middleware component received a new action. Beside to invoke a dispatch signal, it will search for a function with a name as the action. If it exists, it will call also call the function.</p>
+<pre class="cpp">Middleware {
+  filterFunctionEnabled: <span class="keyword">true</span>
+
+  function addItem(message) {
+    <span class="comment">//process</span>
+    next(<span class="string">&quot;addItem&quot;</span><span class="operator">,</span> message);
+  }
+}</pre>
+<p>The default value is false</p>
+</div></div><!-- @@@filterFunctionEnabled -->
+<br/>
+<h2>Method Documentation</h2>
+<!-- $$$next -->
+<div class="qmlitem"><div class="qmlproto">
+<div class="table"><table class="qmlname">
+<tr valign="top" class="odd" id="next-method">
+<td class="tblQmlFuncNode"><p>
+<a name="next-method"></a><span class="name">next</span>(<span class="type">string</span> <i>type</i>, <span class="type">object</span> <i>message</i>)</p></td></tr>
+</table></div>
+</div><div class="qmldoc"><p>Pass an action message to next middleware. If it is already the last middleware, the action will be dispatched to Store component.</p>
+</div></div><!-- @@@next -->
+<br/>
+</body>
+</html>

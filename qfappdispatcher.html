@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- qfdispatcher.cpp -->
+  <title>QFAppDispatcher Class | QuickFlux 1.1</title>
+  <link rel="stylesheet" type="text/css" href="style/offline.css" />
+</head>
+<body>
+<li>QFAppDispatcher</li>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">QFAppDispatcher Class</h1>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <span class="preprocessor">#include &lt;QFAppDispatcher&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherits:</td><td class="memItemRight bottomAlign"> QFDispatcher</td></tr></table></div><ul>
+<li><a href="qfappdispatcher-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qfappdispatcher.html#QFAppDispatcher">QFAppDispatcher</a></b>(QObject *<i>parent</i> = 0)</td></tr>
+</table></div>
+<ul>
+<li class="fn">6 public functions inherited from <a href="qfdispatcher.html#public-functions">QFDispatcher</a></li>
+</ul>
+<a name="static-public-members"></a>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> QFAppDispatcher *</td><td class="memItemRight bottomAlign"><b><a href="qfappdispatcher.html#instance">instance</a></b>(QQmlEngine *<i>engine</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QObject *</td><td class="memItemRight bottomAlign"><b><a href="qfappdispatcher.html#singletonObject">singletonObject</a></b>(QQmlEngine *<i>engine</i>, QString <i>package</i>, int <i>versionMajor</i>, int <i>versionMinor</i>, QString <i>typeName</i>)</td></tr>
+</table></div>
+<h3>Additional Inherited Members</h3>
+<ul>
+<li class="fn">1 signal inherited from <a href="qfdispatcher.html#signals">QFDispatcher</a></li>
+</ul>
+<a name="details"></a>
+<!-- $$$QFAppDispatcher-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p><a href="qfappdispatcher.html">QFAppDispatcher</a> is the C++ implementation of <a href="qml-appdispatcher.html">AppDispatcher</a> in QML scope. You may need this class to setup communication between C++ and QML.</p>
+<pre class="cpp"><span class="preprocessor">#include &quot;qfappdispatcher.h&quot;</span></pre>
+</div>
+<!-- @@@QFAppDispatcher -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$QFAppDispatcher[overload1]$$$QFAppDispatcherQObject* -->
+<h3 class="fn" id="QFAppDispatcher"><a name="QFAppDispatcher"></a>QFAppDispatcher::<span class="name">QFAppDispatcher</span>(<span class="type">QObject</span> *<i>parent</i> = 0)</h3>
+<p>Default constructs an instance of QFAppDispatcher.</p><!-- @@@QFAppDispatcher -->
+<!-- $$$instance[overload1]$$$instanceQQmlEngine* -->
+<h3 class="fn" id="instance"><a name="instance"></a><code>[static] </code><span class="type"><a href="qfappdispatcher.html#QFAppDispatcher">QFAppDispatcher</a></span> *QFAppDispatcher::<span class="name">instance</span>(<span class="type">QQmlEngine</span> *<i>engine</i>)</h3>
+<p>Obtain the singleton instance of <a href="qml-appdispatcher.html">AppDispatcher</a> for specific <i>engine</i></p>
+<!-- @@@instance -->
+<!-- $$$singletonObject[overload1]$$$singletonObjectQQmlEngine*QStringintintQString -->
+<h3 class="fn" id="singletonObject"><a name="singletonObject"></a><code>[static] </code><span class="type">QObject</span> *QFAppDispatcher::<span class="name">singletonObject</span>(<span class="type">QQmlEngine</span> *<i>engine</i>, <span class="type">QString</span> <i>package</i>, <span class="type">int</span> <i>versionMajor</i>, <span class="type">int</span> <i>versionMinor</i>, <span class="type">QString</span> <i>typeName</i>)</h3>
+<p><i>engine</i> QQmlEngine instance</p>
+<p><i>package</i> The package name of the singleton object</p>
+<p><i>versionMajor</i> The major version no. of the singleton object</p>
+<p><i>versionMinor</i> The minor version no. of the singleton object</p>
+<p><i>typeName</i> The name of the singleton object</p>
+<p>Obtain a singleton object from a package for specific QQmlEngine instance. It is useful when you need to get a singleton Actions object from C++.</p>
+<!-- @@@singletonObject -->
+</div>
+</body>
+</html>
