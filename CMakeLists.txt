@@ -6,6 +6,10 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(quickflux)
 
+if(MSVC)
+	set_property (GLOBAL PROPERTY USE_FOLDERS ON)
+endif()
+
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_DEBUG_POSTFIX d)
@@ -89,6 +93,14 @@ set(quickflux_PUBLIC_HEADERS
 	${SRC_DIR}/qfstore.h
     ${SRC_DIR}/QuickFlux
 )
+
+if(MSVC)
+	source_group("Source Files" FILES ${quickflux_PUBLIC_SOURCES})
+	source_group("Source Files\\Private" FILES ${quickflux_PRIVATE_SOURCES})
+	source_group("Header Files" FILES ${quickflux_PUBLIC_HEADERS})
+	source_group("Header Files\\Private" FILES ${quickflux_PRIVATE_HEADERS})
+	source_group("Source Files\\MOC" REGULAR_EXPRESSION "moc*")
+endif()
 
 add_library(quickflux STATIC
 	${quickflux_PRIVATE_SOURCES}
