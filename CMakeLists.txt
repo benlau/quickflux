@@ -25,64 +25,74 @@ include_directories(
 add_definitions(${Qt5Qml_DEFINITIONS})
 add_definitions(${Qt5Quick_DEFINITIONS})
 
-#Include headers from priv folder as CMAKE_AUTOMOC do not works on it
+# Include headers from priv folder as CMAKE_AUTOMOC do not works on it
 qt5_wrap_cpp(moc 
     ${SRC_DIR}/priv/qflistener.h
     ${SRC_DIR}/priv/qfappscriptrunnable.h
     ${SRC_DIR}/priv/qfappscriptdispatcherwrapper.h
 )
 
-set(quickflux_SOURCES
-    ${SRC_DIR}/qfapplistener.cpp
-    ${SRC_DIR}/qfappdispatcher.cpp
-    ${SRC_DIR}/qfappscript.cpp
-    ${SRC_DIR}/qfappscriptrunnable.cpp
-    ${SRC_DIR}/qfappscriptdispatcherwrapper.cpp
-    ${SRC_DIR}/qflistener.cpp
-    ${SRC_DIR}/qfqmltypes.cpp
-    ${SRC_DIR}/qfapplistenergroup.cpp
-    ${SRC_DIR}/qfappscriptgroup.cpp
-    ${SRC_DIR}/qffilter.cpp
-    ${SRC_DIR}/qfkeytable.cpp
+set(quickflux_PRIVATE_SOURCES
+    ${SRC_DIR}/priv/qfhook.cpp
+    ${SRC_DIR}/priv/qfmiddlewareshook.cpp
     ${SRC_DIR}/priv/qfsignalproxy.cpp
+    ${SRC_DIR}/priv/quickfluxfunctions.cpp
+)
+
+set(quickflux_PUBLIC_SOURCES
     ${SRC_DIR}/qfactioncreator.cpp
+    ${SRC_DIR}/qfappdispatcher.cpp
+    ${SRC_DIR}/qfapplistener.cpp
+    ${SRC_DIR}/qfapplistenergroup.cpp
+    ${SRC_DIR}/qfappscript.cpp
+    ${SRC_DIR}/qfappscriptdispatcherwrapper.cpp
+    ${SRC_DIR}/qfappscriptgroup.cpp
+    ${SRC_DIR}/qfappscriptrunnable.cpp
+    ${SRC_DIR}/qfdispatcher.cpp
+    ${SRC_DIR}/qffilter.cpp
+    ${SRC_DIR}/qfhydrate.cpp
+    ${SRC_DIR}/qfkeytable.cpp
+    ${SRC_DIR}/qflistener.cpp
     ${SRC_DIR}/qfmiddleware.cpp
     ${SRC_DIR}/qfmiddlewarelist.cpp
     ${SRC_DIR}/qfobject.cpp
+    ${SRC_DIR}/qfqmltypes.cpp
     ${SRC_DIR}/qfstore.cpp
-    ${SRC_DIR}/qfdispatcher.cpp
-    ${SRC_DIR}/priv/qfmiddlewareshook.cpp
-    ${SRC_DIR}/priv/qfhook.cpp
-    ${SRC_DIR}/priv/quickfluxfunctions.cpp
-    ${SRC_DIR}/qfhydrate.cpp
 )
 
 set(quickflux_PRIVATE_HEADERS
-    ${SRC_DIR}/priv/qfappscriptrunnable.h
     ${SRC_DIR}/priv/qfappscriptdispatcherwrapper.h
+    ${SRC_DIR}/priv/qfappscriptrunnable.h
+	${SRC_DIR}/priv/qfhook.h
     ${SRC_DIR}/priv/qflistener.h
+	${SRC_DIR}/priv/qfmiddlewareshook.h
     ${SRC_DIR}/priv/qfsignalproxy.h
+	${SRC_DIR}/priv/quickfluxfunctions.h
 )
 
 set(quickflux_PUBLIC_HEADERS
-    ${SRC_DIR}/qfappdispatcher.h
-    ${SRC_DIR}/qfapplistener.h
-    ${SRC_DIR}/qfappscript.h
-    ${SRC_DIR}/qfapplistenergroup.h
-    ${SRC_DIR}/qfappscriptgroup.h
-    ${SRC_DIR}/qffilter.h
-    ${SRC_DIR}/qfkeytable.h
     ${SRC_DIR}/qfactioncreator.h
+    ${SRC_DIR}/QFAppDispatcher
+    ${SRC_DIR}/qfapplistener.h
+    ${SRC_DIR}/qfapplistenergroup.h
+    ${SRC_DIR}/qfappscript.h
+    ${SRC_DIR}/qfappdispatcher.h
+    ${SRC_DIR}/qfappscriptgroup.h
+    ${SRC_DIR}/qfdispatcher.h
+    ${SRC_DIR}/qffilter.h
+    ${SRC_DIR}/qfhydrate.h
+    ${SRC_DIR}/QFKeyTable
+    ${SRC_DIR}/qfkeytable.h
     ${SRC_DIR}/qfmiddleware.h
     ${SRC_DIR}/qfmiddlewarelist.h
-    ${SRC_DIR}/qfdispatcher.h
-    ${SRC_DIR}/QFAppDispatcher
-    ${SRC_DIR}/QFKeyTable
+	${SRC_DIR}/qfobject.h
+	${SRC_DIR}/qfstore.h
     ${SRC_DIR}/QuickFlux
 )
 
 add_library(quickflux STATIC
-	${quickflux_SOURCES}
+	${quickflux_PRIVATE_SOURCES}
+	${quickflux_PUBLIC_SOURCES}
 	${quickflux_PRIVATE_HEADERS}
 	${quickflux_PUBLIC_HEADERS}
 	${moc}
