@@ -87,6 +87,33 @@ Installation Instruction (without qpm)
 import QuickFlux 1.0
 ```
 
+Installation Instruction (with CMake)
+=====================================
+
+Add QuickFlux as an external project in your CMakeLists.txt:
+ 
+```
+include(ExternalProject)
+
+ExternalProject_Add(QuickFlux
+	PREFIX "${PROJECT_BINARY_DIR}/QuickFlux-build"
+	GIT_REPOSITORY "https://github.com/benlau/quickflux.git"
+	CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=${PROJECT_BINARY_DIR}/QuickFlux"
+)
+
+link_directories("${PROJECT_BINARY_DIR}/QuickFlux/lib")
+include_directories("${PROJECT_BINARY_DIR}/QuickFlux/includes")
+
+...
+
+add_dependencies(<your target> QuickFlux)
+target_link_libraries(<your target>	debug quickfluxd optimized quickflux)
+```
+
+Instead of using GIT_REPOSITORY which clones a remote repository, you can use SOURCE_DIR with a local path which contains the project sources.
+
+You may need to add ```"-DCMAKE_PREFIX_PATH=<your Qt install path>"``` to the CMAKE_ARGS on some platforms.
+
 Example Projects
 ================
 
