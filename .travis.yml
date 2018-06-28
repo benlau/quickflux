@@ -13,8 +13,6 @@ before_install:
     - qt-5.7
 script:
     - source qt-5.7.env
-    - mkdir build
-    - cd build
-    - run-unittests ../tests/quickfluxunittests/quickfluxunittests.pro
-
+    - (mkdir build; cd build; run-unittests ../tests/quickfluxunittests/quickfluxunittests.pro)
+    - (cd examples/todo; cmake . ; make)
   
