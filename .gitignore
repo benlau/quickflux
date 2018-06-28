@@ -39,3 +39,4 @@ build
 vendor
 *.qmlc
 *.swp
+CMakeLists.txt.user

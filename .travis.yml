@@ -16,4 +16,5 @@ script:
     - mkdir build
     - cd build
     - run-unittests ../tests/quickfluxunittests/quickfluxunittests.pro
+
   
