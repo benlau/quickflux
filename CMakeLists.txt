@@ -30,11 +30,11 @@ add_definitions(${Qt5Qml_DEFINITIONS})
 add_definitions(${Qt5Quick_DEFINITIONS})
 
 # Include headers from priv folder as CMAKE_AUTOMOC do not works on it
-qt5_wrap_cpp(moc 
-    ${SRC_DIR}/priv/qflistener.h
-    ${SRC_DIR}/priv/qfappscriptrunnable.h
-    ${SRC_DIR}/priv/qfappscriptdispatcherwrapper.h
-)
+#qt5_wrap_cpp(moc 
+#    ${SRC_DIR}/priv/qflistener.h
+#    ${SRC_DIR}/priv/qfappscriptrunnable.h
+#    ${SRC_DIR}/priv/qfappscriptdispatcherwrapper.h
+#)
 
 set(quickflux_PRIVATE_SOURCES
     ${SRC_DIR}/priv/qfhook.cpp
