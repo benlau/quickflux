@@ -123,10 +123,10 @@ install(TARGETS quickflux
 
 install(FILES
 	${quickflux_PUBLIC_HEADERS}
-	DESTINATION includes
+	DESTINATION include
 )
 
 install(FILES
 	${quickflux_PRIVATE_HEADERS}
-	DESTINATION includes/priv
+	DESTINATION include/priv
 )

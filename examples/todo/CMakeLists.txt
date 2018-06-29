@@ -31,7 +31,7 @@ ExternalProject_Add(QuickFlux
 )
 
 link_directories("${PROJECT_BINARY_DIR}/QuickFlux/lib")
-include_directories("${PROJECT_BINARY_DIR}/QuickFlux/includes")
+include_directories("${PROJECT_BINARY_DIR}/QuickFlux/include")
 
 add_executable(todo WIN32 ${todo_SRCS})
 add_dependencies(todo QuickFlux)
