@@ -26,4 +26,4 @@ build_script:
   - dir release /w
   - release\quickfluxunittests
   - cd ../..
-  - cd examples/todo && cmake . && dir /w && nmake
+  - cd examples/todo && cmake -G "Unix Makefiles" . && dir /w && nmake
