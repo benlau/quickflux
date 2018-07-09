@@ -98,12 +98,15 @@ include(ExternalProject)
 ExternalProject_Add(QuickFlux
 	PREFIX "${PROJECT_BINARY_DIR}/QuickFlux-build"
 	GIT_REPOSITORY "https://github.com/benlau/quickflux.git"
-	CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=${PROJECT_BINARY_DIR}/QuickFlux"
+	CMAKE_ARGS "-DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}"
+                    "-DCMAKE_INSTALL_PREFIX=${PROJECT_BINARY_DIR}/QuickFlux"
+                    "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}"
 )
 
 link_directories("${PROJECT_BINARY_DIR}/QuickFlux/lib")
 include_directories("${PROJECT_BINARY_DIR}/QuickFlux/include")
 
+target_link_libraries(todo debug quickfluxd optimized quickflux)
 ...
 
 add_dependencies(<your target> QuickFlux)
@@ -113,6 +116,8 @@ target_link_libraries(<your target>	debug quickfluxd optimized quickflux)
 Instead of using GIT_REPOSITORY which clones a remote repository, you can use SOURCE_DIR with a local path which contains the project sources.
 
 You may need to add ```"-DCMAKE_PREFIX_PATH=<your Qt install path>"``` to the CMAKE_ARGS on some platforms.
+
+Reference: [examples/todo/CMakeLists.txt](https://github.com/benlau/quickflux/blob/master/examples/todo/CMakeLists.txt)
 
 Example Projects
 ================
