@@ -11,7 +11,7 @@ class QFMiddleware : public QQuickItem
     Q_PROPERTY(QJSValue _nextCallback READ nextCallback WRITE setNextCallback NOTIFY _nextCallbackChanged)
 
 public:
-    QFMiddleware(QQuickItem* parent = 0);
+    QFMiddleware(QQuickItem* parent = nullptr);
 
     QJSValue nextCallback() const;
     void setNextCallback(const QJSValue &nextCallback);

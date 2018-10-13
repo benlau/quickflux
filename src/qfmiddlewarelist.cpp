@@ -53,9 +53,9 @@ It is added since QuickFlux 1.1
  *
  */
 
-QFMiddlewareList::QFMiddlewareList()
+QFMiddlewareList::QFMiddlewareList(QQuickItem* parent) : QQuickItem(parent)
 {
-    m_engine = 0;
+    m_engine = nullptr;
 }
 
 void QFMiddlewareList::apply(QObject *source)
@@ -92,8 +92,8 @@ void QFMiddlewareList::componentComplete()
 
 void QFMiddlewareList::setup()
 {
-    QFActionCreator *creator = 0;
-    QFDispatcher* dispatcher = 0;
+    QFActionCreator *creator = nullptr;
+    QFDispatcher* dispatcher = nullptr;
 
     creator = qobject_cast<QFActionCreator*>(m_applyTarget.data());
     if (creator) {
@@ -102,7 +102,7 @@ void QFMiddlewareList::setup()
         dispatcher = qobject_cast<QFDispatcher*>(m_applyTarget.data());
     }
 
-    if (creator == 0 && dispatcher == 0) {
+    if (creator == nullptr && dispatcher == nullptr) {
         qWarning() << "Middlewares.apply(): Invalid input";
     }
 
@@ -121,7 +121,7 @@ void QFMiddlewareList::setup()
     if (!m_dispatcher.isNull() &&
         m_dispatcher.data() != dispatcher) {
         QFHook* hook = m_dispatcher->hook();
-        m_dispatcher->setHook(0);
+        m_dispatcher->setHook(nullptr);
         m_dispatcher->disconnect(this);
         if (hook) {
             delete hook;

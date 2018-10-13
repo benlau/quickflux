@@ -8,7 +8,7 @@ class QFMiddlewareList : public QQuickItem
     Q_OBJECT
     Q_PROPERTY(QObject* applyTarget READ applyTarget WRITE setApplyTarget NOTIFY applyTargetChanged)
 public:
-    QFMiddlewareList();
+    QFMiddlewareList(QQuickItem* parent = nullptr);
 
     QObject *applyTarget() const;
     void setApplyTarget(QObject *applyTarget);

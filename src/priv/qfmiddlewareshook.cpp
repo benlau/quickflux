@@ -70,7 +70,6 @@ void QFMiddlewaresHook::setup(QQmlEngine *engine, QObject *middlewares)
     if (invoke.isError()) {
         QuickFlux::printException(invoke);
     }
-
 }
 
 void QFMiddlewaresHook::next(int senderIndex, QString type, QJSValue message)

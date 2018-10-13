@@ -100,7 +100,10 @@ void QFMiddleware::next(QString type, QJSValue message)
         QJSValueList args;
         args << type;
         args << message;
-        m_nextCallback.call(args);
+        QJSValue result = m_nextCallback.call(args);
+        if (result.isError()) {
+            QuickFlux::printException(result);
+        }
     }
 }
 

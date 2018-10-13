@@ -56,4 +56,5 @@ DISTFILES += \
     qmltests/tst_middleware_filterFunctionEnabled.qml \
     qmltests/tst_middlewarelist.qml \
     qmltests/tst_middlewarelist_applyTarget.qml \
-    ../../appveyor.yml
+    ../../appveyor.yml \
+    qmltests/tst_middleware_exception.qml

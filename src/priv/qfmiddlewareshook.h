@@ -10,7 +10,7 @@ class QFMiddlewaresHook : public QFHook
 {
     Q_OBJECT
 public:
-    explicit QFMiddlewaresHook(QObject *parent = 0);
+    explicit QFMiddlewaresHook(QObject *parent = nullptr);
 
 signals:
 
