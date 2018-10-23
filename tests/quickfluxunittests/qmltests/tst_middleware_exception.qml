@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtTest 1.0
 import QuickFlux 1.1
+import MessageLogger 1.0
 
 TestCase {
     name : "Middleware_Exception"
@@ -25,6 +26,8 @@ TestCase {
 
     function init() {
         loader.active = true;
+        MessageLogger.clear();
+        MessageLogger.install();
     }
 
     function cleanup() {
@@ -33,6 +36,8 @@ TestCase {
 
     function test_Middleware_dispatch_should_show_exception_error() {
         AppDispatcher.dispatch("test_exception");
+        compare(MessageLogger.messages.length, 1);
+        compare(MessageLogger.messages[0].indexOf("Invalid write to global") >= 0, true);
     }
 
 }

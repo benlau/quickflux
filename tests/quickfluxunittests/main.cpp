@@ -3,6 +3,7 @@
 #include <QtQuickTest>
 #include "testrunner.h"
 #include "quickfluxunittests.h"
+#include "messagelogger.h"
 
 namespace AutoTestRegister {
     QUICK_TEST_MAIN(QuickTests)
@@ -11,6 +12,7 @@ namespace AutoTestRegister {
 int main(int argc, char *argv[])
 {
     qputenv("QML_DISABLE_DISK_CACHE", "true");
+
     QGuiApplication app(argc,argv);
 
     TestRunner runner;

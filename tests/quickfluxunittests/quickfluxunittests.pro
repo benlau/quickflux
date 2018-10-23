@@ -14,7 +14,8 @@ DEFINES += SRCDIR=\\\"$$PWD/\\\" QUICK_TEST_SOURCE_DIR=\\\"$$PWD/qmltests\\\"
 SOURCES += main.cpp \
     quickfluxunittests.cpp \
     testenv.cpp \
-    actiontypes.cpp
+    actiontypes.cpp \
+    messagelogger.cpp
 
 include(vendor/vendor.pri)
 include(../../quickflux.pri)
@@ -22,7 +23,8 @@ include(../../quickflux.pri)
 HEADERS += \
     quickfluxunittests.h \
     testenv.h \
-    actiontypes.h
+    actiontypes.h \
+    messagelogger.h
 
 RESOURCES += \
     qml.qrc
