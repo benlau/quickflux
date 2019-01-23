@@ -2,6 +2,8 @@
 #include <QQmlEngine>
 #include "messagelogger.h"
 
+static QStringList s_messages;
+
 static void logFunc(QtMsgType type, const QMessageLogContext &context, const QString &msg) {
     Q_UNUSED(type);
     Q_UNUSED(context);
@@ -24,18 +26,17 @@ void MessageLogger::install()
 
 void MessageLogger::log(const QString &message)
 {
-    m_messages << message;
-    emit messagesChanged();
+    s_messages << message;
 }
 
 QStringList MessageLogger::messages() const
 {
-    return m_messages;
+    return s_messages;
 }
 
 void MessageLogger::setMessages(const QStringList &messages)
 {
-    m_messages = messages;
+    s_messages = messages;
 }
 
 MessageLogger *MessageLogger::globalInstance()
@@ -49,15 +50,15 @@ MessageLogger *MessageLogger::globalInstance()
 
 void MessageLogger::clear()
 {
-    m_messages.clear();
-    emit messagesChanged();
+    s_messages.clear();
 }
 
 static QObject *provider(QQmlEngine *engine, QJSEngine *scriptEngine) {
     Q_UNUSED(engine);
     Q_UNUSED(scriptEngine);
 
-    return MessageLogger::globalInstance();
+    MessageLogger* logger = new MessageLogger(engine);
+    return logger;
 }
 
 static void init() {

@@ -36,8 +36,9 @@ TestCase {
 
     function test_Middleware_dispatch_should_show_exception_error() {
         AppDispatcher.dispatch("test_exception");
-        compare(MessageLogger.messages.length, 1);
-        compare(MessageLogger.messages[0].indexOf("Invalid write to global") >= 0, true);
+        var messages = MessageLogger.messages();
+        compare(messages.length, 1);
+        compare(messages[0].indexOf("Invalid write to global") >= 0, true);
     }
 
 }

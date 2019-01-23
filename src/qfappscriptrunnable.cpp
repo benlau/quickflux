@@ -127,7 +127,7 @@ void QFAppScriptRunnable::setCondition(QJSValue condition)
         QString type = QString("QuickFlux.AppScript.%1").arg(QUuid::createUuid().toString());
         setType(type);
 
-        QString generator = "function(dispatcher) { return function() {dispatcher.dispatch(arguments)}}";
+        QString generator = "(function(dispatcher) { return function() {dispatcher.dispatch(arguments)}})";
         QFAppDispatcher* dispatcher = QFAppDispatcher::instance(m_engine);
         QFAppScriptDispatcherWrapper * wrapper = new QFAppScriptDispatcherWrapper();
         wrapper->setType(type);
