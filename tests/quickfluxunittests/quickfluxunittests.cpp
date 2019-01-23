@@ -333,19 +333,16 @@ void QuickFluxUnitTests::loading()
 {
     QFETCH(QString, input);
 
-
     QQmlEngine engine;
     engine.addImportPath("qrc:///");
 
-
     QQmlComponent comp(&engine);
-    comp.loadUrl(QUrl(input));
+    comp.loadUrl(QUrl(input), QQmlComponent::PreferSynchronous);
 
     if (comp.isError()) {
         qDebug() << QString("%1 : Load Failed. Reason :  %2").arg(input).arg(comp.errorString());
     }
     QVERIFY(!comp.isError());
-
 }
 
 void QuickFluxUnitTests::loading_data()
