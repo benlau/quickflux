@@ -49,7 +49,6 @@ DISTFILES += \
     qmltests/tst_keytable.qml \
     qmltests/tst_qimage.qml \
     qmltests/tst_actioncreator.qml \
-    qmltests/tst_object.qml \
     qmltests/tst_store.qml \
     qmltests/tst_store_children.qml \
     qmltests/tst_hydrate.qml \

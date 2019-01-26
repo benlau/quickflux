@@ -51,7 +51,7 @@ Item {
             property real value2 : 0;
             property string value3: "";
 
-            property var value4 : Object {
+            property var value4 : QtObject {
                 id: target2Child1
                 property var value41
             }

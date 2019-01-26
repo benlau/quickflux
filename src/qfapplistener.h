@@ -20,7 +20,7 @@ class QFAppListener : public QQuickItem
     Q_PROPERTY(QList<int> waitFor READ waitFor WRITE setWaitFor NOTIFY waitForChanged)
 
 public:
-    explicit QFAppListener(QQuickItem *parent = 0);
+    explicit QFAppListener(QQuickItem *parent = nullptr);
     ~QFAppListener();
 
     /// Get the listening target.
@@ -62,7 +62,7 @@ public:
 
 signals:
     /// It is emitted whatever it has received a dispatched message from AppDispatcher.
-    void dispatched(QString type,QJSValue message);
+    Q_SIGNAL void dispatched(QString type,QJSValue message);
 
     void filterChanged();
 

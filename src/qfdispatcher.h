@@ -20,7 +20,7 @@ public:
 
 signals:
     /// Listeners should listen on this signal to get the latest dispatched message from AppDispatcher
-    void dispatched(QString type,QJSValue message);
+    Q_SIGNAL void dispatched(QString type,QJSValue message);
 
 public slots:
     /// Dispatch a message via Dispatcher
