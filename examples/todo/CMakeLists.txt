@@ -18,22 +18,23 @@ find_package(Qt5Core CONFIG REQUIRED)
 find_package(Qt5Quick CONFIG REQUIRED)
 
 set(todo_SRCS
-    main.cpp
-    qml.qrc
-)
+  main.cpp
+  qml.qrc
+  )
 
 include(ExternalProject)
 
 ExternalProject_Add(QuickFlux
-        PREFIX "${PROJECT_BINARY_DIR}/QuickFlux-build"
-	SOURCE_DIR "${PROJECT_SOURCE_DIR}/../.."
-        CMAKE_ARGS "-DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}"
-                    "-DCMAKE_INSTALL_PREFIX=${PROJECT_BINARY_DIR}/QuickFlux"
-                    "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}"
-)
+  PREFIX "${PROJECT_BINARY_DIR}/QuickFlux-build"
+  SOURCE_DIR "${PROJECT_SOURCE_DIR}/../.."
+  CMAKE_ARGS "-DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}"
+             "-DCMAKE_INSTALL_PREFIX=${PROJECT_BINARY_DIR}/QuickFlux"
+             "-DCMAKE_INSTALL_LIBDIR=${PROJECT_BINARY_DIR}/QuickFlux/lib"
+             "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}"
+  )
 
 link_directories("${PROJECT_BINARY_DIR}/QuickFlux/lib")
-include_directories("${PROJECT_BINARY_DIR}/QuickFlux/include")
+include_directories("${PROJECT_BINARY_DIR}/QuickFlux/include/quickflux")
 
 add_executable(todo WIN32 ${todo_SRCS})
 add_dependencies(todo QuickFlux)
