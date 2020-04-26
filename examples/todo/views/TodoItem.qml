@@ -30,4 +30,3 @@ Rectangle {
         AppActions.setTaskDone(uid,checked);
     }
 }
-

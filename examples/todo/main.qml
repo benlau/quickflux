@@ -23,4 +23,3 @@ Item {
         id: mainWindow
     }
 }
-

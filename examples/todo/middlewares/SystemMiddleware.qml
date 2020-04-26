@@ -25,5 +25,4 @@ Middleware {
             console.log("closing");
         }
     }
-
 }

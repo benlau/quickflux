@@ -36,5 +36,4 @@ Middleware {
         /// Pass the action to next middleware / store
         next(type, message);
     }
-
 }

@@ -15,4 +15,3 @@ ActionCreator {
     signal setShowCompletedTasks(bool value)
 
 }
-

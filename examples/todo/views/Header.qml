@@ -23,6 +23,4 @@ Item {
             value: MainStore.userPrefs.showCompletedTasks
         }
     }
-
 }
-

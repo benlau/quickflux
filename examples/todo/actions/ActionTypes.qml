@@ -13,4 +13,3 @@ KeyTable {
 
     property string startApp
 }
-
