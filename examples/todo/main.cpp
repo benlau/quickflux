@@ -1,5 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
+#include <KLocalizedContext>
 #include <QFAppDispatcher>
 #include <QuickFlux>
 
@@ -12,6 +14,8 @@ int main(int argc, char *argv[])
     registerQuickFluxQmlTypes(); // It is not necessary to call this function if the QuickFlux library is installed via qpm
 
     QQmlApplicationEngine engine;
+
+    engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
     QFAppDispatcher* dispatcher = QFAppDispatcher::instance(&engine);
