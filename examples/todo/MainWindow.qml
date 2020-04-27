@@ -1,34 +1,9 @@
-import QtQuick 2.3
-import QtQuick.Window 2.2
-import QtQuick.Layouts 1.0
-import QuickFlux 1.1
-import "./views"
-import "./middlewares"
-import "./actions"
+import org.kde.kirigami 2.0 as Kirigami
 
-Window {
-    width: 480
-    height: 640
-    visible: true
+// Wraps single-page application in a platform window
+Kirigami.ApplicationWindow {
+    width: 18 * Kirigami.Units.gridUnit
+    height: 20 * Kirigami.Units.gridUnit
 
-    ColumnLayout {
-        anchors.fill: parent
-        anchors.leftMargin: 16
-        anchors.rightMargin: 16
-
-        Header {
-            Layout.fillWidth: true
-            Layout.fillHeight: false
-        }
-
-        TodoList {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-        }
-
-        Footer {
-            Layout.fillWidth: true
-            Layout.fillHeight: false
-        }
-    }
+    pageStack.initialPage: MainPage {}
 }

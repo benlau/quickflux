@@ -17,5 +17,6 @@
         <file>middlewares/DialogMiddleware.qml</file>
         <file>MainWindow.qml</file>
         <file>middlewares/SystemMiddleware.qml</file>
+        <file>MainPage.qml</file>
     </qresource>
 </RCC>
