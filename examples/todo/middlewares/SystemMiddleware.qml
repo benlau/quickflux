@@ -1,6 +1,6 @@
 import QtQuick 2.0
+import QtQuick.Window 2.0
 import QuickFlux 1.1
-import QtQuick.Dialogs 1.2
 import "../actions"
 import "../stores"
 
@@ -8,7 +8,7 @@ Middleware {
 
     property RootStore store: MainStore
 
-    property var mainWindow: null
+    property Window mainWindow: null
 
     function dispatch(type, message) {
         if (type === ActionTypes.startApp) {

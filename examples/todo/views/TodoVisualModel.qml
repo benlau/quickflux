@@ -21,9 +21,11 @@ VisualDataModel {
         uid: model.uid
         title: model.title
         checked: model.done
+        // for animations
+        z: -index
 
         Component.onCompleted: {
-            item.VisualDataModel.inNonCompleted = Qt.binding(function() { return !model.done})
+            item.VisualDataModel.inNonCompleted = Qt.binding(() => !model.done)
         }
     }
 }

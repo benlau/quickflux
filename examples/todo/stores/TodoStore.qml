@@ -56,7 +56,7 @@ Store {
                 title: message.title,
                 done: false
             }
-            model.append(item);
+            model.insert(0, item);
         }
     }
 
