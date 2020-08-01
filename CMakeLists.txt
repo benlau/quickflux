@@ -6,6 +6,8 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(quickflux VERSION 1.1.3)
 
+option(quickflux_INSTALL "Enable the installation of targets." ON)
+
 if(MSVC)
   set_property (GLOBAL PROPERTY USE_FOLDERS ON)
 endif()
@@ -113,53 +115,57 @@ set_target_properties(quickflux PROPERTIES
   DEBUG_POSTFIX d
   )
 
-install(TARGETS quickflux EXPORT QuickFluxTargets
-  LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-  ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-  RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
-  INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/quickflux"
+if(quickflux_INSTALL)
+
+  install(TARGETS quickflux EXPORT QuickFluxTargets
+    LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+    ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+    RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+    INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/quickflux"
+    )
+
+  install(FILES
+    ${quickflux_PUBLIC_HEADERS}
+    DESTINATION include/quickflux
+    )
+  install(FILES
+    ${quickflux_PRIVATE_HEADERS}
+    DESTINATION include/quickflux/priv
+    )
+
+
+  include(CMakePackageConfigHelpers)
+  write_basic_package_version_file(
+      ${CMAKE_BINARY_DIR}/cmake/QuickFluxVersion.cmake
+      VERSION ${PROJECT_VERSION}
+      COMPATIBILITY SameMajorVersion
   )
 
-install(FILES
-  ${quickflux_PUBLIC_HEADERS}
-  DESTINATION include/quickflux
-  )
-install(FILES
-  ${quickflux_PRIVATE_HEADERS}
-  DESTINATION include/quickflux/priv
+  # installation - build tree specific package config files
+  export(EXPORT QuickFluxTargets FILE ${CMAKE_BINARY_DIR}/QuickFluxTargets.cmake)
+  configure_file(${PROJECT_SOURCE_DIR}/QuickFluxConfig.cmake.in
+      ${CMAKE_BINARY_DIR}/QuickFluxConfig.cmake
+      COPYONLY
   )
 
+  # installation - relocatable package config files
+  configure_package_config_file(${PROJECT_SOURCE_DIR}/QuickFluxConfig.cmake.in
+                                ${CMAKE_CURRENT_BINARY_DIR}/cmake/QuickFluxConfig.cmake
+                                INSTALL_DESTINATION cmake
+  )
 
-include(CMakePackageConfigHelpers)
-write_basic_package_version_file(
-    ${CMAKE_BINARY_DIR}/cmake/QuickFluxVersion.cmake
-    VERSION ${PROJECT_VERSION}
-    COMPATIBILITY SameMajorVersion
-)
+  set(CONFIG_PACKAGE_LOCATION ${CMAKE_INSTALL_LIBDIR}/cmake/QuickFlux)
 
-# installation - build tree specific package config files
-export(EXPORT QuickFluxTargets FILE ${CMAKE_BINARY_DIR}/QuickFluxTargets.cmake)
-configure_file(${PROJECT_SOURCE_DIR}/QuickFluxConfig.cmake.in
-    ${CMAKE_BINARY_DIR}/QuickFluxConfig.cmake
-    COPYONLY
-)
+  install(EXPORT QuickFluxTargets
+      FILE QuickFluxTargets.cmake
+      NAMESPACE QuickFlux::
+      DESTINATION ${CONFIG_PACKAGE_LOCATION}
+  )
 
-# installation - relocatable package config files
-configure_package_config_file(${PROJECT_SOURCE_DIR}/QuickFluxConfig.cmake.in
-                              ${CMAKE_CURRENT_BINARY_DIR}/cmake/QuickFluxConfig.cmake
-                              INSTALL_DESTINATION cmake
-)
+  install(FILES
+      ${CMAKE_BINARY_DIR}/cmake/QuickFluxConfig.cmake
+      ${CMAKE_BINARY_DIR}/cmake/QuickFluxVersion.cmake
+      DESTINATION ${CONFIG_PACKAGE_LOCATION}
+  )
 
-set(CONFIG_PACKAGE_LOCATION ${CMAKE_INSTALL_LIBDIR}/cmake/QuickFlux)
-
-install(EXPORT QuickFluxTargets
-    FILE QuickFluxTargets.cmake
-    NAMESPACE QuickFlux::
-    DESTINATION ${CONFIG_PACKAGE_LOCATION}
-)
-
-install(FILES
-    ${CMAKE_BINARY_DIR}/cmake/QuickFluxConfig.cmake
-    ${CMAKE_BINARY_DIR}/cmake/QuickFluxVersion.cmake
-    DESTINATION ${CONFIG_PACKAGE_LOCATION}
-)
+endif()
