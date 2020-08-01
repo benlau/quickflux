@@ -10,10 +10,6 @@ if(MSVC)
   set_property (GLOBAL PROPERTY USE_FOLDERS ON)
 endif()
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_DEBUG_POSTFIX d)
-
 set(SRC_DIR "${PROJECT_SOURCE_DIR}/src")
 
 include(GNUInstallDirs)
@@ -110,6 +106,11 @@ target_include_directories(quickflux
   PUBLIC
   "$<BUILD_INTERFACE:${SRC_DIR}>"
   "$<INSTALL_INTERFACE:include/quickflux>"
+  )
+
+set_target_properties(quickflux PROPERTIES
+  AUTOMOC TRUE
+  DEBUG_POSTFIX d
   )
 
 install(TARGETS quickflux EXPORT QuickFluxTargets
