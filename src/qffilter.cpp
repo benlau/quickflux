@@ -177,6 +177,11 @@ void QFFilter::setTypes(const QStringList &types)
 
 QQmlListProperty<QObject> QFFilter::children()
 {
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+    return QQmlListProperty<QObject>(qobject_cast<QObject*>(this),
+                                     &m_children);
+#else
     return QQmlListProperty<QObject>(qobject_cast<QObject*>(this),
                                      m_children);
+#endif
 }
