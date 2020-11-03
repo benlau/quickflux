@@ -1,18 +1,24 @@
+sudo: required
 language : cpp
+dist: bionic
+services:
+  - docker
+  - xvfb
 env:
   - DISPLAY=:99.0
 compiler:
   - gcc
 before_install:
+    - export PATH=$PWD/.travis:$PATH
+    - export DISPLAY=:99.0
+    - docker pull benlau/qtsdk:5.9.9
     - export GOPATH=`pwd`/gosrc
     - export PATH=`pwd`/gosrc/bin:$PATH
-    - go get qpm.io/qpm    
-    - sh -e /etc/init.d/xvfb start
-    - git clone https://github.com/benlau/qtci.git
-    - source qtci/path.env
-    - qt-5.7
+    - go get qpm.io/qpm
+
 script:
-    - source qt-5.7.env
-    - (mkdir build; cd build; run-unittests ../tests/quickfluxunittests/quickfluxunittests.pro)
-    - (cd examples/todo; cmake . ; make)
-  
+    - sleep 3
+    - pushd tests/quickfluxunittests
+    - qpm install
+    - popd
+    - docker run --rm --network host -v "$PWD:/src" -t benlau/qtsdk:5.9.9 bash -c 'cd src && .travis/run-all-tests.sh'

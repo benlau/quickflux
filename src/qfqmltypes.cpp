@@ -50,7 +50,13 @@ void registerQuickFluxQmlTypes()
     qmlRegisterType<QFAppScript>("QuickFlux", 1, 0, "AppScript");
     qmlRegisterType<QFAppListenerGroup>("QuickFlux", 1, 0, "AppListenerGroup");
     qmlRegisterType<QFAppScriptGroup>("QuickFlux", 1, 0, "AppScriptGroup");
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+    qmlRegisterAnonymousType<QFAppScriptRunnable>("QuickFlux", 1);
+#else
     qmlRegisterType<QFAppScriptRunnable>();
+#endif
+
     qmlRegisterType<QFKeyTable>("QuickFlux", 1, 0, "KeyTable");
     qmlRegisterType<QFActionCreator>("QuickFlux", 1, 0, "ActionCreator");
     qmlRegisterType<QFFilter>("QuickFlux", 1, 0, "Filter");

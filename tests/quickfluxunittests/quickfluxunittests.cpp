@@ -1,6 +1,6 @@
 #include <QString>
-#include <QtTest>
 #include <QCoreApplication>
+#include <QTest>
 #include <QQmlEngine>
 #include <QQmlComponent>
 #include <QQmlApplicationEngine>

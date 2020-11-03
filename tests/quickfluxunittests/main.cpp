@@ -1,6 +1,5 @@
 #include <QString>
-#include <QtTest>
-#include <QtQuickTest>
+#include <QtQuickTest/quicktest.h>
 #include "testrunner.h"
 #include "quickfluxunittests.h"
 #include "messagelogger.h"
