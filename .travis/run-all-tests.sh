@@ -13,4 +13,7 @@ popd
 pushd examples/todo
 qmake
 make
+make clean
+cmake
+make
 popd
