@@ -16,9 +16,6 @@ make
 make clean
 mkdir build
 cd build
-export Qt5_DIR=/opt/Qt/5.9.9/usr/lib/cmake/Qt5
-ls /opt/Qt
-ls $Qt5_DIR
 cmake ../
 make
 popd
