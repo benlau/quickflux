@@ -13,4 +13,9 @@ popd
 pushd examples/todo
 qmake
 make
+make clean
+mkdir build
+cd build
+cmake ../
+make
 popd
