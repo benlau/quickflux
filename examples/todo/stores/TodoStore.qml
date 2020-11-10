@@ -51,29 +51,26 @@ Store {
 
         type: ActionTypes.addTask
         onDispatched: {
-            var item = {
+            const item = {
                 uid: nextUid++,
                 title: message.title,
                 done: false
             }
-            model.append(item);
+            model.insert(0, item);
         }
     }
 
     Filter {
         type: ActionTypes.setTaskDone
         onDispatched: {
-            for (var i = 0 ; i < model.count ; i++) {
-                var item  = model.get(i);
+            // quick and dirty
+            for (let i = 0; i < model.count; i++) {
+                const item  = model.get(i);
                 if (item.uid === message.uid) {
-                    model.setProperty(i,"done",message.done);
+                    model.setProperty(i, "done", message.done);
                     break;
                 }
             }
         }
     }
-
 }
-
-
-

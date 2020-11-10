@@ -1,6 +1,6 @@
 pragma Singleton
 import QtQuick 2.0
-import QuickFlux 1.0
+import QuickFlux 1.1
 
 KeyTable {
     // KeyTable is an object with properties equal to its key name
@@ -13,4 +13,3 @@ KeyTable {
 
     property string startApp
 }
-
