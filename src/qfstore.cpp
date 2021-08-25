@@ -125,7 +125,11 @@ QFStore::QFStore(QObject *parent) : QObject(parent) , m_filterFunctionEnabled(fa
 
 QQmlListProperty<QObject> QFStore::children()
 {
+    #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    return QQmlListProperty<QObject>(qobject_cast<QObject*>(this), &m_children);
+    #else
     return QQmlListProperty<QObject>(qobject_cast<QObject*>(this), m_children);
+    #endif
 }
 
 void QFStore::dispatch(QString type, QJSValue message)
@@ -245,7 +249,11 @@ void QFStore::setup()
 
 QQmlListProperty<QObject> QFStore::redispatchTargets()
 {
+    #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    return QQmlListProperty<QObject>(qobject_cast<QObject*>(this), &m_redispatchTargets);
+    #else
     return QQmlListProperty<QObject>(qobject_cast<QObject*>(this), m_redispatchTargets);
+    #endif
 }
 
 
