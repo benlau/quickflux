@@ -200,6 +200,7 @@ Application Gallery
 A collection of application using Quick Flux
 
  1. [Lanto - An Intuitive batch Photo Resizer](http://e-fever.net/lanto/)
+ 2. [Showtech Lampy - Modern Lighting Console](https://www.highlite.com/en/lampy-v2)
 
 Related Projects
 =================
